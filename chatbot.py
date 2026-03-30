@@ -9,7 +9,7 @@ import google_connector as gc
 import manus_connector as manus
 import re
 import glob
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from pymilvus import MilvusClient
 from dotenv import load_dotenv
@@ -23,6 +23,123 @@ load_dotenv()
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 st.set_page_config(page_title="Alfred Dashboard", page_icon="🤖", layout="wide")
+
+# ── Premium Dark Theme CSS ──────────────────────────────────
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-primary: #0f1117;
+    --bg-card: #1a1d2e;
+    --bg-card-hover: #232740;
+    --accent: #6366f1;
+    --accent-glow: rgba(99, 102, 241, 0.15);
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --border: #2d3148;
+}
+
+/* Global font */
+html, body, [class*="css"] {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Briefing Cards */
+.briefing-card {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-hover) 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 0.8rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.briefing-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+.briefing-card h4 {
+    margin: 0 0 0.6rem 0;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+.briefing-card .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+}
+.briefing-card .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+}
+
+/* Status badges */
+.badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge-active { background: rgba(16,185,129,0.15); color: var(--success); }
+.badge-warning { background: rgba(245,158,11,0.15); color: var(--warning); }
+.badge-danger { background: rgba(239,68,68,0.15); color: var(--danger); }
+
+/* Timeline item */
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-time {
+    min-width: 60px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+.timeline-content {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+.timeline-meta {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Quick action buttons */
+.stButton > button {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Notification banner */
+.notification-bar {
+    background: linear-gradient(90deg, rgba(245,158,11,0.1) 0%, rgba(239,68,68,0.1) 100%);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1rem;
+}
+
+/* Tab styling */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
+}
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px 8px 0 0;
+    font-weight: 500;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # ── Auth ────────────────────────────────────────────────────
 with open(os.path.join(os.path.dirname(__file__), "credentials.yaml")) as f:
@@ -67,6 +184,8 @@ if "resume_llm" not in st.session_state:
     st.session_state.resume_llm = False
 if "qa_mode" not in st.session_state:
     st.session_state.qa_mode = False
+if "active_tab" not in st.session_state:
+    st.session_state.active_tab = "🏠 Home"
 
 # ── Conversation persistence helpers ────────────────────────
 
@@ -291,6 +410,359 @@ def get_memory_context():
     return ""
 
 
+# ── Briefing Engine ─────────────────────────────────────────
+
+@st.cache_data(ttl=300)  # Cache for 5 minutes
+def get_calendar_today():
+    """Fetch today's and tomorrow's calendar events."""
+    try:
+        events = gc.calendar_list_events(days_ahead=2, max_results=10)
+        return events
+    except Exception as e:
+        return [{"error": str(e)}]
+
+
+@st.cache_data(ttl=300)
+def get_email_highlights():
+    """Fetch unread and priority emails."""
+    try:
+        unread = gc.gmail_search("is:unread newer_than:3d", max_results=8)
+        return unread
+    except Exception as e:
+        return [{"error": str(e)}]
+
+
+def get_active_tasks():
+    """Scan vault task records for active/in-progress tasks."""
+    task_dir = VAULT_PATH / "task"
+    tasks = []
+    if not task_dir.exists():
+        return tasks
+    for f in task_dir.glob("*.md"):
+        try:
+            text = f.read_text("utf-8", errors="replace")[:1000]
+            status = ""
+            priority = ""
+            deadline = ""
+            m_status = re.search(r'^status:\s*(.+)$', text, re.MULTILINE)
+            m_priority = re.search(r'^priority:\s*(.+)$', text, re.MULTILINE)
+            m_deadline = re.search(r'^deadline:\s*(.+)$', text, re.MULTILINE)
+            if m_status:
+                status = m_status.group(1).strip().lower()
+            if m_priority:
+                priority = m_priority.group(1).strip()
+            if m_deadline:
+                deadline = m_deadline.group(1).strip()
+            if status in ("active", "in-progress", "in_progress", "todo", "open", "pending"):
+                tasks.append({
+                    "name": f.stem,
+                    "status": status,
+                    "priority": priority,
+                    "deadline": deadline,
+                    "path": str(f.relative_to(VAULT_PATH)),
+                })
+        except Exception:
+            continue
+    # Sort: high priority first, then by deadline
+    priority_order = {"critical": 0, "high": 1, "medium": 2, "low": 3, "": 4}
+    tasks.sort(key=lambda t: (priority_order.get(t["priority"].lower(), 4), t["deadline"] or "9999"))
+    return tasks[:20]
+
+
+def get_vault_stats():
+    """Get quick vault statistics."""
+    stats = {}
+    for rt in ["person", "org", "project", "task", "note", "decision", "assumption", "constraint", "synthesis", "contradiction", "conversation"]:
+        d = VAULT_PATH / rt
+        if d.exists():
+            stats[rt] = len(list(d.glob("*.md")))
+    return stats
+
+
+def get_attention_items():
+    """Get items that need attention: overdue tasks, contradictions, janitor issues."""
+    items = []
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    # Overdue tasks
+    tasks = get_active_tasks()
+    for t in tasks:
+        if t["deadline"] and t["deadline"] < today and t["deadline"] != "":
+            items.append({"type": "overdue", "icon": "⏰", "text": f"**Overdue task:** {t['name']} (deadline: {t['deadline']})", "severity": "danger"})
+
+    # Recent contradictions
+    contra_dir = VAULT_PATH / "contradiction"
+    if contra_dir.exists():
+        recent_contras = sorted(contra_dir.glob("*.md"), key=lambda f: f.stat().st_mtime, reverse=True)[:3]
+        for c in recent_contras:
+            age_days = (datetime.now() - datetime.fromtimestamp(c.stat().st_mtime)).days
+            if age_days <= 7:
+                items.append({"type": "contradiction", "icon": "⚡", "text": f"**Contradiction found:** {c.stem}", "severity": "warning"})
+
+    # Janitor issues count
+    janitor_state = ALFRED_DIR / "data" / "janitor_state.json"
+    if janitor_state.exists():
+        try:
+            jdata = json.loads(janitor_state.read_text())
+            sweeps = jdata.get("sweeps", {})
+            if sweeps:
+                last_sweep = list(sweeps.values())[-1]
+                issue_count = last_sweep.get("issues_found", 0)
+                if issue_count > 100:
+                    items.append({"type": "janitor", "icon": "🧹", "text": f"**Janitor:** {issue_count:,} issues detected in last sweep", "severity": "warning"})
+        except Exception:
+            pass
+
+    return items
+
+
+def get_contextual_briefing_text():
+    """Build a text summary of today's context for injection into the system prompt."""
+    lines = ["\n## Today's Context (auto-injected)"]
+    lines.append(f"**Date:** {datetime.now().strftime('%A, %B %d, %Y %I:%M %p')} (Israel Time)")
+
+    # Calendar
+    try:
+        events = get_calendar_today()
+        if events and not events[0].get("error"):
+            lines.append(f"\n**📅 Today's Calendar ({len(events)} events):**")
+            for e in events[:5]:
+                start = e.get("start", "?")
+                if "T" in start:
+                    start = start[11:16]
+                lines.append(f"- {start} — {e.get('summary', 'No title')}")
+    except Exception:
+        pass
+
+    # Active tasks
+    try:
+        tasks = get_active_tasks()
+        if tasks:
+            lines.append(f"\n**📋 Active Tasks ({len(tasks)}):**")
+            for t in tasks[:5]:
+                p = f" [{t['priority']}]" if t['priority'] else ""
+                d = f" (due: {t['deadline']})" if t['deadline'] else ""
+                lines.append(f"- {t['name']}{p}{d}")
+    except Exception:
+        pass
+
+    # Attention items
+    try:
+        attention = get_attention_items()
+        if attention:
+            lines.append(f"\n**⚠️ Needs Attention:**")
+            for a in attention[:3]:
+                lines.append(f"- {a['text']}")
+    except Exception:
+        pass
+
+    return "\n".join(lines)
+
+
+def render_briefing():
+    """Render the full Daily Briefing command center."""
+    now = datetime.now()
+    greeting_hour = now.hour
+    if greeting_hour < 12:
+        greeting = "Good morning"
+    elif greeting_hour < 17:
+        greeting = "Good afternoon"
+    else:
+        greeting = "Good evening"
+
+    st.markdown(f"## {greeting}, {st.session_state.get('name', 'Rami')} 👋")
+    st.caption(f"📅 {now.strftime('%A, %B %d, %Y')} · {now.strftime('%I:%M %p')} Israel Time")
+
+    # ── Notification Bar (Attention Items) ──
+    attention = get_attention_items()
+    if attention:
+        with st.container():
+            st.markdown('<div class="notification-bar">', unsafe_allow_html=True)
+            for a in attention[:3]:
+                st.markdown(f"{a['icon']} {a['text']}")
+            st.markdown('</div>', unsafe_allow_html=True)
+
+    # ── Quick Actions Row ──
+    st.markdown("### ⚡ Quick Actions")
+    qa1, qa2, qa3, qa4 = st.columns(4)
+    with qa1:
+        if st.button("📝 New Note", use_container_width=True):
+            st.session_state.active_tab = "💬 Chat"
+            st.session_state.messages.append({"role": "user", "content": "Create a new note for me. Ask me what it should be about."})
+            st.session_state.resume_llm = True
+            st.rerun()
+    with qa2:
+        if st.button("✅ New Task", use_container_width=True):
+            st.session_state.active_tab = "💬 Chat"
+            st.session_state.messages.append({"role": "user", "content": "Create a new task for me. Ask me about the title, priority, and deadline."})
+            st.session_state.resume_llm = True
+            st.rerun()
+    with qa3:
+        if st.button("📧 Draft Email", use_container_width=True):
+            st.session_state.active_tab = "💬 Chat"
+            st.session_state.messages.append({"role": "user", "content": "Help me draft an email. Ask me who it's for and what it should say."})
+            st.session_state.resume_llm = True
+            st.rerun()
+    with qa4:
+        if st.button("🔍 Deep Search", use_container_width=True):
+            st.session_state.active_tab = "💬 Chat"
+            st.session_state.messages.append({"role": "user", "content": "I want to do a deep search. Ask me what I'm looking for and search across the vault, Gmail, and Drive."})
+            st.session_state.resume_llm = True
+            st.rerun()
+
+    st.markdown("---")
+
+    # ── Main Briefing Grid ──
+    col_cal, col_email = st.columns(2)
+
+    # Calendar Column
+    with col_cal:
+        st.markdown("### 📅 Today's Schedule")
+        events = get_calendar_today()
+        if events and not events[0].get("error"):
+            for e in events:
+                start = e.get("start", "")
+                time_str = start[11:16] if "T" in start else "All day"
+                summary = e.get("summary", "No title")
+                location = e.get("location", "")
+                loc_str = f" · 📍 {location}" if location else ""
+                attendees = e.get("attendees", [])
+                att_str = f" · 👥 {len(attendees)}" if attendees else ""
+
+                st.markdown(f"""
+<div class="timeline-item">
+    <div class="timeline-time">{time_str}</div>
+    <div>
+        <div class="timeline-content">{summary}</div>
+        <div class="timeline-meta">{loc_str}{att_str}</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+        else:
+            err = events[0].get("error", "") if events else ""
+            if err:
+                st.caption(f"⚠️ Calendar unavailable: {err[:80]}")
+            else:
+                st.caption("No events today ✨")
+
+    # Email Column
+    with col_email:
+        st.markdown("### 📧 Unread Emails")
+        emails = get_email_highlights()
+        if emails and not emails[0].get("error"):
+            for em in emails[:6]:
+                sender = em.get("from", "").split("<")[0].strip().strip('"')
+                subject = em.get("subject", "(no subject)")
+                snippet = em.get("snippet", "")[:80]
+                st.markdown(f"""**{sender}**  
+_{subject}_  
+<span style="color: var(--text-secondary); font-size: 0.8rem;">{snippet}...</span>
+""", unsafe_allow_html=True)
+                st.markdown("<hr style='margin: 0.4rem 0; border-color: var(--border);'>", unsafe_allow_html=True)
+        else:
+            err = emails[0].get("error", "") if emails else ""
+            if err:
+                st.caption(f"⚠️ Gmail unavailable: {err[:80]}")
+            else:
+                st.caption("Inbox zero! 🎉")
+
+    st.markdown("---")
+
+    # ── Tasks & Vault Stats Row ──
+    col_tasks, col_stats = st.columns([3, 2])
+
+    with col_tasks:
+        st.markdown("### 📋 Active Tasks")
+        tasks = get_active_tasks()
+        if tasks:
+            for t in tasks[:8]:
+                priority = t['priority'].lower()
+                if priority in ('critical', 'high'):
+                    badge_class = 'badge-danger'
+                elif priority == 'medium':
+                    badge_class = 'badge-warning'
+                else:
+                    badge_class = 'badge-active'
+                p_badge = f'<span class="badge {badge_class}">{t["priority"]}</span>' if t['priority'] else ''
+                d_str = f' · Due: {t["deadline"]}' if t['deadline'] else ''
+                st.markdown(f"{p_badge} **{t['name']}**{d_str}", unsafe_allow_html=True)
+        else:
+            st.caption("No active tasks. Time to plan! 📝")
+
+    with col_stats:
+        st.markdown("### 📊 Vault Overview")
+        stats = get_vault_stats()
+        total = sum(stats.values())
+        st.markdown(f'<div class="briefing-card"><div class="stat-value">{total:,}</div><div class="stat-label">Total Records</div></div>', unsafe_allow_html=True)
+
+        # Mini stat grid
+        top_types = sorted(stats.items(), key=lambda x: x[1], reverse=True)[:6]
+        gcol1, gcol2 = st.columns(2)
+        for i, (rtype, count) in enumerate(top_types):
+            with gcol1 if i % 2 == 0 else gcol2:
+                st.metric(rtype.title(), count)
+
+
+def render_analytics():
+    """Render the Analytics / Vault Health page."""
+    st.markdown("## 📊 Analytics & Vault Health")
+
+    # Worker Status (expanded version)
+    st.markdown("### ⚙️ Worker Daemons")
+    try:
+        daemon_running, tools_status, workers_list, data_dir = _load_worker_dashboard()
+        status_text = "🟢 **Running**" if daemon_running else "🔴 **Stopped**"
+        st.markdown(f"Daemon Status: {status_text}")
+
+        wcols = st.columns(4)
+        for i, w in enumerate(workers_list):
+            with wcols[i]:
+                tool_info = tools_status.get(w["key"], {})
+                is_running = tool_info.get("status") == "running" and daemon_running
+                dot = "🟢" if is_running else "⚪"
+                restarts = tool_info.get("restarts", 0)
+                st.markdown(f"{dot} **{w['icon']} {w['name']}**")
+                if restarts > 0:
+                    st.warning(f"Restarted {restarts}x")
+                state_path = data_dir / w["state_file"]
+                if state_path.exists():
+                    try:
+                        state_data = json.loads(state_path.read_text())
+                        stats = w["stats"](state_data)
+                        for label, value in stats.items():
+                            st.caption(f"{label}: **{value}**")
+                    except Exception:
+                        st.caption("Can't read state")
+    except Exception as e:
+        st.error(f"Worker status error: {e}")
+
+    st.markdown("---")
+
+    # Vault Stats
+    st.markdown("### 📁 Records by Type")
+    stats = get_vault_stats()
+    if stats:
+        import pandas as pd
+        df = pd.DataFrame(list(stats.items()), columns=["Type", "Count"]).sort_values("Count", ascending=False)
+        st.bar_chart(df.set_index("Type"))
+
+    # Recent vault activity
+    st.markdown("### 🕐 Recent Vault Activity")
+    recent_files = []
+    for rt in ["note", "task", "decision", "conversation"]:
+        d = VAULT_PATH / rt
+        if d.exists():
+            for f in d.glob("*.md"):
+                try:
+                    recent_files.append({"name": f"{rt}/{f.name}", "modified": datetime.fromtimestamp(f.stat().st_mtime)})
+                except Exception:
+                    continue
+    recent_files.sort(key=lambda x: x["modified"], reverse=True)
+    for rf in recent_files[:10]:
+        age = _fmt_time(rf["modified"].astimezone(timezone.utc).isoformat())
+        st.caption(f"📄 `{rf['name']}` — {age}")
+
+
 # ── Sidebar ─────────────────────────────────────────────────
 
 authenticator.logout("Logout", "sidebar")
@@ -348,12 +820,166 @@ else:
 
 st.sidebar.markdown("---")
 
-# ── Header ──────────────────────────────────────────────────
-st.title("Alfred Interactive Dashboard 🤖")
-if st.session_state.chat_title:
-    st.caption(f"💬 {st.session_state.chat_title}")
-else:
-    st.markdown("Chat with your vault. Alfred can **search**, **edit**, **create**, and **delete** records — with your approval.")
+# ── Worker Status Dashboard ─────────────────────────────────
+st.sidebar.subheader("⚙️ Workers")
+
+def _load_worker_dashboard():
+    """Load worker status from workers.json and individual state files."""
+    data_dir = ALFRED_DIR / "data"
+    workers_file = data_dir / "workers.json"
+
+    # Check if daemon is running
+    daemon_info = {}
+    if workers_file.exists():
+        try:
+            daemon_info = json.loads(workers_file.read_text())
+        except Exception:
+            pass
+
+    daemon_pid = daemon_info.get("pid")
+    daemon_running = False
+    if daemon_pid:
+        try:
+            os.kill(daemon_pid, 0)  # Signal 0 = check if alive
+            daemon_running = True
+        except (ProcessLookupError, PermissionError):
+            daemon_running = False
+
+    tools_status = daemon_info.get("tools", {})
+
+    # Worker definitions: name, state file, stat extractors
+    workers = [
+        {
+            "name": "Curator",
+            "icon": "📥",
+            "state_file": "curator_state.json",
+            "key": "curator",
+            "stats": lambda d: {
+                "Processed": len(d.get("processed", {})),
+                "Last Run": _fmt_time(d.get("last_run")),
+            }
+        },
+        {
+            "name": "Janitor",
+            "icon": "🧹",
+            "state_file": "janitor_state.json",
+            "key": "janitor",
+            "stats": lambda d: {
+                "Files": len(d.get("files", {})),
+                "Sweeps": len(d.get("sweeps", {})),
+                "Last Sweep": _fmt_time(_last_sweep_time(d)),
+            }
+        },
+        {
+            "name": "Distiller",
+            "icon": "🧪",
+            "state_file": "distiller_state.json",
+            "key": "distiller",
+            "stats": lambda d: {
+                "Sources": len(d.get("files", {})),
+                "Runs": len(d.get("runs", {})),
+                "Last Run": _fmt_time(_last_distiller_run(d)),
+            }
+        },
+        {
+            "name": "Surveyor",
+            "icon": "🔭",
+            "state_file": "surveyor_state.json",
+            "key": "surveyor",
+            "stats": lambda d: {
+                "Files": len(d.get("files", {})),
+                "Clusters": len(d.get("clusters", {})),
+                "Last Run": _fmt_time(d.get("last_run")),
+            }
+        },
+    ]
+
+    return daemon_running, tools_status, workers, data_dir
+
+
+def _fmt_time(ts_str):
+    """Format an ISO timestamp to a short relative/absolute label."""
+    if not ts_str:
+        return "Never"
+    try:
+        ts = datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+        now = datetime.now(timezone.utc)
+        delta = now - ts
+        if delta.total_seconds() < 60:
+            return "Just now"
+        elif delta.total_seconds() < 3600:
+            return f"{int(delta.total_seconds() / 60)}m ago"
+        elif delta.total_seconds() < 86400:
+            return f"{int(delta.total_seconds() / 3600)}h ago"
+        else:
+            return f"{int(delta.days)}d ago"
+    except Exception:
+        return ts_str[:10] if ts_str else "?"
+
+
+def _last_sweep_time(d):
+    """Get the timestamp of the last janitor sweep."""
+    sweeps = d.get("sweeps", {})
+    if isinstance(sweeps, dict) and sweeps:
+        last_key = list(sweeps.keys())[-1]
+        return sweeps[last_key].get("timestamp")
+    return None
+
+
+def _last_distiller_run(d):
+    """Get the timestamp of the last distiller run."""
+    runs = d.get("runs", {})
+    if isinstance(runs, dict) and runs:
+        last_key = list(runs.keys())[-1]
+        return runs[last_key].get("timestamp")
+    return None
+
+
+try:
+    daemon_running, tools_status, workers, data_dir = _load_worker_dashboard()
+
+    # Daemon status indicator
+    if daemon_running:
+        st.sidebar.markdown("🟢 **Daemon Running**")
+    else:
+        st.sidebar.markdown("🔴 **Daemon Stopped**")
+
+    for w in workers:
+        tool_info = tools_status.get(w["key"], {})
+        is_running = tool_info.get("status") == "running" and daemon_running
+        status_dot = "🟢" if is_running else "⚪"
+        restarts = tool_info.get("restarts", 0)
+        restart_badge = f" ⚠️{restarts}" if restarts > 0 else ""
+
+        # Load state file for stats
+        state_path = data_dir / w["state_file"]
+        stats = {}
+        if state_path.exists():
+            try:
+                state_data = json.loads(state_path.read_text())
+                stats = w["stats"](state_data)
+            except Exception:
+                stats = {"Error": "Can't read state"}
+
+        # Render compact worker card
+        with st.sidebar.expander(f"{status_dot} {w['icon']} {w['name']}{restart_badge}", expanded=False):
+            for label, value in stats.items():
+                st.caption(f"**{label}:** {value}")
+
+except Exception as e:
+    st.sidebar.caption(f"Worker status unavailable: {e}")
+
+st.sidebar.markdown("---")
+
+# ── Header & Tabs ───────────────────────────────────────────
+st.title("Alfred Dashboard 🤖")
+
+tab_home, tab_chat, tab_analytics = st.tabs(["🏠 Home", "💬 Chat", "📊 Analytics"])
+
+# Track which tab was clicked (for quick action redirects)
+if st.session_state.get("active_tab") == "💬 Chat":
+    # Reset after redirect
+    st.session_state.active_tab = "🏠 Home"
 
 # ── Tool definitions for OpenRouter ─────────────────────────
 TOOLS = [
@@ -608,11 +1234,13 @@ TOOLS = [
     },
 ]
 
-SYSTEM_PROMPT = """You are Alfred, a smart and friendly AI assistant managing Rami Khouri's personal knowledge vault and connected services.
+SYSTEM_PROMPT = """You are Alfred, a powerful and proactive AI personal assistant for Rami Khouri.
+
+You go beyond simple chat — you anticipate needs, connect the dots across different data sources, and take initiative.
 
 You have THREE main capabilities:
 
-1. **Vault Operations** — The vault contains structured Markdown files (person, org, project, task, note, conversation, decision, etc.).
+1. **Vault Operations** — The vault contains 5,000+ structured Markdown files (person, org, project, task, note, conversation, decision, assumption, constraint, contradiction, synthesis, etc.).
    Tools: vault_search, vault_read, vault_list, vault_edit, vault_create, vault_delete
 
 2. **Google Workspace** — You can access Rami's Gmail, Google Calendar, and Google Drive.
@@ -622,16 +1250,19 @@ You have THREE main capabilities:
    Tools: manus_task (creates a task, requires approval), manus_status (check results), manus_list (list tasks)
 
 Guidelines:
-- Be conversational, helpful, and concise. Don't be overly formal.
+- Be conversational, helpful, and concise but thorough. You are a serious assistant, not a toy.
+- When asked "what should I focus on?", use calendar_events + vault_list (tasks) + gmail_search to give a prioritized briefing.
+- When discussing a person, proactively search for their vault record AND recent emails for full context.
 - When the user asks about emails, use gmail_search. For calendar questions, use calendar_events.
 - When the user asks a vault question, use vault_search or vault_read.
 - For complex research or analysis that goes beyond the vault, use manus_task to delegate to Manus.
-- If you need to ask the user questions to gather information (e.g., to build a profile), ask short, direct questions. **Cluster your questions** into groups of 3-5 at a time rather than asking one by one.
-- Read tools execute immediately. Write tools (vault_edit, vault_create, vault_delete, gmail_send, calendar_create, manus_task) require user approval. You can call MULTIPLE write tools in a single response, and they will be queued for the user to approve all at once.
+- If you need to ask the user questions to gather information, ask short, direct questions. **Cluster your questions** into groups of 3-5 at a time rather than asking one by one.
+- Read tools execute immediately. Write tools (vault_edit, vault_create, vault_delete, gmail_send, calendar_create, manus_task) require user approval.
 - Summarize information naturally — don't dump raw data.
 - If you don't find relevant information, say so honestly.
 - You have memory of past conversations — reference previous chats naturally when relevant.
-- The user's timezone is Asia/Jerusalem (UTC+2)."""
+- The user's timezone is Asia/Jerusalem (UTC+3).
+- Today's date is """ + datetime.now().strftime("%A, %B %d, %Y") + """."""
 
 QA_MODE_PROMPT = """
 CURRENT MODE: KNOWLEDGE BASE REFINEMENT Q&A
@@ -852,104 +1483,116 @@ def call_llm(messages, tools=None):
         print(f"Error parsing API response: {e}\nResponse text: {resp.text[:500]}")
         return None, f"Parsing error: {e}"
 
-# ── Display chat history ────────────────────────────────────
+# ── Tab: Home (Daily Briefing) ──────────────────────────────
+with tab_home:
+    render_briefing()
 
-for msg in st.session_state.messages:
-    if msg["role"] in ("user", "assistant"):
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
+# ── Tab: Analytics ──────────────────────────────────────────
+with tab_analytics:
+    render_analytics()
 
-# ── Handle pending write action ─────────────────────────────
+# ── Tab: Chat ───────────────────────────────────────────────
+with tab_chat:
+    if st.session_state.chat_title:
+        st.caption(f"💬 {st.session_state.chat_title}")
+    else:
+        st.markdown("Chat with your vault. Alfred can **search**, **edit**, **create**, and **delete** records — with your approval.")
 
-if st.session_state.get("pending_actions"):
-    count = len(st.session_state.pending_actions)
-    es = "s" if count > 1 else ""
-    st.warning(f"⚡ **Alfred wants to perform {count} action{es}:**")
+    for msg in st.session_state.messages:
+        if msg["role"] in ("user", "assistant"):
+            with st.chat_message(msg["role"]):
+                st.markdown(msg["content"])
 
-    for p in st.session_state.pending_actions:
-        name = p["name"]
-        args = p["args"]
-        desc = describe_action(name, args).replace('\n', '\n  ')
-        st.markdown(f"- {desc}")
+    # ── Handle pending write action ─────────────────────────────
 
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("✅ Approve All", use_container_width=True, type="primary"):
-            # First, append the assistant message that spawned these tools
-            if st.session_state.pending_assistant_msg:
-                st.session_state.messages.append(st.session_state.pending_assistant_msg)
+    if st.session_state.get("pending_actions"):
+        count = len(st.session_state.pending_actions)
+        es = "s" if count > 1 else ""
+        st.warning(f"⚡ **Alfred wants to perform {count} action{es}:**")
 
-            for p in st.session_state.pending_actions:
-                name = p["name"]
-                args = p["args"]
-                tool_call_id = p["tool_call_id"]
+        for p in st.session_state.pending_actions:
+            name = p["name"]
+            args = p["args"]
+            desc = describe_action(name, args).replace('\n', '\n  ')
+            st.markdown(f"- {desc}")
 
-                # Execute based on tool type
-                if name in {"vault_edit", "vault_create", "vault_delete"}:
-                    cmd_args, stdin = build_vault_cmd_args(name, args)
-                    ok, output = run_vault_cmd(cmd_args, stdin)
-                    if ok:
-                        result_msg = f"Done! `{name}` succeeded.\n```\n{output}\n```"
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("✅ Approve All", use_container_width=True, type="primary"):
+                # First, append the assistant message that spawned these tools
+                if st.session_state.pending_assistant_msg:
+                    st.session_state.messages.append(st.session_state.pending_assistant_msg)
+
+                for p in st.session_state.pending_actions:
+                    name = p["name"]
+                    args = p["args"]
+                    tool_call_id = p["tool_call_id"]
+
+                    # Execute based on tool type
+                    if name in {"vault_edit", "vault_create", "vault_delete"}:
+                        cmd_args, stdin = build_vault_cmd_args(name, args)
+                        ok, output = run_vault_cmd(cmd_args, stdin)
+                        if ok:
+                            result_msg = f"Done! `{name}` succeeded.\n```\n{output}\n```"
+                        else:
+                            result_msg = f"Failed to execute `{name}`: {output}"
+                    elif name == "gmail_send":
+                        try:
+                            output = gc.gmail_send(args["to"], args["subject"], args["body"])
+                            result_msg = output
+                        except Exception as e:
+                            result_msg = f"Failed to send email: {e}"
+                    elif name == "calendar_create":
+                        try:
+                            output = gc.calendar_create_event(args["summary"], args["start"], args["end"], args.get("description", ""))
+                            result_msg = output
+                        except Exception as e:
+                            result_msg = f"Failed to create event: {e}"
+                    elif name == "manus_task":
+                        try:
+                            task = manus.create_task(args["prompt"])
+                            task_id = task.get("task_id", "unknown")
+                            result_msg = f"Manus task created! ID: `{task_id}` (status: {task.get('status', 'queued')})\n\nThe task is running in the background. Ask me to check the status with: *\"Check Manus task {task_id}\"*"
+                        except Exception as e:
+                            result_msg = f"Failed to create Manus task: {e}"
                     else:
-                        result_msg = f"Failed to execute `{name}`: {output}"
-                elif name == "gmail_send":
-                    try:
-                        output = gc.gmail_send(args["to"], args["subject"], args["body"])
-                        result_msg = output
-                    except Exception as e:
-                        result_msg = f"Failed to send email: {e}"
-                elif name == "calendar_create":
-                    try:
-                        output = gc.calendar_create_event(args["summary"], args["start"], args["end"], args.get("description", ""))
-                        result_msg = output
-                    except Exception as e:
-                        result_msg = f"Failed to create event: {e}"
-                elif name == "manus_task":
-                    try:
-                        task = manus.create_task(args["prompt"])
-                        task_id = task.get("task_id", "unknown")
-                        result_msg = f"Manus task created! ID: `{task_id}` (status: {task.get('status', 'queued')})\n\nThe task is running in the background. Ask me to check the status with: *\"Check Manus task {task_id}\"*"
-                    except Exception as e:
-                        result_msg = f"Failed to create Manus task: {e}"
-                else:
-                    result_msg = f"Unknown write tool: {name}"
+                        result_msg = f"Unknown write tool: {name}"
 
-                # Append the proper tool role message
-                st.session_state.messages.append({
-                    "role": "tool",
-                    "tool_call_id": tool_call_id,
-                    "content": result_msg
-                })
+                    # Append the proper tool role message
+                    st.session_state.messages.append({
+                        "role": "tool",
+                        "tool_call_id": tool_call_id,
+                        "content": result_msg
+                    })
 
-            st.session_state.pending_actions = []
-            st.session_state.pending_assistant_msg = None
-            st.session_state.resume_llm = True
-            save_conversation()
-            st.rerun()
-    with col2:
-        if st.button("❌ Reject All", use_container_width=True):
-            if st.session_state.pending_assistant_msg:
-                st.session_state.messages.append(st.session_state.pending_assistant_msg)
+                st.session_state.pending_actions = []
+                st.session_state.pending_assistant_msg = None
+                st.session_state.resume_llm = True
+                save_conversation()
+                st.rerun()
+        with col2:
+            if st.button("❌ Reject All", use_container_width=True):
+                if st.session_state.pending_assistant_msg:
+                    st.session_state.messages.append(st.session_state.pending_assistant_msg)
 
-            for p in st.session_state.pending_actions:
-                st.session_state.messages.append({
-                    "role": "tool",
-                    "tool_call_id": p["tool_call_id"],
-                    "content": "User rejected this action."
-                })
-            st.session_state.pending_actions = []
-            st.session_state.pending_assistant_msg = None
-            st.session_state.resume_llm = True
-            save_conversation()
-            st.rerun()
+                for p in st.session_state.pending_actions:
+                    st.session_state.messages.append({
+                        "role": "tool",
+                        "tool_call_id": p["tool_call_id"],
+                        "content": "User rejected this action."
+                    })
+                st.session_state.pending_actions = []
+                st.session_state.pending_assistant_msg = None
+                st.session_state.resume_llm = True
+                save_conversation()
+                st.rerun()
 
-# ── Chat input ──────────────────────────────────────────────
+# ── Chat input (outside tabs for persistence) ──────────────
 
 prompt = st.chat_input("Ask Alfred a question...", key="chat_input")
 should_run_llm = False
 
 if prompt:
-    st.chat_message("user").markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
     should_run_llm = True
 elif st.session_state.get("resume_llm"):
@@ -964,7 +1607,8 @@ if should_run_llm:
     with st.spinner("Alfred is thinking..."):
         # Build system prompt with memory context
         memory_ctx = get_memory_context() if not st.session_state.chat_title else ""
-        full_system = SYSTEM_PROMPT + memory_ctx
+        contextual_ctx = get_contextual_briefing_text()
+        full_system = SYSTEM_PROMPT + contextual_ctx + memory_ctx
         
         if st.session_state.get("qa_mode"):
             full_system += "\n\n" + QA_MODE_PROMPT
@@ -1000,7 +1644,6 @@ if should_run_llm:
                 if text:
                     with st.chat_message("assistant"):
                         st.markdown(text)
-                    # We must append a copy without tool_calls to the visible messages array
                     visible_msg = {"role": "assistant", "content": text}
                     st.session_state.messages.append(visible_msg)
 
@@ -1035,15 +1678,13 @@ if should_run_llm:
                         })
 
                 if has_write_tools:
-                        # We already rendered the text above if it existed
-                        # The pending assistant msg should just hold the tool calls for the retry loop
-                        reply_copy = dict(reply)
-                        reply_copy["content"] = ""
-                        st.session_state.pending_assistant_msg = reply_copy
-                        
-                        st.session_state.pending_actions = pending_list
-                        save_conversation()
-                        st.rerun()
+                    reply_copy = dict(reply)
+                    reply_copy["content"] = ""
+                    st.session_state.pending_assistant_msg = reply_copy
+                    
+                    st.session_state.pending_actions = pending_list
+                    save_conversation()
+                    st.rerun()
 
                 # After processing read tools, loop back so LLM can use the results
                 continue
@@ -1066,4 +1707,5 @@ if should_run_llm:
                 st.markdown(err_msg)
             st.session_state.messages.append({"role": "assistant", "content": err_msg})
             
-        st.rerun()
+    st.rerun()
+
