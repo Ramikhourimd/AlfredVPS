@@ -7,6 +7,7 @@ import subprocess
 import requests
 import google_connector as gc
 import manus_connector as manus
+from extensions import SkillManager, MCPClient, PluginManager, render_extensions_tab, get_mcp_client
 import re
 import glob
 from datetime import datetime, timezone, timedelta
@@ -974,7 +975,7 @@ st.sidebar.markdown("---")
 # ── Header & Tabs ───────────────────────────────────────────
 st.title("Alfred Dashboard 🤖")
 
-tab_home, tab_chat, tab_analytics = st.tabs(["🏠 Home", "💬 Chat", "📊 Analytics"])
+tab_home, tab_chat, tab_analytics, tab_extensions = st.tabs(["🏠 Home", "💬 Chat", "📊 Analytics", "🧩 Extensions"])
 
 # Track which tab was clicked (for quick action redirects)
 if st.session_state.get("active_tab") == "💬 Chat":
@@ -1976,6 +1977,10 @@ with tab_home:
 with tab_analytics:
     render_analytics()
 
+# ── Tab: Extensions ─────────────────────────────────────────
+with tab_extensions:
+    render_extensions_tab()
+
 # ── Tab: Chat ───────────────────────────────────────────────
 with tab_chat:
     if st.session_state.chat_title:
@@ -1984,7 +1989,7 @@ with tab_chat:
         st.markdown("Chat with your vault. Alfred can **search**, **edit**, **create**, and **delete** records — with your approval.")
 
     for msg in st.session_state.messages:
-        if msg["role"] in ("user", "assistant"):
+        if msg["role"] in ("user", "assistant") and msg.get("content"):
             with st.chat_message(msg["role"]):
                 st.markdown(msg["content"])
 
@@ -2101,6 +2106,10 @@ should_run_llm = False
 
 if prompt:
     st.session_state.messages.append({"role": "user", "content": prompt})
+    # Render user message immediately so it appears visually
+    with tab_chat:
+        with st.chat_message("user"):
+            st.markdown(prompt)
     should_run_llm = True
 elif st.session_state.get("resume_llm"):
     should_run_llm = True
@@ -2120,6 +2129,11 @@ if should_run_llm:
         if st.session_state.get("qa_mode"):
             full_system += "\n\n" + QA_MODE_PROMPT
 
+        # Inject active skills into system prompt
+        skills_prompt = SkillManager.get_active_skills_prompt()
+        if skills_prompt:
+            full_system += skills_prompt
+
         # Build conversation for the LLM (system + last 15 messages to ensure tool context isn't lost)
         llm_msgs = [{"role": "system", "content": full_system}]
         for m in st.session_state.messages[-15:]:
@@ -2130,11 +2144,16 @@ if should_run_llm:
                 msg_obj["tool_call_id"] = m["tool_call_id"]
             llm_msgs.append(msg_obj)
 
+        # Merge MCP tools into the tools list
+        mcp_client = get_mcp_client()
+        mcp_tools = mcp_client.get_mcp_tools()
+        all_tools = TOOLS + mcp_tools
+
         # Agentic loop: let the LLM call tools iteratively
         MAX_ROUNDS = 15
         for round_num in range(MAX_ROUNDS):
             print(f"Calling LLM, round {round_num}")
-            reply, err = call_llm(llm_msgs, tools=TOOLS)
+            reply, err = call_llm(llm_msgs, tools=all_tools)
             if err:
                 print(f"LLM Loop broken due to error: {err}")
                 st.error(err)
@@ -2164,6 +2183,14 @@ if should_run_llm:
                     if fn_name in READ_TOOLS:
                         # Execute read tools immediately
                         result = exec_tool(fn_name, fn_args)
+                        llm_msgs.append({
+                            "role": "tool",
+                            "tool_call_id": tc["id"],
+                            "content": result
+                        })
+                    elif fn_name.startswith("mcp_"):
+                        # Execute MCP tools immediately (treated as read)
+                        result = mcp_client.exec_tool(fn_name, fn_args)
                         llm_msgs.append({
                             "role": "tool",
                             "tool_call_id": tc["id"],
