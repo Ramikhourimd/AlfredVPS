@@ -1234,6 +1234,70 @@ TOOLS = [
     },
 ]
 
+# ── Assistant-specific tools (task lifecycle + meeting prep) ─
+ASSISTANT_TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "task_complete",
+            "description": "Mark a vault task as completed. Sets status to 'done' and adds a completion timestamp. REQUIRES USER APPROVAL.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "task_name": {"type": "string", "description": "The task file name (without .md extension), e.g. 'Fix On-Call Examination Link to Show Correct Form'"}
+                },
+                "required": ["task_name"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "task_snooze",
+            "description": "Snooze a task by updating its due date. Sets status to 'snoozed' with a new due date. REQUIRES USER APPROVAL.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "task_name": {"type": "string", "description": "The task file name (without .md extension)"},
+                    "snooze_until": {"type": "string", "description": "New due date in YYYY-MM-DD format, e.g. '2026-04-07'"}
+                },
+                "required": ["task_name", "snooze_until"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "task_list_active",
+            "description": "List all active/todo tasks from the vault, sorted by priority and due date. Returns structured task data.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "priority_filter": {"type": "string", "description": "Filter by priority: critical, high, medium, low", "enum": ["critical", "high", "medium", "low"]},
+                    "limit": {"type": "integer", "description": "Max tasks to return (default 15)", "default": 15}
+                }
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "meeting_prep",
+            "description": "Prepare a comprehensive briefing for an upcoming meeting with a person. Searches the vault for their profile, recent emails, calendar events, and related notes/decisions. Returns a structured dossier.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "person_name": {"type": "string", "description": "Name of the person you're meeting with"},
+                    "meeting_topic": {"type": "string", "description": "Optional topic or context for the meeting", "default": ""}
+                },
+                "required": ["person_name"]
+            }
+        }
+    },
+]
+
+TOOLS = TOOLS + ASSISTANT_TOOLS
+
 SYSTEM_PROMPT = """You are Alfred, a powerful and proactive AI personal assistant for Rami Khouri.
 
 You go beyond simple chat — you anticipate needs, connect the dots across different data sources, and take initiative.
@@ -1262,7 +1326,14 @@ Guidelines:
 - If you don't find relevant information, say so honestly.
 - You have memory of past conversations — reference previous chats naturally when relevant.
 - The user's timezone is Asia/Jerusalem (UTC+3).
-- Today's date is """ + datetime.now().strftime("%A, %B %d, %Y") + """."""
+- Today's date is """ + datetime.now().strftime("%A, %B %d, %Y") + """.
+
+**Task Lifecycle:**
+- When the user says a task is done (e.g., "mark X as done", "completed X"), use `task_complete`.
+- When the user wants to postpone a task (e.g., "snooze X", "postpone X to next week"), use `task_snooze` with a concrete date.
+- When the user asks "what tasks do I have?" or "what's on my plate?", use `task_list_active`.
+- When the user has an upcoming meeting with someone, proactively offer to run `meeting_prep`.
+- After completing a task, suggest the next highest-priority task to focus on."""
 
 QA_MODE_PROMPT = """
 CURRENT MODE: KNOWLEDGE BASE REFINEMENT Q&A
@@ -1279,8 +1350,8 @@ Rules for this mode:
 8. Once you get an answer, queue the necessary write operations immediately without asking, then proceed to your next question.
 """
 
-READ_TOOLS = {"vault_search", "vault_read", "vault_list", "gmail_search", "gmail_read", "calendar_events", "drive_search", "drive_read", "manus_status", "manus_list"}
-WRITE_TOOLS = {"vault_edit", "vault_create", "vault_delete", "gmail_send", "calendar_create", "manus_task"}
+READ_TOOLS = {"vault_search", "vault_read", "vault_list", "gmail_search", "gmail_read", "calendar_events", "drive_search", "drive_read", "manus_status", "manus_list", "task_list_active", "meeting_prep"}
+WRITE_TOOLS = {"vault_edit", "vault_create", "vault_delete", "gmail_send", "calendar_create", "manus_task", "task_complete", "task_snooze"}
 
 # ── Tool execution ──────────────────────────────────────────
 
@@ -1405,6 +1476,100 @@ def exec_tool(name, args):
         except Exception as e:
             return f"Manus list error: {e}"
 
+    # ── Task Lifecycle tools ──
+    elif name == "task_list_active":
+        try:
+            tasks = get_active_tasks()
+            pf = args.get("priority_filter")
+            if pf:
+                tasks = [t for t in tasks if t["priority"].lower() == pf.lower()]
+            limit = args.get("limit", 15)
+            tasks = tasks[:limit]
+            if not tasks:
+                return "No active tasks found" + (f" with priority '{pf}'" if pf else "") + "."
+            lines = [f"Found {len(tasks)} active tasks:"]
+            for i, t in enumerate(tasks, 1):
+                p = f" [{t['priority']}]" if t['priority'] else ""
+                d = f" (due: {t['deadline']})" if t['deadline'] else ""
+                lines.append(f"{i}. {t['name']}{p}{d} — `{t['path']}`")
+            return "\n".join(lines)
+        except Exception as e:
+            return f"Task list error: {e}"
+
+    elif name == "meeting_prep":
+        try:
+            person = args["person_name"]
+            topic = args.get("meeting_topic", "")
+            dossier_parts = [f"# Meeting Prep Dossier: {person}"]
+            if topic:
+                dossier_parts.append(f"**Meeting Topic:** {topic}\n")
+
+            # 1. Search vault for person record
+            person_dir = VAULT_PATH / "person"
+            person_file = None
+            if person_dir.exists():
+                for f in person_dir.glob("*.md"):
+                    if person.lower().replace(" ", "-") in f.stem.lower().replace(" ", "-"):
+                        person_file = f
+                        break
+                    if person.lower() in f.stem.lower():
+                        person_file = f
+                        break
+
+            if person_file:
+                content = person_file.read_text("utf-8", errors="replace")[:3000]
+                dossier_parts.append(f"## 👤 Vault Profile\n```\n{content}\n```")
+            else:
+                dossier_parts.append(f"## 👤 Vault Profile\n*No person record found for '{person}'. Consider creating one.*")
+
+            # 2. Search recent emails
+            try:
+                emails = gc.gmail_search(f"from:{person} OR to:{person}", max_results=5)
+                if emails:
+                    dossier_parts.append(f"## 📧 Recent Emails ({len(emails)} found)")
+                    for em in emails[:5]:
+                        sender = em.get("from", "")
+                        subj = em.get("subject", "(no subject)")
+                        snippet = em.get("snippet", "")[:120]
+                        date = em.get("date", "")
+                        dossier_parts.append(f"- **{subj}** — {sender} ({date})\n  _{snippet}_")
+            except Exception:
+                dossier_parts.append("## 📧 Recent Emails\n*Gmail unavailable*")
+
+            # 3. Search vault for related notes, decisions, tasks
+            if milvus:
+                try:
+                    search_query = f"{person} {topic}" if topic else person
+                    vec = get_embedding(search_query)
+                    results = milvus.search(collection_name="vault_embeddings", data=[vec], limit=5,
+                                            output_fields=["record_type", "name"])
+                    if results[0]:
+                        dossier_parts.append(f"## 🔗 Related Vault Records")
+                        for res in results[0]:
+                            nm = res["entity"].get("name", "")
+                            tp = res["entity"].get("record_type", "?")
+                            rel_path = res["id"]
+                            dossier_parts.append(f"- [{tp}] {nm} — `{rel_path}`")
+                except Exception:
+                    pass
+
+            # 4. Recent calendar events with this person
+            try:
+                events = gc.calendar_list_events(days_ahead=14, max_results=20)
+                related = [e for e in events if person.lower() in json.dumps(e).lower()]
+                if related:
+                    dossier_parts.append(f"## 📅 Upcoming Calendar Events")
+                    for e in related[:5]:
+                        start = e.get("start", "")
+                        summ = e.get("summary", "No title")
+                        dossier_parts.append(f"- {start[:16]} — {summ}")
+            except Exception:
+                pass
+
+            return "\n\n".join(dossier_parts)
+        except Exception as e:
+            return f"Meeting prep error: {e}"
+
     return "Unknown tool."
 
 def build_vault_cmd_args(name, args):
@@ -1457,6 +1622,10 @@ def describe_action(name, args):
         return f"📅 **Create event** \"{args['summary']}\"\n  Start: `{args['start']}`\n  End: `{args['end']}`"
     elif name == "manus_task":
         return f"🤖 **Delegate to Manus AI**\n  Task: _{args['prompt'][:200]}_"
+    elif name == "task_complete":
+        return f"✅ **Mark task as done:** `{args['task_name']}`"
+    elif name == "task_snooze":
+        return f"⏰ **Snooze task:** `{args['task_name']}` until `{args['snooze_until']}`"
     return f"Unknown action: {name}"
 
 # ── OpenRouter API call ─────────────────────────────────────
@@ -1555,6 +1724,24 @@ with tab_chat:
                             result_msg = f"Manus task created! ID: `{task_id}` (status: {task.get('status', 'queued')})\n\nThe task is running in the background. Ask me to check the status with: *\"Check Manus task {task_id}\"*"
                         except Exception as e:
                             result_msg = f"Failed to create Manus task: {e}"
+                    elif name == "task_complete":
+                        task_path = f"task/{args['task_name']}.md"
+                        completed_date = datetime.now().strftime("%Y-%m-%d")
+                        cmd_args = ["edit", task_path, "--set", f"status=done", "--set", f"completed={completed_date}"]
+                        ok, output = run_vault_cmd(cmd_args)
+                        if ok:
+                            result_msg = f"\u2705 Task '{args['task_name']}' marked as done! (completed: {completed_date})"
+                        else:
+                            result_msg = f"Failed to complete task: {output}"
+                    elif name == "task_snooze":
+                        task_path = f"task/{args['task_name']}.md"
+                        snooze_date = args["snooze_until"]
+                        cmd_args = ["edit", task_path, "--set", f"status=snoozed", "--set", f"due={snooze_date}"]
+                        ok, output = run_vault_cmd(cmd_args)
+                        if ok:
+                            result_msg = f"\u23f0 Task '{args['task_name']}' snoozed until {snooze_date}"
+                        else:
+                            result_msg = f"Failed to snooze task: {output}"
                     else:
                         result_msg = f"Unknown write tool: {name}"
 
