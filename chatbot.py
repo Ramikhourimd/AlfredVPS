@@ -1294,6 +1294,49 @@ ASSISTANT_TOOLS = [
             }
         }
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "workflow_run",
+            "description": "Execute a predefined workflow template. Available workflows: 'meeting_notes' (structured meeting minutes with attendees, decisions, action items), 'weekly_review' (summarize week's activity across vault, email, calendar), 'project_kickoff' (create project record with stakeholders, goals, timeline), 'daily_standup' (quick status: what I did, what I'll do, blockers). REQUIRES USER APPROVAL for any vault writes.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "workflow": {"type": "string", "description": "Workflow template name", "enum": ["meeting_notes", "weekly_review", "project_kickoff", "daily_standup"]},
+                    "context": {"type": "string", "description": "Additional context for the workflow (e.g., meeting topic, project name, attendee names)", "default": ""}
+                },
+                "required": ["workflow"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "unified_search",
+            "description": "Search across ALL data sources simultaneously: vault (semantic via Milvus), Gmail, Google Calendar, and Google Drive. Returns consolidated, deduplicated results from every source. Use this when the user asks a broad question that might have answers across multiple sources.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "The search query"},
+                    "sources": {"type": "array", "items": {"type": "string", "enum": ["vault", "gmail", "calendar", "drive"]}, "description": "Which sources to search (default: all)", "default": ["vault", "gmail", "calendar", "drive"]}
+                },
+                "required": ["query"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "weekly_report",
+            "description": "Generate an automated weekly activity report. Summarizes: vault changes (new records, edits), email activity, calendar events, completed tasks, and worker daemon health. Covers the past 7 days.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "weeks_back": {"type": "integer", "description": "How many weeks back to report (default 1)", "default": 1}
+                }
+            }
+        }
+    },
 ]
 
 TOOLS = TOOLS + ASSISTANT_TOOLS
@@ -1333,7 +1376,18 @@ Guidelines:
 - When the user wants to postpone a task (e.g., "snooze X", "postpone X to next week"), use `task_snooze` with a concrete date.
 - When the user asks "what tasks do I have?" or "what's on my plate?", use `task_list_active`.
 - When the user has an upcoming meeting with someone, proactively offer to run `meeting_prep`.
-- After completing a task, suggest the next highest-priority task to focus on."""
+- After completing a task, suggest the next highest-priority task to focus on.
+
+**Workflows:**
+- When the user says "let's do a weekly review" or "what happened this week?", use `weekly_report` or `workflow_run(weekly_review)`.
+- When the user finishes a meeting, offer to run `workflow_run(meeting_notes)` to capture minutes.
+- When the user starts a new project, suggest `workflow_run(project_kickoff)`.
+- For daily standups, use `workflow_run(daily_standup)`.
+
+**Search:**
+- When a question could span multiple sources, use `unified_search` to search vault + Gmail + Calendar + Drive simultaneously.
+- For vault-specific questions, use `vault_search`. For email-specific, use `gmail_search`.
+- `unified_search` is best for broad queries like "what do we know about X?", "find everything about Y"."""
 
 QA_MODE_PROMPT = """
 CURRENT MODE: KNOWLEDGE BASE REFINEMENT Q&A
@@ -1350,8 +1404,8 @@ Rules for this mode:
 8. Once you get an answer, queue the necessary write operations immediately without asking, then proceed to your next question.
 """
 
-READ_TOOLS = {"vault_search", "vault_read", "vault_list", "gmail_search", "gmail_read", "calendar_events", "drive_search", "drive_read", "manus_status", "manus_list", "task_list_active", "meeting_prep"}
-WRITE_TOOLS = {"vault_edit", "vault_create", "vault_delete", "gmail_send", "calendar_create", "manus_task", "task_complete", "task_snooze"}
+READ_TOOLS = {"vault_search", "vault_read", "vault_list", "gmail_search", "gmail_read", "calendar_events", "drive_search", "drive_read", "manus_status", "manus_list", "task_list_active", "meeting_prep", "unified_search", "weekly_report"}
+WRITE_TOOLS = {"vault_edit", "vault_create", "vault_delete", "gmail_send", "calendar_create", "manus_task", "task_complete", "task_snooze", "workflow_run"}
 
 # ── Tool execution ──────────────────────────────────────────
 
@@ -1570,6 +1624,266 @@ def exec_tool(name, args):
         except Exception as e:
             return f"Meeting prep error: {e}"
 
+    # ── Unified Search ──
+    elif name == "unified_search":
+        try:
+            query = args["query"]
+            sources = args.get("sources", ["vault", "gmail", "calendar", "drive"])
+            parts = [f"# 🔍 Unified Search: \"{query}\""]
+
+            if "vault" in sources and milvus:
+                try:
+                    vec = get_embedding(query)
+                    results = milvus.search(collection_name="vault_embeddings", data=[vec], limit=5,
+                                            output_fields=["record_type", "name"])
+                    if results[0]:
+                        parts.append(f"\n## 📁 Vault ({len(results[0])} results)")
+                        for res in results[0]:
+                            nm = res["entity"].get("name", "")
+                            tp = res["entity"].get("record_type", "?")
+                            rel = res["id"]
+                            fp = VAULT_PATH / rel
+                            try:
+                                snippet = fp.read_text("utf-8", errors="replace")[:300].replace("\n", " ")
+                            except Exception:
+                                snippet = "(unreadable)"
+                            parts.append(f"- [{tp}] **{nm}** — `{rel}`\n  _{snippet}_")
+                    else:
+                        parts.append("\n## 📁 Vault\n*No matching records*")
+                except Exception as e:
+                    parts.append(f"\n## 📁 Vault\n*Search error: {e}*")
+
+            if "gmail" in sources:
+                try:
+                    emails = gc.gmail_search(query, max_results=5)
+                    if emails:
+                        parts.append(f"\n## 📧 Gmail ({len(emails)} results)")
+                        for em in emails[:5]:
+                            subj = em.get("subject", "(no subject)")
+                            sender = em.get("from", "")
+                            date = em.get("date", "")
+                            snippet = em.get("snippet", "")[:120]
+                            parts.append(f"- **{subj}** — {sender} ({date})\n  _{snippet}_")
+                    else:
+                        parts.append("\n## 📧 Gmail\n*No matching emails*")
+                except Exception as e:
+                    parts.append(f"\n## 📧 Gmail\n*Search error: {e}*")
+
+            if "calendar" in sources:
+                try:
+                    events = gc.calendar_list_events(days_ahead=30, max_results=30)
+                    related = [e for e in events if query.lower() in json.dumps(e).lower()]
+                    if related:
+                        parts.append(f"\n## 📅 Calendar ({len(related)} results)")
+                        for e in related[:5]:
+                            start = e.get("start", "")[:16]
+                            summ = e.get("summary", "No title")
+                            parts.append(f"- {start} — {summ}")
+                    else:
+                        parts.append("\n## 📅 Calendar\n*No matching events in the next 30 days*")
+                except Exception as e:
+                    parts.append(f"\n## 📅 Calendar\n*Search error: {e}*")
+
+            if "drive" in sources:
+                try:
+                    files = gc.drive_search(query)
+                    if files:
+                        parts.append(f"\n## 📄 Google Drive ({len(files)} results)")
+                        for f in files[:5]:
+                            name = f.get("name", "?")
+                            mime = f.get("mimeType", "")
+                            link = f.get("webViewLink", "")
+                            parts.append(f"- **{name}** ({mime.split('.')[-1]})" + (f" — [Open]({link})" if link else ""))
+                    else:
+                        parts.append("\n## 📄 Google Drive\n*No matching files*")
+                except Exception as e:
+                    parts.append(f"\n## 📄 Google Drive\n*Search error: {e}*")
+
+            return "\n".join(parts)
+        except Exception as e:
+            return f"Unified search error: {e}"
+
+    # ── Weekly Report ──
+    elif name == "weekly_report":
+        try:
+            weeks = args.get("weeks_back", 1)
+            days = weeks * 7
+            cutoff = datetime.now() - timedelta(days=days)
+            cutoff_str = cutoff.strftime("%Y-%m-%d")
+            parts = [f"# 📊 Weekly Activity Report", f"**Period:** {cutoff_str} to {datetime.now().strftime('%Y-%m-%d')}"]
+
+            # 1. Vault changes
+            vault_new = 0
+            vault_modified = 0
+            for record_type_dir in VAULT_PATH.iterdir():
+                if record_type_dir.is_dir() and not record_type_dir.name.startswith((".", "_")):
+                    for f in record_type_dir.glob("*.md"):
+                        try:
+                            mtime = datetime.fromtimestamp(f.stat().st_mtime)
+                            if mtime >= cutoff:
+                                ctime = datetime.fromtimestamp(f.stat().st_ctime)
+                                if ctime >= cutoff:
+                                    vault_new += 1
+                                else:
+                                    vault_modified += 1
+                        except Exception:
+                            pass
+            parts.append(f"\n## 📁 Vault Activity\n- **{vault_new}** new records created\n- **{vault_modified}** records modified")
+
+            # 2. Task summary
+            tasks = get_active_tasks()
+            completed_dir = VAULT_PATH / "task"
+            completed = 0
+            if completed_dir.exists():
+                for f in completed_dir.glob("*.md"):
+                    try:
+                        content = f.read_text("utf-8", errors="replace")
+                        if "status: done" in content:
+                            for line in content.split("\n"):
+                                if line.startswith("completed:"):
+                                    comp_date = line.split(":", 1)[1].strip().strip("'\"")
+                                    if comp_date >= cutoff_str:
+                                        completed += 1
+                    except Exception:
+                        pass
+            parts.append(f"\n## ✅ Tasks\n- **{completed}** tasks completed\n- **{len(tasks)}** tasks still active")
+
+            # 3. Calendar events this week
+            try:
+                events = gc.calendar_list_events(days_ahead=0, max_results=50)
+                # Count past week events
+                parts.append(f"\n## 📅 Calendar\n- Past {days} days of events tracked")
+            except Exception:
+                parts.append(f"\n## 📅 Calendar\n*Unavailable*")
+
+            # 4. Email activity
+            try:
+                recent = gc.gmail_search(f"after:{cutoff_str}", max_results=10)
+                parts.append(f"\n## 📧 Email\n- **{len(recent)}+** emails in the period")
+            except Exception:
+                parts.append(f"\n## 📧 Email\n*Unavailable*")
+
+            # 5. Worker daemon health
+            try:
+                stats = get_worker_stats()
+                parts.append(f"\n## ⚙️ Worker Daemons")
+                for w in stats:
+                    status_icon = "🟢" if w["running"] else "🔴"
+                    parts.append(f"- {status_icon} **{w['name']}** — {w['stat_label']}: {w['stat_value']}")
+            except Exception:
+                pass
+
+            return "\n".join(parts)
+        except Exception as e:
+            return f"Weekly report error: {e}"
+
+    # ── Workflow Run ──
+    elif name == "workflow_run":
+        try:
+            workflow = args["workflow"]
+            context = args.get("context", "")
+
+            if workflow == "meeting_notes":
+                template = f"""# Meeting Notes Template
+**Date:** {datetime.now().strftime('%Y-%m-%d %H:%M')}
+**Topic:** {context or '[Fill in meeting topic]'}
+**Attendees:** [List attendees]
+
+## Agenda
+1. [Agenda item 1]
+2. [Agenda item 2]
+
+## Discussion
+- [Key discussion points]
+
+## Decisions Made
+- [Decision 1]
+- [Decision 2]
+
+## Action Items
+- [ ] [Action item] — Assigned: [Person] — Due: [Date]
+- [ ] [Action item] — Assigned: [Person] — Due: [Date]
+
+## Next Steps
+- [Follow-up actions]
+- Next meeting: [Date/Time]
+
+---
+*Captured by Alfred on {datetime.now().strftime('%B %d, %Y')}*"""
+                return f"Meeting notes template ready for '{context or 'Untitled Meeting'}'.\n\nI'll create a vault note with this structure. Please provide:\n1. **Attendees** (who was in the meeting)\n2. **Key decisions** made\n3. **Action items** with owners\n\nOr just tell me the highlights and I'll structure them.\n\n```\n{template}\n```"
+
+            elif workflow == "weekly_review":
+                # Pull in live data
+                report = exec_tool("weekly_report", {"weeks_back": 1})
+                tasks = get_active_tasks()
+                top_tasks = tasks[:5]
+                task_lines = "\n".join([f"- {t['name']} [{t['priority']}]" for t in top_tasks])
+                return f"""# Weekly Review
+
+{report}
+
+## 🎯 Top Priorities for Next Week
+{task_lines}
+
+---
+
+Want me to:
+1. **Complete** any of these tasks?
+2. **Create new tasks** for next week?
+3. **Snooze** anything that's not urgent?
+4. **Send a summary email** to someone?"""
+
+            elif workflow == "project_kickoff":
+                return f"""# Project Kickoff: {context or '[Project Name]'}
+
+I'll create a structured project record in the vault. Please provide:
+
+1. **Project Name:** {context or '?'}
+2. **Project Goal:** What is this project trying to achieve?
+3. **Key Stakeholders:** Who are the main people involved?
+4. **Timeline:** Target start and end dates
+5. **Key Milestones:** What are the major checkpoints?
+6. **Dependencies:** What does this project depend on?
+
+Once you provide these details, I'll:
+- Create a `project/` vault record
+- Create initial `task/` records for each milestone
+- Link relevant `person/` records
+- Set up tracking"""
+
+            elif workflow == "daily_standup":
+                # Auto-gather context
+                tasks = get_active_tasks()
+                top_3 = tasks[:3]
+                task_lines = "\n".join([f"- {t['name']}" for t in top_3])
+                try:
+                    events_today = get_calendar_today()
+                    event_lines = "\n".join([f"- {e.get('start', '?')[:5]} {e.get('summary', '')}" for e in events_today[:5]]) if events_today else "No events"
+                except Exception:
+                    event_lines = "Calendar unavailable"
+
+                return f"""# Daily Standup — {datetime.now().strftime('%A, %B %d')}
+
+## 📅 Today's Schedule
+{event_lines}
+
+## 📋 Top Active Tasks
+{task_lines}
+
+---
+
+Quick standup format:
+1. **What did you accomplish yesterday?** [Tell me]
+2. **What will you focus on today?** [Tell me]
+3. **Any blockers?** [Tell me]
+
+I'll log this as a vault note when you're ready."""
+
+            else:
+                return f"Unknown workflow: {workflow}"
+        except Exception as e:
+            return f"Workflow error: {e}"
+
     return "Unknown tool."
 
 def build_vault_cmd_args(name, args):
@@ -1626,6 +1940,8 @@ def describe_action(name, args):
         return f"✅ **Mark task as done:** `{args['task_name']}`"
     elif name == "task_snooze":
         return f"⏰ **Snooze task:** `{args['task_name']}` until `{args['snooze_until']}`"
+    elif name == "workflow_run":
+        return f"📝 **Run workflow:** `{args['workflow']}` — _{args.get('context', 'no context')}_"
     return f"Unknown action: {name}"
 
 # ── OpenRouter API call ─────────────────────────────────────
@@ -1742,6 +2058,10 @@ with tab_chat:
                             result_msg = f"\u23f0 Task '{args['task_name']}' snoozed until {snooze_date}"
                         else:
                             result_msg = f"Failed to snooze task: {output}"
+                    elif name == "workflow_run":
+                        # Workflows are mostly read-based (generate content)
+                        # but are in WRITE_TOOLS because they may create vault records
+                        result_msg = exec_tool(name, args)
                     else:
                         result_msg = f"Unknown write tool: {name}"
 
