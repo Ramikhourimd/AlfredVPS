@@ -1,3 +1,3 @@
 #!/bin/bash
-# alfred up
+alfred up
 python -m streamlit run chatbot.py --server.port=8501 --server.address=0.0.0.0
