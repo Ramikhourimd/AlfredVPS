@@ -727,11 +727,35 @@ def render_analytics():
             with wcols[i]:
                 tool_info = tools_status.get(w["key"], {})
                 is_running = tool_info.get("status") == "running" and daemon_running
-                dot = "🟢" if is_running else "⚪"
+                pid = tool_info.get("pid")
+                
+                is_paused = False
+                if pid and is_running:
+                    try:
+                        import subprocess
+                        stat = subprocess.check_output(["ps", "-o", "stat=", "-p", str(pid)], text=True).strip()
+                        if 'T' in stat:
+                            is_paused = True
+                    except Exception:
+                        pass
+
+                dot = "⏸️" if is_paused else ("🟢" if is_running else "⚪")
                 restarts = tool_info.get("restarts", 0)
                 st.markdown(f"{dot} **{w['icon']} {w['name']}**")
                 if restarts > 0:
                     st.warning(f"Restarted {restarts}x")
+                    
+                if is_running and pid:
+                    import os, signal
+                    btn_label = "▶️ Resume" if is_paused else "⏸️ Pause"
+                    if st.button(btn_label, key=f"btn_daemon_{w['key']}"):
+                        try:
+                            sig = signal.SIGCONT if is_paused else signal.SIGSTOP
+                            os.kill(int(pid), sig)
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Failed to {btn_label}: {e}")
+                            
                 state_path = data_dir / w["state_file"]
                 if state_path.exists():
                     try:
