@@ -979,7 +979,19 @@ try:
     for w in workers:
         tool_info = tools_status.get(w["key"], {})
         is_running = tool_info.get("status") == "running" and daemon_running
-        status_dot = "🟢" if is_running else "⚪"
+        pid = tool_info.get("pid")
+        
+        is_paused = False
+        if pid and is_running:
+            try:
+                import subprocess
+                stat = subprocess.check_output(["ps", "-o", "stat=", "-p", str(pid)], text=True).strip()
+                if 'T' in stat:
+                    is_paused = True
+            except Exception:
+                pass
+
+        status_dot = "⏸️" if is_paused else ("🟢" if is_running else "⚪")
         restarts = tool_info.get("restarts", 0)
         restart_badge = f" ⚠️{restarts}" if restarts > 0 else ""
 
@@ -995,6 +1007,17 @@ try:
 
         # Render compact worker card
         with st.sidebar.expander(f"{status_dot} {w['icon']} {w['name']}{restart_badge}", expanded=False):
+            if is_running and pid:
+                import os, signal
+                btn_label = "▶️ Resume" if is_paused else "⏸️ Pause"
+                if st.button(btn_label, key=f"sidebar_btn_daemon_{w['key']}"):
+                    try:
+                        sig = signal.SIGCONT if is_paused else signal.SIGSTOP
+                        os.kill(int(pid), sig)
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Failed: {e}")
+            
             for label, value in stats.items():
                 st.caption(f"**{label}:** {value}")
 
