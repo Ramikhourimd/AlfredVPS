@@ -1,0 +1,166 @@
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.0.0.2:8501
+
+[31m──[0m[31m────────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────────[0m[31m──[0m
+[31m [0m [2m/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/streamlit/[0m [31m [0m
+[31m [0m [2mruntime/scriptrunner/[0m[1mexec_code.py[0m:129 in exec_func_with_error_handling               [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/streamlit/[0m [31m [0m
+[31m [0m [2mruntime/scriptrunner/[0m[1mscript_runner.py[0m:689 in code_to_exec                            [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/ramikhouri/Desktop/Alfred/[0m[1mchatbot.py[0m:2 in <module>                            [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m  1 [0m[94mimport[0m[90m [0m[4;96mstreamlit[0m[90m [0m[94mas[0m[90m [0m[4;96mst[0m                                                         [31m [0m
+[31m [0m [31m❱ [0m  2 [1;4;94mimport[0m[1;4;90m [0m[1;4;96mos[0m                                                                      [31m [0m
+[31m [0m   [2m  3 [0m[94mimport[0m[90m [0m[4;96mrequests[0m                                                                [31m [0m
+[31m [0m   [2m  4 [0m[94mfrom[0m[90m [0m[4;96mpymilvus[0m[90m [0m[94mimport[0m MilvusClient                                              [31m [0m
+[31m [0m   [2m  5 [0m[94mfrom[0m[90m [0m[4;96mdotenv[0m[90m [0m[94mimport[0m load_dotenv                                                 [31m [0m
+[31m────────────────────────────────────────────────────────────────────────────────────────[0m
+[1;91mModuleNotFoundError: [0mNo module named [32m'streamlit_authenticator'[0m
+[31m──[0m[31m────────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────────[0m[31m──[0m
+[31m [0m [2m/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/streamlit/[0m [31m [0m
+[31m [0m [2mruntime/scriptrunner/[0m[1mexec_code.py[0m:129 in exec_func_with_error_handling               [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/streamlit/[0m [31m [0m
+[31m [0m [2mruntime/scriptrunner/[0m[1mscript_runner.py[0m:689 in code_to_exec                            [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/ramikhouri/Desktop/Alfred/[0m[1mchatbot.py[0m:2 in <module>                            [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m   [2m  1 [0m[94mimport[0m[90m [0m[4;96mstreamlit[0m[90m [0m[94mas[0m[90m [0m[4;96mst[0m                                                         [31m [0m
+[31m [0m [31m❱ [0m  2 [1;4;94mimport[0m[1;4;90m [0m[1;4;96mstreamlit_authenticator[0m[1;4;90m [0m[1;4;94mas[0m[1;4;90m [0m[1;4;96mstauth[0m                                       [31m [0m
+[31m [0m   [2m  3 [0m[94mimport[0m[90m [0m[4;96myaml[0m                                                                    [31m [0m
+[31m [0m   [2m  4 [0m[94mimport[0m[90m [0m[4;96mos[0m                                                                      [31m [0m
+[31m [0m   [2m  5 [0m[94mimport[0m[90m [0m[4;96mrequests[0m                                                                [31m [0m
+[31m────────────────────────────────────────────────────────────────────────────────────────[0m
+[1;91mModuleNotFoundError: [0mNo module named [32m'streamlit_authenticator'[0m
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:153: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  return self._jws.encode(
+E20260303 19:56:02.030732 28269 schema_util.cpp:532] [SERVER][TranslateOutputFields][] Field path not exist
+E20260303 19:56:02.031963 28269 schema_util.cpp:532] [SERVER][TranslateOutputFields][] Field path not exist
+RPC error: [search], <MilvusException: (code=1100, message=: invalid parameter)>, <Time:{'RPC start': '2026-03-03 19:56:01.928453', 'RPC error': '2026-03-03 19:56:02.032242'}>
+Failed to search collection: vault_embeddings
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 3
+Calling LLM, round 4
+[31m──[0m[31m────────────────────────[0m[31m [0m[1;31mTraceback [0m[1;2;31m(most recent call last)[0m[31m [0m[31m─────────────────────────[0m[31m──[0m
+[31m [0m [2m/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/streamlit/[0m [31m [0m
+[31m [0m [2mruntime/scriptrunner/[0m[1mexec_code.py[0m:129 in exec_func_with_error_handling               [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/streamlit/[0m [31m [0m
+[31m [0m [2mruntime/scriptrunner/[0m[1mscript_runner.py[0m:689 in code_to_exec                            [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m [0m [2m/Users/ramikhouri/Desktop/Alfred/[0m[1mchatbot.py[0m:966 in <module>                          [31m [0m
+[31m [0m                                                                                      [31m [0m
+[31m────────────────────────────────────────────────────────────────────────────────────────[0m
+[1;91mNameError: [0mname [32m'_'[0m is not defined
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 3
+Calling LLM, round 4
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 3
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 3
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 0
+API error 400: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"messages.0.content.0: unexpected `tool_use_i
+LLM Loop broken due to error: API error 400: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"messages.0.content.0: unexpected `tool_use_i
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 3
+Calling LLM, round 4
+Calling LLM, round 5
+Calling LLM, round 6
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 3
+Calling LLM, round 4
+Calling LLM, round 5
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 3
+Calling LLM, round 0
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 0
+API error 400: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"messages.0.content.0: unexpected `tool_use_i
+LLM Loop broken due to error: API error 400: {"error":{"message":"Provider returned error","code":400,"metadata":{"raw":"{\"type\":\"error\",\"error\":{\"type\":\"invalid_request_error\",\"message\":\"messages.0.content.0: unexpected `tool_use_i
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 3
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+Calling LLM, round 0
+Calling LLM, round 1
+Calling LLM, round 2
+  Stopping...
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://10.0.0.2:8501
+
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(
+/Users/ramikhouri/miniforge3/envs/alfred-env/lib/python3.12/site-packages/jwt/api_jwt.py:371: InsecureKeyLengthWarning: The HMAC key is 30 bytes long, which is below the minimum recommended length of 32 bytes for SHA256. See RFC 7518 Section 3.2.
+  decoded = self.decode_complete(

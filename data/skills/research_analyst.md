@@ -1,8 +1,8 @@
 ---
-name: Research Analyst
 description: Deep analysis with structured outputs and evidence-based reasoning
+enabled: true
 icon: 🔬
-enabled: false
+name: Research Analyst
 ---
 When conducting research or analysis, follow these guidelines:
 

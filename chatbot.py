@@ -16,8 +16,14 @@ from pymilvus import MilvusClient
 from dotenv import load_dotenv
 from yaml.loader import SafeLoader
 
-VAULT_PATH = Path("/Users/ramikhouri/Desktop/Taliaz")
-ALFRED_DIR = Path("/Users/ramikhouri/Desktop/Alfred")
+ALFRED_DIR = Path(__file__).parent.resolve()
+try:
+    with open(ALFRED_DIR / "config.yaml", "r") as config_file:
+        config_data = yaml.load(config_file, Loader=SafeLoader)
+    VAULT_PATH = Path(config_data.get("vault", {}).get("path", "/Users/ramikhouri/Desktop/Taliaz"))
+except Exception:
+    VAULT_PATH = Path("/Users/ramikhouri/Desktop/Taliaz")
+
 CONVERSATIONS_DIR = VAULT_PATH / "conversation"
 
 load_dotenv()
@@ -1233,6 +1239,22 @@ TOOLS = [
             }
         }
     },
+    # ── Web Search Tool ──────────────────────────────────────────
+    {
+        "type": "function",
+        "function": {
+            "name": "web_search",
+            "description": "Search the web using DuckDuckGo. Use for current events, facts not in the vault, public information about companies/people, or any question requiring up-to-date web data.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "The search query"},
+                    "max_results": {"type": "integer", "description": "Max results to return (default 5)", "default": 5}
+                },
+                "required": ["query"]
+            }
+        }
+    },
 ]
 
 # ── Assistant-specific tools (task lifecycle + meeting prep) ─
@@ -1340,13 +1362,79 @@ ASSISTANT_TOOLS = [
     },
 ]
 
-TOOLS = TOOLS + ASSISTANT_TOOLS
+# ── Workspace / Self-Edit tools ──────────────────────────────
+WORKSPACE_TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "workspace_list",
+            "description": "List files and directories in Alfred's own codebase/workspace. Use this to explore the project structure. Returns file names, sizes, and types.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string", "description": "Relative path within the Alfred workspace to list. Use '.' for root, 'data/skills' for skills directory, etc.", "default": "."}
+                }
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "workspace_read",
+            "description": "Read the contents of any file in Alfred's workspace. Use this to inspect source code, configs, skill files, logs, etc.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string", "description": "Relative path to the file, e.g. 'chatbot.py', 'extensions.py', 'data/skills/email_drafter.md'"},
+                    "start_line": {"type": "integer", "description": "Start line (1-indexed). Omit to read from the beginning."},
+                    "end_line": {"type": "integer", "description": "End line (1-indexed, inclusive). Omit to read to the end. Max 200 lines per call."}
+                },
+                "required": ["path"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "workspace_edit",
+            "description": "Edit a file in Alfred's workspace. Can replace specific text, append content, or overwrite the entire file. A backup (.bak) is created automatically before editing. Use this to modify Alfred's own code, add features, fix bugs, or update configurations. REQUIRES USER APPROVAL.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string", "description": "Relative path to the file to edit, e.g. 'chatbot.py', 'extensions.py'"},
+                    "action": {"type": "string", "description": "Edit action: 'replace' (find and replace text), 'append' (add to end), 'write' (overwrite entire file), 'insert' (insert at line number)", "enum": ["replace", "append", "write", "insert"]},
+                    "find": {"type": "string", "description": "For 'replace' action: the exact text to find and replace"},
+                    "content": {"type": "string", "description": "The new content (replacement text, text to append, full file content, or text to insert)"},
+                    "line_number": {"type": "integer", "description": "For 'insert' action: line number to insert before (1-indexed)"}
+                },
+                "required": ["path", "action", "content"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "workspace_run",
+            "description": "Run a shell command in Alfred's workspace directory. Use for: installing packages (pip install), running tests, restarting services, checking logs, git operations, etc. REQUIRES USER APPROVAL. Be careful with destructive commands.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "command": {"type": "string", "description": "The shell command to run, e.g. 'pip install requests', 'git status', 'python -c \"print(1)\"'"},
+                    "timeout": {"type": "integer", "description": "Timeout in seconds (default 30, max 120)", "default": 30}
+                },
+                "required": ["command"]
+            }
+        }
+    },
+]
+
+TOOLS = TOOLS + ASSISTANT_TOOLS + WORKSPACE_TOOLS
 
 SYSTEM_PROMPT = """You are Alfred, a powerful and proactive AI personal assistant for Rami Khouri.
 
 You go beyond simple chat — you anticipate needs, connect the dots across different data sources, and take initiative.
 
-You have THREE main capabilities:
+You have FOUR main capabilities:
 
 1. **Vault Operations** — The vault contains 5,000+ structured Markdown files (person, org, project, task, note, conversation, decision, assumption, constraint, contradiction, synthesis, etc.).
    Tools: vault_search, vault_read, vault_list, vault_edit, vault_create, vault_delete
@@ -1357,6 +1445,10 @@ You have THREE main capabilities:
 3. **Manus AI Agent** — You can delegate complex tasks (deep research, analysis, report generation, data processing) to Manus, an autonomous AI agent platform.
    Tools: manus_task (creates a task, requires approval), manus_status (check results), manus_list (list tasks)
 
+4. **Workspace (Self-Edit)** — You can read, edit, and modify your own source code and configuration files. This gives you the power to add new features, fix bugs, update your system prompt, create new skills, and evolve yourself.
+   Tools: workspace_list, workspace_read (read-only), workspace_edit, workspace_run (require approval)
+   Key files: chatbot.py (main app), extensions.py (skills/MCPs/plugins), data/skills/*.md (skill files), data/mcp_config.json (MCP config)
+
 Guidelines:
 - Be conversational, helpful, and concise but thorough. You are a serious assistant, not a toy.
 - When asked "what should I focus on?", use calendar_events + vault_list (tasks) + gmail_search to give a prioritized briefing.
@@ -1365,7 +1457,7 @@ Guidelines:
 - When the user asks a vault question, use vault_search or vault_read.
 - For complex research or analysis that goes beyond the vault, use manus_task to delegate to Manus.
 - If you need to ask the user questions to gather information, ask short, direct questions. **Cluster your questions** into groups of 3-5 at a time rather than asking one by one.
-- Read tools execute immediately. Write tools (vault_edit, vault_create, vault_delete, gmail_send, calendar_create, manus_task) require user approval.
+- Read tools execute immediately. Write tools (vault_edit, vault_create, vault_delete, gmail_send, calendar_create, manus_task, workspace_edit, workspace_run) require user approval.
 - Summarize information naturally — don't dump raw data.
 - If you don't find relevant information, say so honestly.
 - You have memory of past conversations — reference previous chats naturally when relevant.
@@ -1388,7 +1480,17 @@ Guidelines:
 **Search:**
 - When a question could span multiple sources, use `unified_search` to search vault + Gmail + Calendar + Drive simultaneously.
 - For vault-specific questions, use `vault_search`. For email-specific, use `gmail_search`.
-- `unified_search` is best for broad queries like "what do we know about X?", "find everything about Y"."""
+- `unified_search` is best for broad queries like "what do we know about X?", "find everything about Y".
+
+**Workspace (Self-Modification):**
+- When the user asks you to add a feature, fix a bug, or change your behavior, use `workspace_read` to inspect your code first, then `workspace_edit` to make changes.
+- Always read the relevant file before editing to understand the current state.
+- Use `workspace_list` to explore the project structure if unsure where something is.
+- Use `workspace_run` for package installs, git operations, or restarting services.
+- After editing code, suggest restarting the app with `workspace_run` command: `pkill -f 'streamlit run chatbot.py'; sleep 2; streamlit run chatbot.py --server.port 8501 &`
+- A backup (.bak) is automatically created before each edit for safety.
+- Be precise with edits — use 'replace' with exact text matching rather than rewriting entire files.
+- When creating new skills, you can directly write to `data/skills/newskill.md` using workspace_edit with action='write'."""
 
 QA_MODE_PROMPT = """
 CURRENT MODE: KNOWLEDGE BASE REFINEMENT Q&A
@@ -1405,8 +1507,8 @@ Rules for this mode:
 8. Once you get an answer, queue the necessary write operations immediately without asking, then proceed to your next question.
 """
 
-READ_TOOLS = {"vault_search", "vault_read", "vault_list", "gmail_search", "gmail_read", "calendar_events", "drive_search", "drive_read", "manus_status", "manus_list", "task_list_active", "meeting_prep", "unified_search", "weekly_report"}
-WRITE_TOOLS = {"vault_edit", "vault_create", "vault_delete", "gmail_send", "calendar_create", "manus_task", "task_complete", "task_snooze", "workflow_run"}
+READ_TOOLS = {"vault_search", "vault_read", "vault_list", "gmail_search", "gmail_read", "calendar_events", "drive_search", "drive_read", "manus_status", "manus_list", "task_list_active", "meeting_prep", "unified_search", "weekly_report", "workspace_list", "workspace_read", "web_search"}
+WRITE_TOOLS = {"vault_edit", "vault_create", "vault_delete", "gmail_send", "calendar_create", "manus_task", "task_complete", "task_snooze", "workflow_run", "workspace_edit", "workspace_run"}
 
 # ── Tool execution ──────────────────────────────────────────
 
@@ -1885,6 +1987,95 @@ I'll log this as a vault note when you're ready."""
         except Exception as e:
             return f"Workflow error: {e}"
 
+    # ── Web Search ──
+    elif name == "web_search":
+        try:
+            import warnings
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                try:
+                    from ddgs import DDGS
+                except ImportError:
+                    from duckduckgo_search import DDGS
+            query = args["query"]
+            max_results = int(args.get("max_results", 5))
+            results = []
+            with DDGS() as ddgs:
+                for r in ddgs.text(query, max_results=max_results):
+                    results.append(f"**{r.get('title', 'No title')}**\n{r.get('href', '')}\n{r.get('body', '')}")
+            if results:
+                return f"### Web Search: {query}\n\n" + "\n\n---\n\n".join(results)
+            return f"No results found for: {query}"
+        except ImportError:
+            return "Error: Search package not installed. Run: pip install ddgs"
+        except Exception as e:
+            return f"Web search error: {e}"
+
+    # ── Workspace Read Tools ──
+    elif name == "workspace_list":
+        try:
+            rel_path = args.get("path", ".")
+            target = (ALFRED_DIR / rel_path).resolve()
+            # Security: ensure we stay within ALFRED_DIR
+            if not str(target).startswith(str(ALFRED_DIR.resolve())):
+                return "Error: Cannot list files outside the Alfred workspace."
+            if not target.exists():
+                return f"Path does not exist: {rel_path}"
+            if not target.is_dir():
+                return f"Not a directory: {rel_path}"
+
+            items = []
+            for item in sorted(target.iterdir()):
+                if item.name.startswith(".") and item.name not in (".env",):
+                    continue
+                if item.is_dir():
+                    child_count = sum(1 for _ in item.iterdir()) if item.exists() else 0
+                    items.append(f"📁 {item.name}/ ({child_count} items)")
+                else:
+                    size = item.stat().st_size
+                    if size > 1_000_000:
+                        size_str = f"{size / 1_000_000:.1f} MB"
+                    elif size > 1000:
+                        size_str = f"{size / 1000:.1f} KB"
+                    else:
+                        size_str = f"{size} B"
+                    items.append(f"📄 {item.name} ({size_str})")
+            return f"Contents of `{rel_path}`:\n" + "\n".join(items) if items else f"`{rel_path}` is empty."
+        except Exception as e:
+            return f"Workspace list error: {e}"
+
+    elif name == "workspace_read":
+        try:
+            rel_path = args["path"]
+            target = (ALFRED_DIR / rel_path).resolve()
+            if not str(target).startswith(str(ALFRED_DIR.resolve())):
+                return "Error: Cannot read files outside the Alfred workspace."
+            if not target.exists():
+                return f"File does not exist: {rel_path}"
+            if not target.is_file():
+                return f"Not a file: {rel_path}"
+
+            # Check if binary
+            if target.suffix in (".db", ".lock", ".pid", ".pyc", ".png", ".jpg", ".gif", ".zip", ".tar"):
+                size = target.stat().st_size
+                return f"Binary file: {rel_path} ({size} bytes). Use workspace_list to see contents."
+
+            text = target.read_text("utf-8", errors="replace")
+            lines = text.split("\n")
+
+            start = args.get("start_line", 1) - 1  # Convert to 0-indexed
+            end = args.get("end_line", len(lines))
+            # Clamp to max 200 lines
+            if end - start > 200:
+                end = start + 200
+
+            selected = lines[max(0, start):end]
+            header = f"File: `{rel_path}` (lines {start + 1}-{min(end, len(lines))} of {len(lines)})\n"
+            numbered = "\n".join(f"{i + start + 1:>4} | {line}" for i, line in enumerate(selected))
+            return header + "```\n" + numbered + "\n```"
+        except Exception as e:
+            return f"Workspace read error: {e}"
+
     return "Unknown tool."
 
 def build_vault_cmd_args(name, args):
@@ -1943,6 +2134,23 @@ def describe_action(name, args):
         return f"⏰ **Snooze task:** `{args['task_name']}` until `{args['snooze_until']}`"
     elif name == "workflow_run":
         return f"📝 **Run workflow:** `{args['workflow']}` — _{args.get('context', 'no context')}_"
+    elif name == "workspace_edit":
+        action = args.get("action", "?")
+        path = args.get("path", "?")
+        content_preview = args.get("content", "")[:120]
+        if action == "replace":
+            find_preview = args.get("find", "")[:80]
+            return f"🔧 **Edit workspace file** `{path}`\n  Action: find & replace\n  Find: `{find_preview}`\n  Replace with: `{content_preview}`"
+        elif action == "write":
+            return f"🔧 **Write workspace file** `{path}`\n  Content: _{content_preview}_"
+        elif action == "append":
+            return f"🔧 **Append to workspace file** `{path}`\n  Content: _{content_preview}_"
+        elif action == "insert":
+            line = args.get("line_number", "?")
+            return f"🔧 **Insert into workspace file** `{path}` at line {line}\n  Content: _{content_preview}_"
+        return f"🔧 **Edit workspace file** `{path}` ({action})"
+    elif name == "workspace_run":
+        return f"⚡ **Run shell command:**\n  `{args.get('command', '?')}`"
     return f"Unknown action: {name}"
 
 # ── OpenRouter API call ─────────────────────────────────────
@@ -1958,7 +2166,7 @@ def call_llm(messages, tools=None):
         body["tools"] = tools
     resp = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=body)
     if resp.status_code != 200:
-        err_msg = f"API error {resp.status_code}: {resp.text[:200]}"
+        err_msg = f"API error {resp.status_code}: {resp.text[:500]}"
         print(err_msg)
         return None, err_msg
     try:
@@ -2067,6 +2275,83 @@ with tab_chat:
                         # Workflows are mostly read-based (generate content)
                         # but are in WRITE_TOOLS because they may create vault records
                         result_msg = exec_tool(name, args)
+                    elif name == "workspace_edit":
+                        try:
+                            rel_path = args["path"]
+                            target = (ALFRED_DIR / rel_path).resolve()
+                            if not str(target).startswith(str(ALFRED_DIR.resolve())):
+                                result_msg = "Error: Cannot edit files outside the Alfred workspace."
+                            else:
+                                action = args["action"]
+                                content = args["content"]
+
+                                # Create backup before editing
+                                if target.exists():
+                                    import shutil
+                                    bak = target.with_suffix(target.suffix + ".bak")
+                                    shutil.copy2(target, bak)
+
+                                # Ensure parent dir exists
+                                target.parent.mkdir(parents=True, exist_ok=True)
+
+                                if action == "write":
+                                    target.write_text(content, encoding="utf-8")
+                                    result_msg = f"✅ File written: `{rel_path}` ({len(content)} chars)"
+                                elif action == "append":
+                                    existing = target.read_text("utf-8") if target.exists() else ""
+                                    target.write_text(existing + "\n" + content, encoding="utf-8")
+                                    result_msg = f"✅ Appended to `{rel_path}` ({len(content)} chars added)"
+                                elif action == "replace":
+                                    find_text = args.get("find", "")
+                                    if not find_text:
+                                        result_msg = "Error: 'find' parameter required for replace action."
+                                    else:
+                                        existing = target.read_text("utf-8")
+                                        if find_text not in existing:
+                                            result_msg = f"Error: Could not find the specified text in `{rel_path}`. Use workspace_read to verify the exact content."
+                                        else:
+                                            count = existing.count(find_text)
+                                            new_text = existing.replace(find_text, content, 1)
+                                            target.write_text(new_text, encoding="utf-8")
+                                            result_msg = f"✅ Replaced text in `{rel_path}` (1 of {count} occurrence(s) replaced). Backup saved as `.bak`."
+                                elif action == "insert":
+                                    line_num = args.get("line_number", 1)
+                                    existing = target.read_text("utf-8") if target.exists() else ""
+                                    lines = existing.split("\n")
+                                    idx = max(0, min(line_num - 1, len(lines)))
+                                    lines.insert(idx, content)
+                                    target.write_text("\n".join(lines), encoding="utf-8")
+                                    result_msg = f"✅ Inserted at line {line_num} in `{rel_path}`. Backup saved as `.bak`."
+                                else:
+                                    result_msg = f"Unknown edit action: {action}"
+                        except Exception as e:
+                            result_msg = f"Workspace edit error: {e}"
+                    elif name == "workspace_run":
+                        try:
+                            command = args["command"]
+                            timeout = min(args.get("timeout", 30), 120)
+                            import subprocess as sp
+                            env = os.environ.copy()
+                            result = sp.run(
+                                command, shell=True, capture_output=True, text=True,
+                                timeout=timeout, cwd=str(ALFRED_DIR), env=env
+                            )
+                            output = result.stdout.strip()
+                            errors = result.stderr.strip()
+                            rc = result.returncode
+                            parts = [f"**Exit code:** {rc}"]
+                            if output:
+                                parts.append(f"**stdout:**\n```\n{output[:3000]}\n```")
+                            if errors:
+                                parts.append(f"**stderr:**\n```\n{errors[:1000]}\n```")
+                            if rc == 0:
+                                result_msg = "✅ Command succeeded.\n" + "\n".join(parts)
+                            else:
+                                result_msg = "❌ Command failed.\n" + "\n".join(parts)
+                        except sp.TimeoutExpired:
+                            result_msg = f"⏱️ Command timed out after {timeout}s"
+                        except Exception as e:
+                            result_msg = f"Workspace run error: {e}"
                     else:
                         result_msg = f"Unknown write tool: {name}"
 
@@ -2134,15 +2419,38 @@ if should_run_llm:
         if skills_prompt:
             full_system += skills_prompt
 
-        # Build conversation for the LLM (system + last 15 messages to ensure tool context isn't lost)
-        llm_msgs = [{"role": "system", "content": full_system}]
-        for m in st.session_state.messages[-15:]:
-            msg_obj = {"role": m["role"], "content": m.get("content", "")}
-            if "tool_calls" in m:
-                msg_obj["tool_calls"] = m["tool_calls"]
-            if "tool_call_id" in m:
-                msg_obj["tool_call_id"] = m["tool_call_id"]
-            llm_msgs.append(msg_obj)
+        # Build conversation for the LLM — only clean user/assistant text pairs.
+        # Tool messages are for the current agentic turn only; historical tool
+        # messages cause API 400 errors (orphaned tool_calls / results).
+        raw_msgs = []
+        for m in st.session_state.messages[-20:]:
+            role = m.get("role", "")
+            # Skip tool-related messages entirely
+            if role == "tool":
+                continue
+            if role == "assistant" and "tool_calls" in m:
+                text = m.get("content", "")
+                if text and text.strip():
+                    raw_msgs.append({"role": "assistant", "content": text})
+                continue
+            if role in ("user", "assistant"):
+                content = m.get("content", "")
+                if content and content.strip():
+                    raw_msgs.append({"role": role, "content": content})
+
+        # Merge consecutive same-role messages (Claude requires alternation)
+        merged = []
+        for msg in raw_msgs:
+            if merged and merged[-1]["role"] == msg["role"]:
+                merged[-1]["content"] += "\n\n" + msg["content"]
+            else:
+                merged.append(dict(msg))
+
+        # Ensure first message is from user (Claude requirement)
+        while merged and merged[0]["role"] != "user":
+            merged.pop(0)
+
+        llm_msgs = [{"role": "system", "content": full_system}] + merged
 
         # Merge MCP tools into the tools list
         mcp_client = get_mcp_client()

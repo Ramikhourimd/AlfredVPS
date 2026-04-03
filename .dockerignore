@@ -1,0 +1,7 @@
+data/
+vault/
+.git/
+__pycache__/
+*.bak
+Miniforge3*
+ollama_data/

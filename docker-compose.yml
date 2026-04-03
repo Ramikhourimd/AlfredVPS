@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  alfred:
+    build: .
+    container_name: alfred
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./config.vps.yaml:/app/config.yaml
+      - ./credentials.yaml:/app/credentials.yaml
+      - ./.env:/app/.env
+      - /app/vault:/app/vault  # We'll map the vault to a folder next to Alfred
+    environment:
+      - ALFRED_OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama
+    container_name: alfred-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama_data:/root/.ollama

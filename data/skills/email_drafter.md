@@ -1,8 +1,8 @@
 ---
-name: Email Drafter
 description: Professional email composition with tone awareness and structure
+enabled: true
 icon: ✉️
-enabled: false
+name: Email Drafter
 ---
 When drafting or composing emails, follow these guidelines:
 

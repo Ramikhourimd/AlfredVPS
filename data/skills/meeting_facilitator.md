@@ -1,8 +1,8 @@
 ---
-name: Meeting Facilitator
 description: Structure meetings, capture decisions, and assign action items
-icon: 📋
 enabled: false
+icon: 📋
+name: Meeting Facilitator
 ---
 When handling meetings or meeting-related tasks, follow these guidelines:
 

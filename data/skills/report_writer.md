@@ -1,8 +1,8 @@
 ---
-name: Report Writer
 description: Generate structured reports with executive summaries and data sections
+enabled: true
 icon: 📊
-enabled: false
+name: Report Writer
 ---
 When generating reports or documents, follow these guidelines:
 
