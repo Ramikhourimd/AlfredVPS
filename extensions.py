@@ -751,3 +751,81 @@ def render_extensions_tab():
                             st.caption(" · ".join(badges))
 
                     st.markdown("---")
+
+# ═══════════════════════════════════════════════════════════
+#  GIT TOOLS
+# ═══════════════════════════════════════════════════════════
+
+class GitTools:
+    """Manages Git-based self-evolution for Alfred."""
+
+    @staticmethod
+    def get_tools() -> list[dict]:
+        return [
+            {
+                "type": "function",
+                "function": {
+                    "name": "workspace_git_commit",
+                    "description": "Commit all changes in the workspace to the local Git repository. Use this after making self-edits. REQUIRES USER APPROVAL.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "message": {"type": "string", "description": "The commit message describing exactly what was changed"}
+                        },
+                        "required": ["message"]
+                    }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "workspace_git_push",
+                    "description": "Push committed changes from the workspace to the remote GitHub repository. REQUIRES USER APPROVAL.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {}
+                    }
+                }
+            }
+        ]
+
+    @staticmethod
+    def exec_tool(name: str, args: dict) -> str:
+        if name == "workspace_git_commit":
+            message = args.get("message", "Auto-commit from Alfred")
+            try:
+                # Ensure safe directory inside Docker
+                subprocess.run(["git", "config", "--global", "--add", "safe.directory", "/app"], capture_output=True)
+                subprocess.run(["git", "config", "user.name", "Alfred AI"], capture_output=True)
+                subprocess.run(["git", "config", "user.email", "alfred@agent.local"], capture_output=True)
+                
+                # Add all
+                add_res = subprocess.run(["git", "add", "."], capture_output=True, text=True, cwd=str(ALFRED_DIR))
+                if add_res.returncode != 0:
+                    return f"Git add error: {add_res.stderr}"
+                
+                # Commit
+                commit_res = subprocess.run(["git", "commit", "-m", message], capture_output=True, text=True, cwd=str(ALFRED_DIR))
+                if commit_res.returncode != 0:
+                    if "nothing to commit" in commit_res.stdout:
+                        return "Nothing to commit; working tree clean."
+                    return f"Git commit error: {commit_res.stderr}\n{commit_res.stdout}"
+                return f"✅ Successfully committed changes: '{message}'"
+            except Exception as e:
+                return f"Error executing git commit: {e}"
+
+        elif name == "workspace_git_push":
+            try:
+                subprocess.run(["git", "config", "--global", "--add", "safe.directory", "/app"], capture_output=True)
+                
+                env = os.environ.copy()
+                env["GIT_SSH_COMMAND"] = "ssh -i /app/data/alfred_deploy_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
+                
+                push_res = subprocess.run(["git", "push", "origin", "main"], capture_output=True, text=True, cwd=str(ALFRED_DIR), env=env)
+                if push_res.returncode != 0:
+                    return f"Git push error: {push_res.stderr}\n{push_res.stdout}"
+                return "✅ Successfully pushed changes to remote repository."
+            except Exception as e:
+                return f"Error executing git push: {e}"
+        
+        return f"Unknown git tool: {name}"

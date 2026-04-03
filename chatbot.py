@@ -7,7 +7,7 @@ import subprocess
 import requests
 import google_connector as gc
 import manus_connector as manus
-from extensions import SkillManager, MCPClient, PluginManager, render_extensions_tab, get_mcp_client
+from extensions import SkillManager, MCPClient, PluginManager, render_extensions_tab, get_mcp_client, GitTools
 import re
 import glob
 from datetime import datetime, timezone, timedelta
@@ -1428,7 +1428,7 @@ WORKSPACE_TOOLS = [
     },
 ]
 
-TOOLS = TOOLS + ASSISTANT_TOOLS + WORKSPACE_TOOLS
+TOOLS = TOOLS + ASSISTANT_TOOLS + WORKSPACE_TOOLS + GitTools.get_tools()
 
 SYSTEM_PROMPT = """You are Alfred, a powerful and proactive AI personal assistant for Rami Khouri.
 
@@ -1508,7 +1508,7 @@ Rules for this mode:
 """
 
 READ_TOOLS = {"vault_search", "vault_read", "vault_list", "gmail_search", "gmail_read", "calendar_events", "drive_search", "drive_read", "manus_status", "manus_list", "task_list_active", "meeting_prep", "unified_search", "weekly_report", "workspace_list", "workspace_read", "web_search"}
-WRITE_TOOLS = {"vault_edit", "vault_create", "vault_delete", "gmail_send", "calendar_create", "manus_task", "task_complete", "task_snooze", "workflow_run", "workspace_edit", "workspace_run"}
+WRITE_TOOLS = {"vault_edit", "vault_create", "vault_delete", "gmail_send", "calendar_create", "manus_task", "task_complete", "task_snooze", "workflow_run", "workspace_edit", "workspace_run", "workspace_git_commit", "workspace_git_push"}
 
 # ── Tool execution ──────────────────────────────────────────
 
@@ -2151,6 +2151,10 @@ def describe_action(name, args):
         return f"🔧 **Edit workspace file** `{path}` ({action})"
     elif name == "workspace_run":
         return f"⚡ **Run shell command:**\n  `{args.get('command', '?')}`"
+    elif name == "workspace_git_commit":
+        return f"📦 **Git Commit:**\n  `{args.get('message', '?')}`"
+    elif name == "workspace_git_push":
+        return f"🚀 **Git Push** to origin"
     return f"Unknown action: {name}"
 
 # ── OpenRouter API call ─────────────────────────────────────
@@ -2352,6 +2356,8 @@ with tab_chat:
                             result_msg = f"⏱️ Command timed out after {timeout}s"
                         except Exception as e:
                             result_msg = f"Workspace run error: {e}"
+                    elif name in ["workspace_git_commit", "workspace_git_push"]:
+                        result_msg = GitTools.exec_tool(name, args)
                     else:
                         result_msg = f"Unknown write tool: {name}"
 
