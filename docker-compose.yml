@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   alfred:
@@ -8,10 +7,7 @@ services:
     ports:
       - "8501:8501"
     volumes:
-      - ./data:/app/data
-      - ./config.vps.yaml:/app/config.yaml
-      - ./credentials.yaml:/app/credentials.yaml
-      - ./.env:/app/.env
+      - ./:/app
       - /app/vault:/app/vault  # We'll map the vault to a folder next to Alfred
     environment:
       - ALFRED_OLLAMA_HOST=http://ollama:11434
