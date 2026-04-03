@@ -20,9 +20,10 @@ ALFRED_DIR = Path(__file__).parent.resolve()
 try:
     with open(ALFRED_DIR / "config.yaml", "r") as config_file:
         config_data = yaml.load(config_file, Loader=SafeLoader)
-    VAULT_PATH = Path(config_data.get("vault", {}).get("path", "/Users/ramikhouri/Desktop/Taliaz"))
+    vault_path_str = config_data.get("vault", {}).get("path", "vault")
+    VAULT_PATH = (ALFRED_DIR / vault_path_str).resolve()
 except Exception:
-    VAULT_PATH = Path("/Users/ramikhouri/Desktop/Taliaz")
+    VAULT_PATH = (ALFRED_DIR / "vault").resolve()
 
 CONVERSATIONS_DIR = VAULT_PATH / "conversation"
 
