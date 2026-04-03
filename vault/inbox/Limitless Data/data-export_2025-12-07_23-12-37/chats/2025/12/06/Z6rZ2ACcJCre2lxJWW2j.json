@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Who is dekel taliaz?"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on your logs from yesterday, here is the context on **Dekel**:\n\nDekel is a member of the leadership team, alongside Alex and Oren. He is involved in setting high-level strategic goals, such as the 2026 targets, which you feel are overly focused on financials.\n\n### Key Dynamics & Risks:\n\n*   **Strategic Misalignment:** You perceive a major disconnect between the leadership's aggressive, finance-driven growth targets and your strategy to first stabilize the clinic, build a strong team, and establish robust clinical protocols.\n*   **Communication Breakdown:** You struggle to translate the value of clinical quality and psychiatrist well-being into financial terms that Dekel, Alex, and Oren understand.\n*   **Misinterpretation of Motives:** You believe your desire for greater strategic involvement is being misinterpreted. You noted a specific instance:\n    > \"...דקל הבין מזה שנעלבתי כאילו שלא משתפים אותי.\" (...Dekel understood from this that I was offended that they weren't including me.)\n    This indicates they are viewing your professional concerns through a personal lens, which is a significant risk to effective collaboration.\n\n### Proposed Next Steps:\n\nTo bridge this gap, you have a few options.\n\n1.  **Option A: Data-Driven One-Pager.** Prepare a concise one-page document for Dekel, Oren, and Adiel. Frame the need for clinical stabilization not as a slowdown, but as a necessary de-risking strategy. Tailor the evidence:\n    *   **For Dekel & Oren:** Focus on ROI and compliance. Highlight the financial cost of high psychiatrist turnover, patient no-shows (which you linked to the Teams issue), and potential legal exposure from inadequate protocols.\n    *   **For Adiel:** Emphasize how a premium, well-run clinic becomes a key differentiator for partnerships and business development.\n2.  **Option B: Direct 1:1 with Dekel.** Schedule a dedicated meeting with him to clarify your position, explicitly stating your goal is not about personal feelings but about the long-term health of the company. This is higher-risk as it relies on verbal persuasion, which has been challenging so far.\n3.  **Option C: Tactical Compliance.** Follow their plan for now, secure the budget you need, and build your clinical stabilization plan in parallel. You mentioned this as a possibility, but it creates organizational silos and risks future collisions, such as when they sign a new health fund you cannot support.\n\n### Recommendation:\n\nI recommend **Option A**. It shifts the conversation from personal feelings to a data-driven, strategic discussion. It directly addresses their financial focus while making the case for your clinical priorities.\n\nShall I draft a one-pager outlining the clinical stability plan and its impact on risk/ROI for your review?"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1764989552679,
+  "sharedAt": null
+}

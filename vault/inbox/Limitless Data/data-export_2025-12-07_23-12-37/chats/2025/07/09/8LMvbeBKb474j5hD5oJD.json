@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a summary of my day based on my conversation transcripts from yesterday. Look at the transcript and respond with a summary of my day that I can use to review everything that happened quickly.\nHere are the things I want to be included in the summary:\n- Key meetings and conversations I participated in\n- Important information I learned or shared\n- Decisions I made or was involved in\n- Problems I encountered and solutions I found\n- Major themes or patterns in my conversations\n\nFormat the summary to be readable and insightful, highlighting what matters most about my day. Keep it brief but comprehensive, capturing the essence of my experiences rather than listing every detail.\nShow me the summary in chronological order when possible, starting with morning activities and ending with evening ones. Prioritize significant events over routine interactions."
+    },
+    {
+      "role": "assistant",
+      "content": "Summary of Your Day – July 8, 2025\n\nMorning  \n• Your day began with a series of very brief, unintelligible utterances recorded in the early morning. There were no clear meetings, conversations, or significant exchanges captured during this time.\n\nKey Meetings and Conversations  \n• No structured meetings or substantial conversations were recorded yesterday. The transcript consists of short, unclear phrases without context or actionable content.\n\nImportant Information & Decisions  \n• There is no evidence of important information being learned or shared, nor any decisions made or discussed in the available transcript.\n\nProblems & Solutions  \n• No problems or challenges were mentioned, and no solutions or follow-up actions were identified.\n\nMajor Themes  \n• The day’s recordings were minimal and lacked clear content, suggesting either a quiet day or that key conversations were not captured.\n\nIf you had important meetings or discussions elsewhere, they were not included in the available transcript. Let me know if you’d like to review a different set of entries or need help capturing more detailed summaries in the future."
+    }
+  ],
+  "summary": "Daily Summary",
+  "createdAt": 1752024309204,
+  "sharedAt": null
+}

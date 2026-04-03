@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a comprehensive to-do list based on my conversation transcripts. Please analyze the transcript and identify all tasks, commitments, and follow-up actions I mentioned or agreed to.\nImportantly: Only use items that I specifically said I would do. Do not include things other people said they would do.\nFor each item, include enough detail that I can understand what needs to be done without having to review the entire transcript again. Use action verbs at the beginning of each task.\nGroup related tasks together when possible, and highlight any dependencies between tasks (e.g., \"Complete X before starting Y\").\nExclude routine activities or general comments that don't require specific action."
+    },
+    {
+      "role": "assistant",
+      "content": "Based on your provided lifelog entries for August 5, 2025, there are **no explicit tasks, commitments, or follow-up actions that you specifically stated you would do** in these transcripts. The entries include:\n\n- A brief farewell (\"Ciao.\")\n- Lyrics and themes from a performance of songs (not actionable)\n- A discussion in Arabic about a patient's complex condition, but with no direct commitments or action items attributed to you\n\n**Summary:**  \nNo new actionable items or commitments were made by you in these transcripts. ✅\n\nIf you need a review of previous days’ explicit commitments or want reminders for ongoing projects, let me know! 😊"
+    }
+  ],
+  "summary": "Todos",
+  "createdAt": 1754437691201,
+  "sharedAt": null
+}

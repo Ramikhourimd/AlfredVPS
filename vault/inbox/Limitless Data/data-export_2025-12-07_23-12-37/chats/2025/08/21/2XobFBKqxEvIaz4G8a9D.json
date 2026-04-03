@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "**Personal & Worklife Protocols  \n(Aug 21, 2025 | Rami Khouri)**\n\n---\n\n### 1. Knowledge Protocols 📚\n\n- **Clinical & Ethical Decision-Making:**  \n  - Maintain clear documentation of advanced directives and surrogate decision-makers for family and patients (“if I go into a coma, I don’t want to wake up... need someone to make decisions on my behalf”).  \n  - Regularly review and update these directives as circumstances or preferences change.\n- **Email & Digital Hygiene:**  \n  - Ensure all critical work and personal email accounts are accessible, backed up, and secured (recent troubleshooting suggests potential gaps).  \n  - Use a password manager for all sensitive accounts; avoid account confusion by labeling devices/accounts clearly.\n- **Family Dynamics & Emotional Health:**  \n  - Recognize the emotional toll of family illness, loss, or trauma. Schedule periodic self-check-ins or support sessions to maintain resilience.\n\n---\n\n### 2. Context Protocols 🧩\n\n- **Time Management:**  \n  - Block out time weekly for deep work (AI/automation projects) vs. operational/clinical tasks—avoid context switching where possible.\n- **Delegation:**  \n  - Assign non-core tasks (e.g., routine IT/email troubleshooting) to trusted support or automation tools.\n- **Communication Boundaries:**  \n  - Set expectations with both family and colleagues about availability—especially during periods of high workload or emotional stress.\n\n---\n\n### 3. Intention Protocols 🎯\n\n- **Scalable Psychiatry Vision:**  \n  - Prioritize initiatives that directly move the needle on scalable AI-driven psychiatric care (e.g., workflow automation pilots, clinical protocol digitization).\n- **Proactive Follow-up:**  \n  - After meetings/discussions (personal or professional), immediately capture action items in a central system; review daily for accountability.\n- **Wellbeing Integration:**  \n  - Intentionally schedule decompression time after emotionally heavy conversations or family events—protect cognitive bandwidth for strategic work.\n\n---\n\n**Next Steps / Questions:**\n\n1. Do you want to formalize advanced directives for yourself/family? If so, who should be involved?\n2. Should I set up automated reminders for email account reviews/security?\n3. Would you like a daily summary of outstanding personal vs. work action items?\n4. Any specific boundaries you want enforced between personal/family time and high-focus work blocks?\n\nLet me know which protocols you want prioritized or adjusted! 🚀"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1755740536466,
+  "sharedAt": null
+}

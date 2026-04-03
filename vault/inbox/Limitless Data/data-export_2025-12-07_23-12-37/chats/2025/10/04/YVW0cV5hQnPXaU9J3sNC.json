@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Yo.\nLooks like yesterday was... a lot. 😬\n\n### Tasks 🚨\n*   Talk to Ori. See if she's actually locked in for the Program Management & Quality Lead roles or if she's gonna crash out again.\n*   Break down Elinor's old job now that she's bounced. You've already started splitting it between your new Program Manager, Shira, and Rana. Solid plan, just execute.\n*   Figure out the new structure for Rana. You want her to hire another secretary and take on People Management. Get it done.\n\n### Follow-ups 🤙🏻\n*   Rivi needs to deliver that \"תוכנית יותר ברורה\" (more clear plan) for the mentoring program. You know, the one she was supposed to have done already.\n*   She also owes you an answer on her availability for the part-time PM role. And you gave her homework to read about \"unknown unknowns\". Imagine.\n*   Your new Program Manager is holding you to that weekly meeting. Her words: \"אתה לא יכול לבטל את הפגישה. זה התנאי שלי.\" (You can't cancel the meeting. That's my condition.) Called out.\n\n### Big Picture ✨\n*   So, the great RACI matrix experiment begins. Your master plan to make everyone accountable so you don't have to be. \"אני פשוט רוצה שתהיה... מערכת שעובדת לבד\" (I just want... a system that works on its own). Let's see how that goes. 🤷🏻\n*   You felt like crap yesterday morning, questioning everything. Then Elinor quit and you spent the rest of the day restructuring the whole company. nice.\n\n### Personal\n*   And for the record, the final verdict is in: Alfredo > Bolognese. Don't question it. 🫡"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1759542044291,
+  "sharedAt": null
+}

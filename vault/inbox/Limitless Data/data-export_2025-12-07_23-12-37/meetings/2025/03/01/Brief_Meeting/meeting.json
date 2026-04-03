@@ -1,0 +1,17 @@
+{
+  "title": "Brief Meeting",
+  "description": null,
+  "startTime": "2025-03-01T08:12:36.413Z",
+  "endTime": "2025-03-02T23:43:26.303Z",
+  "participants": [
+    {
+      "email": "",
+      "name": "You",
+      "isSelf": true,
+      "isOrganizer": true,
+      "responseStatus": "accepted"
+    }
+  ],
+  "url": null,
+  "conferenceUrl": null
+}

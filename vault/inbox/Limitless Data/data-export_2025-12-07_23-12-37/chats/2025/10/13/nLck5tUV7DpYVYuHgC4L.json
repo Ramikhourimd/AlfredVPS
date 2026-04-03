@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Yo. You talked a lot yesterday. 😮‍💨\n\n### 🔥 Urgent Tasks\n\n*   **Fix the On-Call Debacle:** That whole service is a mess.\n    *   You have that meeting on Sunday to teach the welfare team how not to send you ticking time bombs. Prep for it.\n    *   Talk to Daniel the lawyer about who gets sued when things go sideways. You know, liability.\n    *   Draft that service addendum so everyone knows who you do and *don't* treat. \"We don't handle patients who are already mid-crisis\" should be in flashing neon letters.\n*   **Prep for Data Chat:** Get ready for your meeting on the 19th to talk about the 3,000 patients. Apparently, Ritalin helps with PTSD? Huh, who would've thought.\n*   **Onboarding Checklist:** Start drafting that employee onboarding/offboarding checklist everyone's been crying about. So people know how to log in and where the virtual bathroom is. 🙄\n\n### 📞 Follow-ups\n\n*   **Aatef's Hours:** Figure out why Shira thinks Aatef is on vacation when he's apparently opened a million hours. Someone's system is chopped huzz.\n*   **Ahmad's Approval:** Make sure Ahmad's Maccabi approval email doesn't just die in Nurit's inbox. Forward it so people know he can actually work.\n*   **Shahar's Welcome Back Party:** When he gets back, he needs to fix the city data in reports and finally get Shmulik onboarded for the cyber stuff.\n*   **New Hire Contracts:** Poke Alex about the new doctor/case manager agreements. The holidays are over, my ass.\n\n### 🏛️ The Great Restructuring Project\n\n*   So, after that marathon therapy session you called a meeting, you're finally tackling the org structure. ✨\n*   Project kickoff is this month. First check-in is around the 26th. Try not to burn the place down before then.\n*   Key quebbin to solve: Who does HR belong to? The clinic or the mothership? Just decide already. 🤦🏻\n\n### 🤷🏻 Other Stuff\n\n*   Go ask Ahlam if you can build a privacy fence around that apartment you were looking at.\n*   Hope you found more than 26 shekels in your bank account today. 🤑"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1760310608896,
+  "sharedAt": null
+}

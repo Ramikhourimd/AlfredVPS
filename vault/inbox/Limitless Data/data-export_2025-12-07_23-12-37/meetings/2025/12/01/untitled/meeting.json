@@ -1,0 +1,94 @@
+{
+  "title": "פגישת ניהול אדמיניסטרציה",
+  "description": "<a href=\"https://us02web.zoom.us/j/81624977802\">https://us02web.zoom.us/j/81624977802</a>",
+  "startTime": "2025-12-01T11:00:00.000Z",
+  "endTime": "2025-12-01T12:00:00.000Z",
+  "participants": [
+    {
+      "email": "shachar@taliazhealth.com",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "accepted"
+    },
+    {
+      "email": "shira@taliazhealth.co.il",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": true,
+      "responseStatus": "accepted"
+    },
+    {
+      "email": "roy@taliazhealth.com",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "needsAction"
+    },
+    {
+      "email": "rami.salim.khouri@gmail.com",
+      "name": null,
+      "isSelf": true,
+      "isOrganizer": false,
+      "responseStatus": "accepted"
+    },
+    {
+      "email": "nadav@taliazhealth.com",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "needsAction"
+    },
+    {
+      "email": "elias.jahjah@mail.huji.ac.il",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "declined"
+    },
+    {
+      "email": "ori@healthymind.co.il",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "needsAction"
+    },
+    {
+      "email": "adi.lavi@taliazhealth.com",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "needsAction"
+    },
+    {
+      "email": "eleanor.khateeb@gmail.com",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "declined"
+    },
+    {
+      "email": "eitan@taliazhealth.com",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "needsAction"
+    },
+    {
+      "email": "basel@taliazhealth.co.il",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "accepted"
+    },
+    {
+      "email": "basel@taliazhealth.com",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "needsAction"
+    }
+  ],
+  "url": "https://www.google.com/calendar/event?eid=MjNldDVsdmVxOTltdmxyZGlnczlpcDRiMXRfMjAyNTEyMDFUMTEwMDAwWiByYW1pLnNhbGltLmtob3VyaUBt",
+  "conferenceUrl": "https://us02web.zoom.us/j/81624977802\">https://us02web.zoom.us/j/81624977802</a>"
+}

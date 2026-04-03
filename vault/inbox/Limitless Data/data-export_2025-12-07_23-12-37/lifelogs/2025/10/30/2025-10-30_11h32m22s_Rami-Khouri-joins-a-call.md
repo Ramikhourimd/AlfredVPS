@@ -1,0 +1,55 @@
+---
+alfred_tags:
+- calls/joining
+- meetings/setup
+relationships:
+- confidence: 0.7
+  context: Call joining events chronologically
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/10/30/2025-10-30_11h32m22s_Rami-Khouri-joins-a-call.md
+  target: inbox/processed/2025-09-22_06h02m46s_A-conversation-about-participants-joining-a-call-and-attempts-to-reach-someone.md
+  type: related-to
+---
+
+# Rami Khouri joins a call
+
+## Initial greetings and technical difficulties
+
+> [2](#startMs=1761823942886&endMs=1761823944886): מה דקה?
+
+> [2](#startMs=1761823944886&endMs=1761823945886): מה קורה?
+
+> [2](#startMs=1761823945886&endMs=1761823946886): סבבה.
+
+> [2](#startMs=1761823947886&endMs=1761823950886): אני מנסה להיכנס לזום אני לא מצליח מהטלפון.
+
+> [2](#startMs=1761823951886&endMs=1761823952886): אתה הצלחת להיכנס?
+
+> [2](#startMs=1761823953886&endMs=1761823953887): כן.
+
+> [2](#startMs=1761823955887&endMs=1761823967886): אתה טוב, אני לא מצליח להיכנס. אה, אולי אני אנסה טיים. יכול לשלוח לי גם קצת אה או מנסה להיכנס טיים? זה מה שאתה אומר עכשיו?
+
+> [2](#startMs=1761823969886&endMs=1761823970886): שנייה.
+
+## Attempting to join via Teams
+
+> [2](#startMs=1761823990886&endMs=1761823991886): אני שולח לך.
+
+> [2](#startMs=1761823992886&endMs=1761823993886): מה זה?
+
+> [2](#startMs=1761823993886&endMs=1761823996886): אני שולח לך לינק לטים.
+
+> [2](#startMs=1761823997886&endMs=1761823999886): תשלח לי בוואטסאפ.
+
+## Technical issues and account problems
+
+> [2](#startMs=1761824049886&endMs=1761824069886): מפריע לי את ה כנראה שזה בסדר באפליקציה, זה לא מפריע לי כמו באפליקציה עוד. אז אה כנראה שהורדתי את האפליקציה. גם זה בגלל הזום. בסדר? עוד דקה, רגע שנייה הוא פותח את זה ומכניס אותך. בסדר?
+
+> [1](#startMs=1761824205620&endMs=1761824209620): אחרי שעה אני מתקן את זה משה משח כמו לי בחשבון.
+
+> [2](#startMs=1761824210620&endMs=1761824211620): חסמו לי את החשבון?
+
+> [1](#startMs=1761824212620&endMs=1761824215620): אני פשוט מדבר בטלפון, קצת קשה עכשיו לדבר בטלפון איתך.
+
+> [2](#startMs=1761824215620&endMs=1761824216620): אני אנסה.
+
+> [2](#startMs=1761824217620&endMs=1761824227620): ניסיתי לענות לך פשוט. אממ טוב. יהיה קצת קשה כי יש פה טבלה של נתונים. ננסה לסכם לך.

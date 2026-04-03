@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a comprehensive to-do list based on my conversation transcripts. Please analyze the transcript and identify all tasks, commitments, and follow-up actions I mentioned or agreed to.\nImportantly: Only use items that I specifically said I would do. Do not include things other people said they would do.\nFor each item, include enough detail that I can understand what needs to be done without having to review the entire transcript again. Use action verbs at the beginning of each task.\nGroup related tasks together when possible, and highlight any dependencies between tasks (e.g., \"Complete X before starting Y\").\nExclude routine activities or general comments that don't require specific action."
+    },
+    {
+      "role": "assistant",
+      "content": "No actionable tasks, commitments, or follow-up actions were identified in your provided transcript. The entries consist of brief conversational phrases in Arabic (e.g., \"Wait a bit, my dear,\" \"They're in a hurry\") without any explicit statements by you about things you will do.\n\n✅ No to-do items to track from this transcript."
+    }
+  ],
+  "summary": "Todos",
+  "createdAt": 1755481744110,
+  "sharedAt": null
+}

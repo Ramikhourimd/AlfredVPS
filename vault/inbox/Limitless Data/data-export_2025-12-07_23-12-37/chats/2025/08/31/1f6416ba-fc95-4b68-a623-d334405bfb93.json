@@ -1,0 +1,27 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain about the kpi’s that alex spoke about today"
+    },
+    {
+      "role": "assistant",
+      "content": "Searching today’s lifelogs for mentions of Alex and KPIs...",
+      "toolCalls": [
+        {
+          "id": "call_eeMv5273jtRRRhpIFSZALWVC",
+          "toolName": "searchLifelogs",
+          "args": {
+            "query": "Alex AND KPI",
+            "startTimeString": "2025-08-31T00:00:00",
+            "endTimeString": "2025-08-31T23:59:59",
+            "isStarred": null
+          }
+        }
+      ]
+    }
+  ],
+  "summary": "KPIs And Alex's Talk",
+  "createdAt": 1756640929485,
+  "sharedAt": null
+}

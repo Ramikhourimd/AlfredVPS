@@ -1,0 +1,258 @@
+---
+alfred_tags:
+- conversations/arabic
+- casual
+relationships:
+- confidence: 0.85
+  context: Temporally close same-day talks
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_15h06m07s_Unstructured-conversation-in-Arabic.md
+  type: related-to
+- confidence: 0.8
+  context: Same-day sequential discussions
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_15h22m32s_A-conversation-with-multiple-topics.md
+  type: related-to
+- confidence: 0.7
+  context: Similar topics 3 days later
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/29/2025-09-29_09h04m45s_Unknown-conversation.md
+  type: related-to
+- confidence: 0.7
+  context: Shared themes on 09-29
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/29/2025-09-29_11h21m02s_Unknown-conversation.md
+  type: related-to
+- confidence: 0.7
+  context: Related convos on 09-29
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/29/2025-09-29_11h34m37s_Unknown-speaker-conversation.md
+  type: related-to
+- confidence: 0.7
+  context: Semantic similarity on 09-29
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/29/2025-09-29_15h50m34s_Unidentified-conversation.md
+  type: related-to
+- confidence: 0.65
+  context: Arabic discussion 5 days later
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/10/01/2025-10-01_05h21m28s_Greetings-and-discussion-in-Arabic.md
+  type: related-to
+- confidence: 0.65
+  context: Similar talk on 10-01
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/10/01/2025-10-01_08h24m04s_Unknown-conversation.md
+  type: related-to
+- confidence: 0.6
+  context: Overlapping topics on 10-03
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/10/03/2025-10-03_12h06m42s_Unknown-conversation.md
+  type: related-to
+- confidence: 0.55
+  context: Semantic link 11 days later
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/09/26/2025-09-26_14h45m24s_Rami-Khouri-and-Unknown-discuss-various-topics.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/10/07/2025-10-07_14h15m38s_Unknown-person-s-conversation.md
+  type: related-to
+---
+
+# Rami Khouri and Unknown discuss various topics
+
+## Discussion about AI and truth
+
+> [3](#startMs=1758897924464&endMs=1758897926463): بقول اذا اوبن اي اي
+
+> [3](#startMs=1758897927463&endMs=1758897928463): بده يطلعوا اول فيلم
+
+> [3](#startMs=1758897930463&endMs=1758897931463): اللي هو 100% اي اي
+
+> [4](#startMs=1758897933463&endMs=1758897935463): انت اللي بتكذبي وبابا ما بيكذبش
+
+> [3](#startMs=1758897936463&endMs=1758897937463): ليه لازم حدا يكذب بابا؟
+
+> [4](#startMs=1758897938463&endMs=1758897939463): انت قلتي
+
+> [4](#startMs=1758897939463&endMs=1758897942463): انه هي بس مش بس
+
+> [3](#startMs=1758897943463&endMs=1758897945463): اول شيء هي ما كذبتش انا وياك اليوم حكينا عن الموضوع صح؟
+
+> [4](#startMs=1758897946463&endMs=1758897947463): بس القلم
+
+> [3](#startMs=1758897948463&endMs=1758897950463): انت سالتيني كان بدك تفهمي كيف ما تكذبيش
+
+> [3](#startMs=1758897952463&endMs=1758897956463): الكذب هو مش شو قالت هسه ماما، ماما قالت شيء اللي هي بتفكر انه هو صح
+
+> [3](#startMs=1758897958463&endMs=1758897961463): الكذب هو انما احنا نحكي شيء واحنا عارفين انه هو غلط
+
+> [3](#startMs=1758897963463&endMs=1758897965463): زي لما سالتك اليوم
+
+> [3](#startMs=1758897966463&endMs=1758897968463): اذا قدس اعطتك ال
+
+> [3](#startMs=1758897969463&endMs=1758897971463): وقلت لي اه انت كنت عارفه انه لا صح؟
+
+> [4](#startMs=1758897972463&endMs=1758897972464): اه عارفه
+
+> [3](#startMs=1758897973464&endMs=1758897976463): هسه ماما لما قالت انه هذا ابوها هي بهيك بتفكر
+
+> [4](#startMs=1758897979463&endMs=1758897979464): مش صح حبيبي
+
+> [3](#startMs=1758897980464&endMs=1758897985463): ما نقدرش نعرف اول شيء وحتى ولو مش صح بينفع اذا انت عرفتي تقولي لماما
+
+> [3](#startMs=1758897986463&endMs=1758897987463): ساعتها هيك بتعلم
+
+> [4](#startMs=1758897987463&endMs=1758897988463): يعني
+
+## Explaining figurative language
+
+> [3](#startMs=1758897989463&endMs=1758897991463): اه انت بتحكي مع البسه يعني
+
+> [3](#startMs=1758898001463&endMs=1758898003463): اشرح للتيت شو يعني تعبير مجازي
+
+> [4](#startMs=1758898005463&endMs=1758898005464): انت اشرح
+
+> [3](#startMs=1758898006464&endMs=1758898008463): معلمه شو يعني تعبير مجازي؟
+
+> [3](#startMs=1758898008463&endMs=1758898011463): يعني زي ايش ايش انا اليوم قلت لك في السياره؟
+
+> [3](#startMs=1758898014463&endMs=1758898016463): متذكره شو انا قلت امبارح شيء
+
+> [3](#startMs=1758898019463&endMs=1758898020463): شو قلت لك؟
+
+> [3](#startMs=1758898021463&endMs=1758898024463): قلت لك الدجاجات قلت لك البطاطا عم تستناكي بالصحن
+
+> [3](#startMs=1758898026463&endMs=1758898026464): صح؟
+
+> [3](#startMs=1758898027464&endMs=1758898029463): هذا شو التعبير؟
+
+> [4](#startMs=1758898029463&endMs=1758898030463): مجازي
+
+> [3](#startMs=1758898031463&endMs=1758898034463): ولما اقول لك شام انا عم بستناكي حد الباب
+
+> [3](#startMs=1758898035463&endMs=1758898036463): هذا ايش تعبير ايش؟
+
+> [4](#startMs=1758898037463&endMs=1758898037464): مجازي
+
+> [3](#startMs=1758898039464&endMs=1758898040463): شو النوع الثاني؟
+
+> [4](#startMs=1758898043463&endMs=1758898044463): اخ طبيعي
+
+> [3](#startMs=1758898046463&endMs=1758898047463): عارفه
+
+> [4](#startMs=1758898047463&endMs=1758898048463): عارفه
+
+> [3](#startMs=1758898050463&endMs=1758898052463): طيب لما
+
+> [3](#startMs=1758898057463&endMs=1758898058463): شو قلت لها انت؟
+
+> [4](#startMs=1758898059463&endMs=1758898060463): شعري تعب
+
+> [3](#startMs=1758898061463&endMs=1758898064463): اه انه ماما قالت لك شعري تعب لازم يتربح هذا ايش؟
+
+> [4](#startMs=1758898065463&endMs=1758898066463): تعبير مجازي
+
+> [3](#startMs=1758898067463&endMs=1758898069463): طيب لما سدو تعب ولا ما استريح؟
+
+> [4](#startMs=1758898070463&endMs=1758898072463): تعبير مجازي
+
+> [3](#startMs=1758898072463&endMs=1758898074463): سدو بيتعب ولا ما بيتعبش؟
+
+> [4](#startMs=1758898074463&endMs=1758898075463): ما بيتعبش
+
+> [4](#startMs=1758898076463&endMs=1758898077463): ما بيتعبش
+
+> [3](#startMs=1758898078463&endMs=1758898079463): سدو ما بيتعبش؟
+
+> [3](#startMs=1758898079463&endMs=1758898080463): بينفع سدو يتعب؟
+
+> [4](#startMs=1758898082463&endMs=1758898082464): كيف لا؟
+
+> [3](#startMs=1758898083464&endMs=1758898084463): انت بينفع تتعب؟
+
+> [3](#startMs=1758898086463&endMs=1758898087463): تعبير
+
+> [3](#startMs=1758898088463&endMs=1758898090463): ركزي بينفع نقول عن شام تعبانه؟
+
+> [3](#startMs=1758898091463&endMs=1758898093463): بينفع نستعمل هذا التعبير؟
+
+> [3](#startMs=1758898102463&endMs=1758898105463): المهم هي ضحكت علي بس قلت لها البطاطا عم تستناكي بالصحن
+
+> [3](#startMs=1758898105463&endMs=1758898106463): عشان مجبوره اشرح لها
+
+## Discussion about doctors and feelings
+
+> [3](#startMs=1758898118463&endMs=1758898118464): عم تفحص
+
+> [3](#startMs=1758898119464&endMs=1758898120463): شوفي شوفي
+
+> [3](#startMs=1758898121463&endMs=1758898123463): بالها عليها طبعا غشها
+
+> [4](#startMs=1758898130463&endMs=1758898131463): مين طبيبات؟
+
+> [3](#startMs=1758898136463&endMs=1758898136464): مين طبيب؟
+
+> [4](#startMs=1758898140464&endMs=1758898141463): الحياه
+
+> [3](#startMs=1758898142463&endMs=1758898143463): مين كمان؟
+
+> [4](#startMs=1758898143463&endMs=1758898144463): طبيب
+
+> [3](#startMs=1758898144463&endMs=1758898145463): بتعرفي حدا طبيب؟
+
+> [4](#startMs=1758898145463&endMs=1758898146463): بابا
+
+> [3](#startMs=1758898146463&endMs=1758898147463): بابا طبيب؟
+
+> [4](#startMs=1758898148463&endMs=1758898148464): اه
+
+> [3](#startMs=1758898149464&endMs=1758898150463): صح؟
+
+> [3](#startMs=1758898150463&endMs=1758898152463): طبيب ايش؟ شو مين بيعالج؟
+
+> [4](#startMs=1758898152463&endMs=1758898154463): بيعالج الكبار
+
+> [3](#startMs=1758898154463&endMs=1758898155463): ايش معالج؟
+
+> [4](#startMs=1758898157463&endMs=1758898160463): غضبانين او زعلانين او مش زعلانين
+
+> [4](#startMs=1758898167463&endMs=1758898168463): الله الله
+
+> [3](#startMs=1758898168463&endMs=1758898171463): ين متضايقين وعايشين الله منها هي الدنيا
+
+> [3](#startMs=1758898174463&endMs=1758898175463): هذول بابا
+
+> [4](#startMs=1758898176463&endMs=1758898176464): لا
+
+> [4](#startMs=1758898177464&endMs=1758898177465): لا
+
+> [3](#startMs=1758898181465&endMs=1758898183463): احكي هنا انا طبيب ايش؟
+
+> [4](#startMs=1758898183463&endMs=1758898184463): طبيب ايش؟
+
+> [4](#startMs=1758898185463&endMs=1758898186463): طبيب مجازي
+
+> [3](#startMs=1758898190463&endMs=1758898190464): طبيب نفسي
+
+> [4](#startMs=1758898192464&endMs=1758898194463): طبيب نفسي في السجا
+
+> [4](#startMs=1758898195463&endMs=1758898196463): نطقت عليك
+
+> [3](#startMs=1758898201463&endMs=1758898203463): ليه رفعتي لي اجري بقول انا عرفت؟
+
+> [4](#startMs=1758898204463&endMs=1758898207463): عشان عشانك قلت شيء غلط
+
+> [3](#startMs=1758898208463&endMs=1758898209463): اخذ
+
+> [3](#startMs=1758898209463&endMs=1758898210463): يعطيك يعني
+
+> [4](#startMs=1758898211463&endMs=1758898212463): شو سؤال؟
+
+> [3](#startMs=1758898212463&endMs=1758898213463): قلت شيء غلط
+
+> [3](#startMs=1758898213463&endMs=1758898214463): هيك
+
+> [4](#startMs=1758898216463&endMs=1758898217463): ليش عم
+
+> [3](#startMs=1758898225463&endMs=1758898226463): تلعبي في البسه هي لحدك
+
+> [4](#startMs=1758898227463&endMs=1758898227464): ايوه
+
+> [3](#startMs=1758898232464&endMs=1758898235463): مروان شو عم بيعمل ليه ما ما بينتش خلقته

@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Yo. Let's get this bread.\n\n### 🚨 Your To-Do List\n\n*   So, about that 80 vs. 150-hour work week you spent half of yesterday debating. The company apparently needs \"another 150 hours this month.\" You need to decide if you're actually going to work those hours or just talk about it. Pick a number and lock in.\n*   You're building an AI company but still manually copying patient notes? And complaining that \"It's crazy, one is masculine and one is feminine\"? You literally said, \"I need someone to help me.\" Maybe build that tool you're always talking about for yourself first? Just a thought. 🤷🏻\n*   That side hustle that could \"make millions a month\"... you were told to \"think about it, and also think if you want to join me.\" Clock's ticking on that one.\n*   Your Monday is cooked. You have meetings stacked from 10 AM to 1 PM. Don't even try to change it.\n\n### 💸 Money Quebbins\n\n*   Joseph hit you with a 22k bill for the car and you seemed... surprised. You're supposed to review the invoice with someone today to \"make sure we're not getting ripped off.\" Don't crash out when you see the price for that \"intercooler.\"\n\n### ✨ Side Quests\n\n*   Nice 30-minute theological deep dive on \"The Chosen\" yesterday. Glad to see you're using your downtime for lighthearted stuff like the socio-political context of the Pharisees. 🤓\n*   Don't forget you're planning a trip to Austria for Christmas. You know, for when you're not working those 150 hours."
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1759881761713,
+  "sharedAt": null
+}

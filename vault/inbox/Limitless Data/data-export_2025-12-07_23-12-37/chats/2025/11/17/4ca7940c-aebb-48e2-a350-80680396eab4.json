@@ -1,0 +1,43 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "i need to start working on a contract for basel"
+    },
+    {
+      "role": "assistant",
+      "content": "Quick check: do you mean a contract with \"Basel\" (a person/company) or for a project in Basel, Switzerland? Any deadline or key terms (scope, payment, IP, data protection, clinical services)? I'll search your recent lifelogs for mentions of \"Basel\" and related contract details. Proceeding to search lifelogs for \"Basel\" and \"contract\".",
+      "toolCalls": [
+        {
+          "id": "call_Kd0tnS8vo1xSAjiBHoYsHRcd",
+          "toolName": "searchLifelogs",
+          "args": {
+            "query": "Basel OR contract OR \"Basel\"",
+            "startTimeString": null,
+            "endTimeString": null,
+            "isStarred": null
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "content": null
+    },
+    {
+      "role": "assistant",
+      "content": "Got it — I'll draft a contract for Basel. Two quick clarifying questions (one closed): \n\n1) Do you mean Basel (the city in Switzerland) — a local partner/health system there — or a person/company named \"Basel\"? (Yes / No: Basel = city)  \n2) What's the target date to share a first draft? If you don't specify, I'll use Nov 24, 2025 (one week).\n\nWhen you confirm, I'll produce:\n- a focused one-page term sheet covering scope, payment, IP/data protection, clinical governance, liability, and termination;\n- a short contract skeleton (key clauses + suggested language) you can hand to lawyers; and\n- an execution checklist with owners and due dates.\n\nBackground I’ll use (from your lifelogs): you routinely negotiate clinic/healthplan contracts (Clalit, Maccabi) with attention to intake vs follow-up flows, psychiatrist vs care-manager pricing ratios, cancellation policy, staff compensation adjustments and onboarding. I'll mirror that structure — itemizing intake (intake assessment), follow-up care (care manager / psychiatrist ratio), data flows, indemnities, and regulatory/compliance points (Swiss DPA/HIPAA-like protections). I’ll flag staff/bonus impacts and no-show/cancellation policy options and recommend a model that preserves margins (e.g., require X care manager follow-ups per psychiatrist intake, or adjust pricing accordingly).\n\nConfirm (Basel = city? and draft deadline), and I’ll start the draft."
+    },
+    {
+      "role": "user",
+      "content": "basel kanaaneh the lead candidate for the clinic general manager"
+    },
+    {
+      "role": "assistant",
+      "content": "Understood — Basel Kanaaneh is the lead candidate for Clinic General Manager.\n\nQuick closed question: do you want (A) an employment/engagement contract for Basel as General Manager, or (B) an offer letter + short-term trial/POC arrangement (e.g., 3-month probation with KPIs) before a full employment contract? Pick A or B.\n\nWhen you answer I'll: verify role & scope from your recent lifelogs, then produce (within this message):\n- Recommended approach (2 options with trade-offs + my firm recommendation).\n- One-page term sheet / offer outline (compensation, hours, probation, KPIs, reporting, termination, notice, benefits).\n- Key contract clauses to send to legal (short template language for Scope of Work, Compensation, IP, Data Protection, Confidentiality, Clinical Governance, Indemnity, Termination, Non-solicit).\n- Execution checklist with owners and due dates (owner = you / legal / HR) to get an offer sent within one week.\n\nAnswer A or B and confirm the target send-by date (default Nov 24, 2025)."
+    }
+  ],
+  "summary": "Basel Contract Clarification",
+  "createdAt": 1763365924266,
+  "sharedAt": null
+}

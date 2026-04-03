@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Who is dekel taliaz?"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on your conversations, Dekel Talias appears to be a senior partner or executive at the company, functioning as a key strategic counterpart to you.\n\nHe is deeply involved in setting the company's primary and secondary objectives, mediating between the financial goals set by leadership (like Oren and Alex) and your focus on clinical stabilization and sustainable growth.\n\nIn your discussion about clinic goals, he helped you frame the strategy for the upcoming 2:00 PM meeting, agreeing that the primary objective should be stabilization, not immediate cost-cutting:\n\n> \"Let's summarize that for the 2 o'clock meeting, you don't have to come and convince about this goal... Come and say how your plan supports the increase in numbers and at what stage you start looking at the other KPIs.\"\n\nHe seems to be the leadership figure you align with on a peer-to-peer, evidence-based level to build a consensus before presenting to the broader team."
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1764894984103,
+  "sharedAt": null
+}

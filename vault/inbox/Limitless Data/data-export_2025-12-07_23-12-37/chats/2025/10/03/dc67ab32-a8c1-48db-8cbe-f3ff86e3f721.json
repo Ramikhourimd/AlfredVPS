@@ -1,0 +1,35 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Detect the idea I described most frequently today and craft a 30-second pitch: hook, value, proof/example, simple ask."
+    },
+    {
+      "role": "assistant",
+      "content": "Checking today’s lifelogs for common ideas...",
+      "toolCalls": [
+        {
+          "id": "call_8gSWSuBvg7rAmFHtkcrERtYk",
+          "toolName": "searchLifelogsInTimeRange",
+          "args": {
+            "startTimeString": "2025-10-03T00:00:00",
+            "endTimeString": "2025-10-03T12:12:00",
+            "topK": 200,
+            "isStarred": null
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "content": null
+    },
+    {
+      "role": "assistant",
+      "content": "Most-seen idea today: RACI model to run projects, plus bi‑weekly mentoring loop. 🗿\n\n- Hook: Work slow. Decisions stuck. Dug bring simple map: RACI. 🗿\n- Value: One owner. One doer. Clear who consult, who inform. Faster moves. Fewer clashes. Scale clinic + AI together.\n- Proof: You say: \\\"אני פשוט רוצה שתהיה שתהיה איזשהי מערכת שעובדת לבד.\\\" 🗿 Use mentoring pilot: אורי = Accountable. ריבי = Responsible. אליאס = Consulted. אתה = Informed. Meetings every שני שבועות. Agenda fixed.\n- Ask: Say “כן” לפיילוט 2 שבועות. Dug make one RACI grid, one standing meet, one status report. Start שבוע הבא."
+    }
+  ],
+  "summary": "Idea Pitch: Hook, Value, Proof, Ask",
+  "createdAt": 1759482764045,
+  "sharedAt": null
+}

@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "**Protocols for Rami Khouri: Knowledge, Context, Intention**\n\n---\n\n**Worklife Protocols**\n\n- **Strategic Focus:**  \n  - Prioritize initiatives that directly accelerate scalable psychiatric services using AI/automation.  \n  - Regularly review project pipelines for bottlenecks or opportunities to automate clinical workflows.\n\n- **Meeting Efficiency:**  \n  - Enter each meeting with a clear agenda and desired outcome.  \n  - Capture action items in real time; assign ownership before meeting ends.  \n  - Summarize key decisions and next steps immediately post-meeting.\n\n- **Execution Support:**  \n  - Use assistants/tools to proactively surface cross-meeting dependencies and follow-ups.  \n  - Set up recurring reviews of ongoing projects—flag delays or repeated tasks for intervention.\n\n- **Clinical & Tech Balance:**  \n  - For every new tech initiative, validate clinical impact early (pilot, feedback loop).  \n  - Maintain a running log of regulatory/compliance considerations as you scale solutions.\n\n---\n\n**Personal Protocols**\n\n- **Time Management:**  \n  - Block focused work periods; minimize context switching during deep work blocks.  \n  - Delegate non-essential tasks aggressively—review delegation list weekly.\n\n- **Communication Boundaries:**  \n  - Use concise, actionable prompts for all inbound/outbound communications.  \n  - Set expectations with team: urgent vs. non-urgent channels.\n\n---\n\n**Knowledge Context**\n\n- You move fast and expect proactive support that connects dots across meetings, documents, and workflows.\n- You value structured thinking—prefer short, specific prompts over long summaries.\n- Your current lifelog shows minimal actionable content; ensure future entries capture more context around decisions, blockers, or commitments to maximize assistant effectiveness.\n\n---\n\n**Intention**\n\n- Drive rapid execution on scalable psychiatric AI projects.\n- Maintain high clinical standards while innovating.\n- Protect your time by enforcing clarity and accountability in all interactions.\n\n---\n\n*Next Step Suggestion:* If recent lifelogs lack actionable info, consider using voice notes or quick summaries after key conversations to capture commitments and context for assistant processing. This will help maintain momentum on critical projects."
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1755481750093,
+  "sharedAt": null
+}

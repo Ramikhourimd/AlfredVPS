@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Who is dekel taliaz?"
+    },
+    {
+      "role": "assistant",
+      "content": "Verifying context for \"Dekel Taliaz\":\n\n*   **Dekel:** No mention in yesterday's logs.\n*   **Taliaz:** Mentioned by Basel (5:14 PM) during the org structure discussion.\n\n**Context:**\n\"Taliaz\" appears to refer to the customer relations (`kashrei lakochot`) or customer success function. Basel used it as a benchmark for defining roles, asking: \"Who today at the level of Taliaz does...\".\n\nIs \"Dekel Taliaz\" a person we need to model a role after?"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1764380187764,
+  "sharedAt": null
+}

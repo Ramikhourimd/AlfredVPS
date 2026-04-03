@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a comprehensive to-do list based on my conversation transcripts. Please analyze the transcript and identify all tasks, commitments, and follow-up actions I mentioned or agreed to.\nImportantly: Only use items that I specifically said I would do. Do not include things other people said they would do.\nFor each item, include enough detail that I can understand what needs to be done without having to review the entire transcript again. Use action verbs at the beginning of each task.\nGroup related tasks together when possible, and highlight any dependencies between tasks (e.g., \"Complete X before starting Y\").\nExclude routine activities or general comments that don't require specific action."
+    },
+    {
+      "role": "assistant",
+      "content": "Okay, Rami, here's a comprehensive to-do list based on your conversations on June 3, 2025, focusing on tasks you specifically committed to:\n\n**UK Related Tasks**\n\n*   **Finish** the document from שנבין regarding the UK.\n*   **Send** the document to Alex after finishing it.\n*   **Think** about a good model for the psychiatric ER (Emergency Room).\n*   **Prepare** a table with what we want to give the client and a table of how the distribution will be internally.\n*   **Send** the offer template that needs to be prepared.\n\n**AI Collaboration Project**\n\n*   **Send** all the \"קורות חיים\" (CVs) to see what is useful.\n\n**Other Tasks**\n\n*   **Lower** the price drastically to around 180.\n\nI hope this is helpful! Is there anything else I can help you with today?\n"
+    }
+  ],
+  "summary": "To-Do List From Transcripts",
+  "createdAt": 1748991618057,
+  "sharedAt": null
+}

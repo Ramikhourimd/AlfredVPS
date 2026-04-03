@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a summary of my day based on my conversation transcripts from yesterday. Look at the transcript and respond with a summary of my day that I can use to review everything that happened quickly.\nHere are the things I want to be included in the summary:\n- Key meetings and conversations I participated in\n- Important information I learned or shared\n- Decisions I made or was involved in\n- Problems I encountered and solutions I found\n- Major themes or patterns in my conversations\n\nFormat the summary to be readable and insightful, highlighting what matters most about my day. Keep it brief but comprehensive, capturing the essence of my experiences rather than listing every detail.\nShow me the summary in chronological order when possible, starting with morning activities and ending with evening ones. Prioritize significant events over routine interactions."
+    },
+    {
+      "role": "assistant",
+      "content": "**Daily Summary for August 17, 2025**\n\n---\n\nNo significant meetings, strategic conversations, or operational decisions were captured in your transcripts for this day. The log consists of brief spoken phrases in Arabic—primarily related to waiting and urgency (“استنى شوي حبيبي” / “wait a bit, my dear”; “مستعجلين كثير” / “we’re in a hurry”). There is no evidence of key business discussions, clinical problem-solving, or project execution activities.\n\n---\n\n**Major Themes & Patterns**\n- The day appears to have been dominated by logistical or personal interactions rather than substantive work-related events.\n- No actionable items, decisions, or problems requiring follow-up were recorded.\n\n---\n\nIf you had important meetings or made strategic decisions elsewhere on August 17th that aren’t reflected in these transcripts, please provide those details for a more comprehensive review."
+    }
+  ],
+  "summary": "Daily Summary",
+  "createdAt": 1755481745223,
+  "sharedAt": null
+}

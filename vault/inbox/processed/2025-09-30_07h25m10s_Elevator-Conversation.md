@@ -1,0 +1,34 @@
+---
+alfred_tags:
+- hebrew/business-discussions
+- project-management/operations
+- rami-khouri
+processed_at: '2026-03-03T12:16:35.154072+00:00'
+status: processed
+---
+
+# Elevator Conversation
+
+## Elevator Floor Announcements
+
+> [1](#startMs=1759217110419&endMs=1759217113419): קומה אחת עשרה.
+
+> [1](#startMs=1759217133419&endMs=1759217135419): קומה שמונה.
+
+> [1](#startMs=1759217151419&endMs=1759217153419): קומה חמש.
+
+> [1](#startMs=1759217170419&endMs=1759217172419): קומה ארבע.
+
+## Discussion about the current situation
+
+> [2](#startMs=1759217181419&endMs=1759217183419): מה אנחנו צריכים להחליק מהר?
+
+> [2](#startMs=1759217183419&endMs=1759217188419): תגיד את האוטו נמצאת זה לא צריך לעבור זה חוזר.
+
+> [1](#startMs=1759217191419&endMs=1759217193419): קומה שלוש.
+
+> [3](#startMs=1759217203419&endMs=1759217205419): הם רוצים להיכנס.
+
+> [3](#startMs=1759217206419&endMs=1759217208419): אולי הם לא רוצים להיכנס.
+
+> [3](#startMs=1759217210419&endMs=1759217213419): מה אנחנו מגיעים שלוש?

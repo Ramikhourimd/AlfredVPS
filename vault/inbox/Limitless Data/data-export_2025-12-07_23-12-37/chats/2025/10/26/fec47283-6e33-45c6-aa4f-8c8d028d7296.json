@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Generate a high-priority, brief todo list from my selected entries. Use bullet points, be concise, and make sure tasks are for myself, not others. Format as if I was writing them down on a piece of paper - brief and to the point."
+    },
+    {
+      "role": "assistant",
+      "content": "- WhatsApp Naama to confirm return date this week; propose 2 Zoom slots for a formal interview; clarify earliest start given reserves (after 26/12).\n- Ask Naama for CV + brief on Python/SQL exposure; send a 2-part take-home (30–60 min): simple Python/SQL task + prompt/rubric for psych summary QA (72h turnaround).\n- Draft a 1-pager: role, scope, hours (≈90 hrs/mo), remote-first + monthly in-person, immediate projects (LLM summaries QA; residents training platform; patient app chatbot), evaluation criteria.\n- Prepare 5 de-identified clinic transcripts + gold-standard summaries; define a scoring rubric for summary quality.\n- Define Day 0–14 onboarding/trial plan and KPIs (accuracy vs gold standard, TAT, # reviews automated, model comparisons).\n- Align with PM + UX on interview panel and review rubric; schedule them for the interview.\n- Decide now: proceed with Naama despite limited coding vs prioritize candidates with Python/SQL; if latter, refresh JD to emphasize Python/SQL + data handling.\n- Create a short follow-up template for candidates outlining next steps, timelines, and expectations.\n- Outline discussion points for interview: chatbot architecture scope, residents’ training system MVP, summary QA pipeline."
+    }
+  ],
+  "summary": "Naama Interview Prep",
+  "createdAt": 1761487432137,
+  "sharedAt": null
+}

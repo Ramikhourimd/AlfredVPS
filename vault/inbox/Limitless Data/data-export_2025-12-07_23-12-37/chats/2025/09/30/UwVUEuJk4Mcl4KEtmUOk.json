@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "### Big Work To Do 🔨\n*   Person leave manager job. Dug think you find new person. 🗿\n*   Make paper for sick people. Explain how Teams app work. You say you write it: \"אני יכול לכתוב מין תוכן כזה\".\n*   Write words for sick people far away. For Maccabi, say no service. 🗿\n*   Think hard if want to help sick people far away. You say: \"אני רוצה לעשות קצת סקירה בנושא\".\n*   Send work paper (contract) to person who leave. You say: \"خليني اكتب عندي بس انه ابعث لك سكان\".\n\n### Talks and Checks 🗣️\n*   Wait for mail from person who leave. She tell you what work is open.\n*   Plan talk with doctors (Atef and Ahmed). Teach on-call plan.\n*   Plan talk with Reut and Tal. Test on-call plan. 🗿\n*   Talk with Shachar and Roy. Check on-call plan is good.\n*   Use WhatsApp group to find time for doctor meeting. 🗿"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1759187564860,
+  "sharedAt": null
+}

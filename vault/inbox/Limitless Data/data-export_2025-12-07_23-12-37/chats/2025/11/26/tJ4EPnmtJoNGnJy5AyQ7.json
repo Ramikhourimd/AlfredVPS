@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Who is dekel taliaz?"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on available data:\n\n*   **Taliaz 🇮🇱:** This is our core entity, \"Taliaz Healthcare Israel.\" Yesterday's discussion on work processes focused on clarifying the Taliaz service for referring physicians to streamline patient intake and define internal roles (Rana, Shira, Ori).\n\n*   **Dekel 🔬:** The name \"Dekel\" was not mentioned in yesterday's lifelogs. However, based on your standing instructions, Dekel is the key stakeholder for whom we prepare peer-reviewed clinical evidence. This implies a senior role in our clinical, research, or medical affairs team.\n\n**Synthesis:**\n\"Dekel Taliaz\" is likely not one individual. The query probably refers to **Dekel [Last Name], a key clinical/research stakeholder at Taliaz.**\n\nShall I confirm Dekel's specific title and last name from the org chart? (Y/N)"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1764115825021,
+  "sharedAt": null
+}

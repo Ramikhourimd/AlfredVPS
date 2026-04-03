@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Hey Rami, here's your brief for Monday, September 22nd.\n\n### 🚀 Top Priorities for Today\n\n*   **Prepare Debrief Summary:** You committed to preparing the summary from yesterday's on-call alert system debrief. Dekel wants to review it before you send it to the wider group. You said, \"I will prepare the summary.\"\n*   **Lead On-Call System Fixes:** The debrief uncovered several critical operational gaps. Your main focus today will be driving the solutions with the team.\n*   **Clarify Roles:** The core of your debate with Dekel was about operational vs. clinical ownership. The high-level meeting you agreed to schedule with Alex, Oren, and Dekel is key to resolving this long-term.\n\n### 🛠️ Action Items & Follow-ups\n\n*   **On-Call Alert System Overhaul:**\n    *   **Caller ID:** Task Shahar or Roi with fixing the caller ID to show \"Taliaz,\" not \"Elitaz.\"\n    *   **Confirmation Mechanism:** Discuss adding a \"press 1 to acknowledge\" feature to the alert call. This was a key suggestion from the debrief.\n    *   **Training & Drills:** The biggest failure was a lack of training. You need to take control and \"ensure that training is done\" for all on-call doctors. Let's build a proper onboarding and practice protocol.\n*   **Team & Hiring:**\n    *   **New Psychiatrists:** You need to find a manager for the children's unit (Anan or Ahmed were mentioned) and continue insisting on a 40-hour commitment from new residents.\n    *   **Ataf:** Good news, Ataf is increasing his hours to 25.\n*   **Personal Follow-ups:**\n    *   **Your Mother's Medication:** Follow up with Nabila about the Vybact. You advised that an extra 0.5mg of Lorivan is okay as needed, as long as doses are 4-5 hours apart.\n    *   **Student Case:** Get the details (name, ID, school) for the 9th-grade student who needs an evaluation.\n\n### 🗓️ Meetings\n\n*   **Confirmed @ 9:00 AM:** Zoom call with Roi and Shahar to go over the on-call system's technical flow. You need to send the invite.\n*   **To Be Scheduled:** A crucial strategy meeting with Alex, Oren, and Dekel to finally delineate operational vs. clinical responsibilities for new services.\n*   **Confirmed for Today:** A brief log mentioned, \"I'll see you on Monday,\" likely referring to your 9 AM sync."
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1758504438465,
+  "sharedAt": null
+}

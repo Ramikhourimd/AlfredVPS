@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flow Dashboard + Layer 2 (Attendance)</title>
+
+  <style>
+    :root{
+      --bg:#070d1a;
+      --glass1: rgba(255,255,255,.05);
+      --glass2: rgba(255,255,255,.02);
+      --border: rgba(255,255,255,.10);
+      --text:#eaf0ff;
+      --muted:#a8b3d6;
+      --good:#2ecc71;
+      --warn:#f1c40f;
+      --bad:#e74c3c;
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1100px 700px at 60% -10%, rgba(120,150,255,.14), transparent 60%),
+        radial-gradient(900px 600px at 10% 10%, rgba(46,204,113,.08), transparent 55%),
+        linear-gradient(180deg, #060b18, #070d1a 55%, #060b18);
+      color: var(--text);
+      padding: 24px;
+    }
+    .wrap{max-width:1300px;margin:0 auto;}
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      gap:12px;flex-wrap:wrap;margin-bottom:14px;
+    }
+    h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .chip{
+      padding:8px 12px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:rgba(168,179,214,.92);
+      font-size:12px; display:flex;gap:8px;align-items:center;
+      white-space:nowrap;
+    }
+    .dot{width:9px;height:9px;border-radius:50%}
+    .dot.warn{background:var(--warn)}
+
+    /* KPI strip */
+    .kpiStrip{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .tile{
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      padding:12px 14px;
+      display:flex;justify-content:space-between;align-items:flex-end;gap:10px;
+      min-height:72px;
+      cursor:pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .tile:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+    }
+    .tile .lbl{font-size:12px;color:rgba(168,179,214,.9)}
+    .tile .val{font-size:28px;font-weight:950;letter-spacing:.2px}
+    .tile.noClick{cursor:default}
+    .tile.noClick:hover{transform:none;border-color:rgba(255,255,255,.10);background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));}
+
+    /* main layout */
+    .main{
+      display:grid;
+      grid-template-columns: 1fr 2fr 1fr; /* left, center, right */
+      gap:12px;
+      align-items:stretch;
+    }
+    .panel{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      padding:14px;
+      overflow:hidden;
+      position:relative;
+      min-height: 360px;
+    }
+    .panel h2{
+      margin:0 0 10px;
+      font-size:14px;color:rgba(168,179,214,.95);
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+    }
+    .tabs{
+      display:flex;gap:6px;
+      padding:4px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+    }
+    .tab{
+      border:none;background:transparent;color:rgba(168,179,214,.9);
+      font-size:12px;padding:6px 10px;border-radius:999px;cursor:pointer;
+    }
+    .tab.active{
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    /* funnel */
+    .sub{color:rgba(168,179,214,.9);font-size:12px;margin-bottom:12px}
+    .funnel{display:grid;grid-template-columns:1fr;gap:12px;margin-top:10px;}
+    .step{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius:16px;
+      padding:14px;
+      position:relative;
+    }
+    .step .topRow{
+      display:flex;justify-content:space-between;align-items:flex-end;gap:12px;
+    }
+    .step .name{font-size:12px;color:rgba(168,179,214,.9)}
+    .step .num{font-size:34px;font-weight:950}
+
+    .bar{
+      height:12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+      margin-top:10px;
+      position:relative;
+    }
+    .fill{height:100%;border-radius:999px}
+    .targetLine{
+      position:absolute;top:-8px;width:2px;height:28px;
+      background: rgba(255,255,255,.65);
+      right:80%;
+    }
+    .connector{
+      display:flex;justify-content:center;align-items:center;
+      color:rgba(168,179,214,.9);
+      font-size:12px;
+      gap:10px;
+    }
+    .connPill{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      padding:6px 10px;border-radius:999px;
+      display:inline-flex;gap:8px;align-items:center;
+      white-space:nowrap;
+      cursor:pointer;
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .connPill:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.18);}
+    .arrow{
+      width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;
+      border-top:12px solid rgba(168,179,214,.7);
+      opacity:.9;
+    }
+
+    /* side panels content */
+    .bigNum{font-size:46px;font-weight:950;margin:2px 0 6px}
+    .miniGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .mini{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius:14px;
+      padding:12px;
+    }
+    .mini .k{color:rgba(168,179,214,.9);font-size:12px}
+    .mini .v{font-size:22px;font-weight:950;margin-top:6px}
+
+    .spark{
+      margin-top:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius:14px;
+      padding:10px;
+    }
+    .spark svg{width:100%;height:70px;display:block}
+    .legend{display:flex;justify-content:space-between;gap:10px;color:rgba(168,179,214,.85);font-size:12px;margin-top:8px}
+
+    /* ===== Drawer Layer 2 ===== */
+    .drawerOverlay{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.45);
+      backdrop-filter: blur(2px);
+      display:none;
+      z-index:1000;
+    }
+    .drawerOverlay.open{display:block;}
+    .drawer{
+      position:absolute;
+      top:0; left:0;
+      width:440px;
+      height:100%;
+      background:linear-gradient(180deg, rgba(15,25,50,.98), rgba(10,18,36,.98));
+      border-right:1px solid rgba(255,255,255,.12);
+      box-shadow: 20px 0 60px rgba(0,0,0,.6);
+      padding:18px;
+      transform: translateX(-100%);
+      transition: transform .35s ease;
+      overflow:auto;
+    }
+    .drawerOverlay.open .drawer{ transform: translateX(0); }
+
+    .drawerHeader{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:12px;
+    }
+    .drawerHeader h3{margin:0;font-size:18px}
+    .closeBtn{
+      background:none;border:none;color:#a8b3d6;
+      font-size:22px;cursor:pointer;
+    }
+    .drawerMeta{
+      color:rgba(168,179,214,.9);
+      font-size:13px;
+      margin-top:4px;
+    }
+    .section{margin-top:16px}
+    .sectionTitle{
+      margin:0 0 10px;
+      font-size:12px;
+      color:#a8b3d6;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+    .row{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:10px 12px;
+      margin-bottom:10px;
+    }
+    .rowTop{
+      display:flex;justify-content:space-between;align-items:center;
+      gap:10px;font-size:13px;
+    }
+    .rowTop b{font-size:14px}
+    .miniBar{
+      margin-top:8px;
+      height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      position:relative;
+    }
+    .miniFill{height:100%;border-radius:999px}
+    .miniTarget{
+      position:absolute;top:-6px;height:22px;width:2px;
+      right:85%;
+      background:rgba(255,255,255,.65);
+      box-shadow: 0 0 0 2px rgba(0,0,0,.25);
+    }
+    .chipsRow{display:flex;gap:8px;flex-wrap:wrap}
+    .chip2{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      color:#eaf0ff;
+    }
+    .insight{
+      margin-top:18px;
+      padding:12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.05);
+      border:1px dashed rgba(255,255,255,.18);
+      font-size:13px;
+      line-height:1.5;
+      color:#eaf0ff;
+    }
+
+    @media(max-width:1100px){
+      .main{grid-template-columns:1fr;}
+      .kpiStrip{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .drawer{width:92vw;}
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Flow Dashboard (Layer 1) + Attendance Layer 2</h1>
+    <div class="chip"><span class="dot warn"></span> NPS: 42 · עודכן: 12/01 18:25</div>
+  </header>
+
+  <!-- KPI strip -->
+  <section class="kpiStrip">
+    <div class="tile noClick">
+      <div class="lbl">Intake Conversion</div><div class="val">83.3%</div>
+    </div>
+
+    <!-- clickable -->
+    <div class="tile" onclick="openAttendanceDrawer('KPI strip')">
+      <div class="lbl">Attendance (לחיץ)</div><div class="val">88.0%</div>
+    </div>
+
+    <div class="tile noClick">
+      <div class="lbl">Wait CM (Avg)</div><div class="val">62h</div>
+    </div>
+    <div class="tile noClick">
+      <div class="lbl">Slots (14d)</div><div class="val">47</div>
+    </div>
+  </section>
+
+  <section class="main">
+    <!-- LEFT: Availability -->
+    <aside class="panel">
+      <h2>
+        <span>Availability (Real-time)</span>
+        <span class="tabs" aria-hidden="true">
+          <button class="tab active" type="button">14 יום</button>
+          <button class="tab" type="button">30 יום</button>
+        </span>
+      </h2>
+
+      <div class="bigNum">47</div>
+      <div class="sub">סלוטים פנויים · יעד חודשי: 80</div>
+
+      <div class="bar">
+        <div class="fill" style="width:59%;background:var(--warn)"></div>
+        <div class="targetLine" style="right:80%"></div>
+      </div>
+
+      <div class="miniGrid" style="margin-top:12px">
+        <div class="mini">
+          <div class="k">תור קרוב</div>
+          <div class="v">14/01</div>
+        </div>
+        <div class="mini">
+          <div class="k">Δ מול אתמול</div>
+          <div class="v" style="color:var(--bad)">-12</div>
+        </div>
+      </div>
+
+      <div class="sub" style="margin-top:12px">שכבה 2 כאן תבוא אחרי (CM/Psych + סוג פגישה).</div>
+    </aside>
+
+    <!-- CENTER: Funnel -->
+    <main class="panel">
+      <h2>
+        <span>New Patients Flow</span>
+        <span class="tabs" aria-hidden="true">
+          <button class="tab active" type="button">7 ימים</button>
+          <button class="tab" type="button">30 ימים</button>
+        </span>
+      </h2>
+
+      <div class="sub">פניות → נקבעו → התקיימו (הזרימה מספרת איפה נופלים)</div>
+
+      <div class="funnel">
+
+        <div class="step">
+          <div class="topRow">
+            <div class="name">פניות (שאלונים)</div>
+            <div class="num">300</div>
+          </div>
+          <div class="bar">
+            <div class="fill" style="width:100%;background:rgba(255,255,255,.20)"></div>
+          </div>
+        </div>
+
+        <div class="connector">
+          <span class="connPill" title="נשאר שכבה 1 בדמו">Conversion: <b style="color:var(--good)">83.3%</b> · יעד 80%</span>
+          <span class="arrow"></span>
+        </div>
+
+        <div class="step">
+          <div class="topRow">
+            <div class="name">פגישות שנקבעו</div>
+            <div class="num">250</div>
+          </div>
+          <div class="bar">
+            <div class="fill" style="width:83%;background:var(--good)"></div>
+            <div class="targetLine" style="right:80%"></div>
+          </div>
+        </div>
+
+        <div class="connector">
+          <!-- clickable -->
+          <span class="connPill" onclick="openAttendanceDrawer('Flow connector')">
+            Attendance: <b style="color:var(--good)">88.0%</b> · סף 85% (לחיץ)
+          </span>
+          <span class="arrow"></span>
+        </div>
+
+        <!-- also clickable on the completed step -->
+        <div class="step" onclick="openAttendanceDrawer('Completed step')" style="cursor:pointer">
+          <div class="topRow">
+            <div class="name">פגישות שהתקיימו (לחיץ)</div>
+            <div class="num">220</div>
+          </div>
+          <div class="bar">
+            <div class="fill" style="width:73%;background:rgba(46,204,113,.35)"></div>
+            <div class="targetLine" style="right:85%"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sub" style="margin-top:12px">
+        שכבה 2: פירוק התקיימו לפי אינטייק/מעקב + סיבות No-show.
+      </div>
+    </main>
+
+    <!-- RIGHT: Wait Times -->
+    <aside class="panel">
+      <h2>
+        <span>Wait Times (Retro)</span>
+        <span class="tabs" aria-hidden="true">
+          <button class="tab active" type="button">7 ימים</button>
+          <button class="tab" type="button">30 ימים</button>
+        </span>
+      </h2>
+
+      <div class="miniGrid">
+        <div class="mini">
+          <div class="k">CM (Avg)</div>
+          <div class="v" style="color:var(--bad)">62h</div>
+        </div>
+        <div class="mini">
+          <div class="k">Psych (Avg)</div>
+          <div class="v" style="color:var(--bad)">19d</div>
+        </div>
+      </div>
+
+      <div class="spark">
+        <div class="k" style="color:rgba(168,179,214,.9);font-size:12px">Trend (דמו)</div>
+        <svg viewBox="0 0 300 70" preserveAspectRatio="none">
+          <polyline fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2"
+            points="0,50 40,48 80,52 120,45 160,40 200,38 240,42 280,35 300,32" />
+          <line x1="0" y1="28" x2="300" y2="28" stroke="rgba(255,255,255,.25)" stroke-dasharray="4 4"/>
+          <text x="6" y="24" font-size="10" fill="rgba(168,179,214,.85)">Target</text>
+        </svg>
+        <div class="legend">
+          <span>יעד CM: 48h</span>
+          <span>יעד Psych: 14d</span>
+        </div>
+      </div>
+
+      <div class="sub" style="margin-top:12px">שכבה 2 כאן תהיה פילוח חציון/זנב + לפי ספק.</div>
+    </aside>
+  </section>
+
+</div>
+
+<!-- ===== Attendance Drawer (Layer 2) ===== -->
+<div class="drawerOverlay" id="attendanceDrawer" onclick="overlayClick(event)">
+  <div class="drawer" role="dialog" aria-modal="true" aria-label="Attendance details" onclick="event.stopPropagation()">
+    <div class="drawerHeader">
+      <div>
+        <h3 style="margin:0">Attendance – פירוק</h3>
+        <div class="drawerMeta" id="drawerMeta">—</div>
+      </div>
+      <button class="closeBtn" onclick="closeDrawer()" aria-label="Close">×</button>
+    </div>
+
+    <div class="section">
+      <div class="sectionTitle">לפי סוג פגישה (יעד 85%)</div>
+
+      <div class="row">
+        <div class="rowTop">
+          <b>Intake</b>
+          <span>48 / 60 · <b style="color:var(--warn)">80%</b></span>
+        </div>
+        <div class="miniBar">
+          <div class="miniFill" style="width:80%;background:var(--warn)"></div>
+          <div class="miniTarget" title="Target 85%"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="rowTop">
+          <b>Follow-up CM</b>
+          <span>23 / 25 · <b style="color:var(--good)">92%</b></span>
+        </div>
+        <div class="miniBar">
+          <div class="miniFill" style="width:92%;background:var(--good)"></div>
+          <div class="miniTarget"></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="rowTop">
+          <b>Follow-up Psychiatrist</b>
+          <span>14 / 15 · <b style="color:var(--good)">93%</b></span>
+        </div>
+        <div class="miniBar">
+          <div class="miniFill" style="width:93%;background:var(--good)"></div>
+          <div class="miniTarget"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sectionTitle">סיבות אי-הגעה</div>
+      <div class="chipsRow">
+        <div class="chip2">No-show · 8</div>
+        <div class="chip2">ביטול מטופל · 10</div>
+        <div class="chip2">ביטול קליניקה · 2</div>
+        <div class="chip2">שינוי מועד · 5</div>
+      </div>
+    </div>
+
+    <div class="insight">
+      🧠 <b>תובנה:</b><br/>
+      רוב אי-ההגעה נובעת מ-No-show באינטייק.<br/>
+      פעולה מומלצת: חיזוק תזכורת / אישור כפול יום לפני.
+    </div>
+  </div>
+</div>
+
+<script>
+  function openAttendanceDrawer(source){
+    const meta = document.getElementById('drawerMeta');
+    meta.textContent = `מקור לחיצה: ${source} · חלון זמן: 7 ימים · מדד: Attendance`;
+    const overlay = document.getElementById('attendanceDrawer');
+    overlay.classList.add('open');
+    // lock scroll (nice UX)
+    document.body.style.overflow='hidden';
+  }
+
+  function closeDrawer(){
+    const overlay = document.getElementById('attendanceDrawer');
+    overlay.classList.remove('open');
+    document.body.style.overflow='';
+  }
+
+  function overlayClick(e){
+    // click outside drawer closes
+    closeDrawer();
+  }
+
+  // ESC closes
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      const overlay = document.getElementById('attendanceDrawer');
+      if(overlay.classList.contains('open')) closeDrawer();
+    }
+  });
+</script>
+
+</body>
+</html>

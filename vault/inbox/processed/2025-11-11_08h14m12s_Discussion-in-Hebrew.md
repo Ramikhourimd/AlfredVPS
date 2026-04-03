@@ -1,0 +1,41 @@
+---
+alfred_tags:
+- conversations/personal
+- mental-health/discussions
+created: '2025-11-11'
+input_type: voice-memo
+received: '2025-11-11'
+related:
+- '[[note/Ambient Voice Memo Medical Specialists Discussion 2025-11-11]]'
+source: whisper
+status: processed
+type: input
+---
+
+# Discussion in Hebrew
+
+## Initial conversation
+
+> [6](#startMs=1762848852096&endMs=1762848854096): אתה רוצה לשמוע בדיחה? דבר
+
+## Further discussion
+
+> [8](#startMs=1762848901096&endMs=1762848905096): בדרך כלל אם אנחנו בסינכרון עם המערכת, وين امتى לי סיטי هذا السؤال
+
+> [8](#startMs=1762848918096&endMs=1762848920096): תשמע, שותף שלי אומר, בוא תפוט על הכוננות
+
+> [8](#startMs=1762848921096&endMs=1762848922096): טוב, אני אשאל אותו, אני אגיד לך אותו דבר
+
+> [9](#startMs=1762848929096&endMs=1762848933096): ובנגיד הראומטולוג, הנוירולוג לא כתב שום דבר על בין אוחז סיטי?
+
+> [9](#startMs=1762848934096&endMs=1762848936096): אני אגיד לך על הנוירולוג
+
+> [10](#startMs=1762848959096&endMs=1762848960096): בכל האחוזים
+
+> [10](#startMs=1762848961096&endMs=1762848963096): יש תבנית פה, יש תבנית פה, יש هاي
+
+> [10](#startMs=1762848964096&endMs=1762848966096): תתבונן פה, זה נותן לך
+
+> [11](#startMs=1762848991096&endMs=1762848992096): גם מסתכלים גם כן, מסתכלים גם כן
+
+> [11](#startMs=1762848993096&endMs=1762848995096): אה, אתה עובד דוקטור

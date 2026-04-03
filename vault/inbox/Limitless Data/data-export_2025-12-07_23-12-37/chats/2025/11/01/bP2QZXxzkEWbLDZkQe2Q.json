@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Here is your execution plan for Saturday, November 1, 2025.\n\n### 🎯 Top Priority: Clinical Product Risk\n\nThe AI-generated summaries for child psychiatry are failing, creating manual work for psychiatrists and undermining the system's value. This is the most critical issue identified yesterday.\n\n*   **Action:** Rivi to analyze the gap between the helpful Case Manager (CM) notes and the inadequate AI summaries for child cases (Achmad & Muriel).\n    *   **Owner:** Rivi Idelman\n    *   **Due:** Nov 7, 2025\n*   **Action:** Based on the analysis, Rivi to provide specific feedback and requirements to Stav for model retraining.\n    *   **Owner:** Rivi Idelman\n    *   **Due:** Nov 7, 2025\n\n### 🛠️ Project: AI Issue Management Dashboard\n\nNext steps based on your demo and discussion with Rivi.\n\n**For You (Rami):**\n*   **Task:** Send Rivi the Helsinki protocol to onboard her into the research context.\n    *   **Owner:** Rami Khouri\n    *   **Due:** Today, Nov 1\n*   **Task:** Formally scope out Rivi's involvement in the NLP analysis project (extracting PCL-5 improvement metrics from transcripts).\n    *   **Owner:** Rami Khouri\n    *   **Due:** Nov 5, 2025\n*   **Bug Fix:** The Google Drive integration is down. This blocks automated transcript ingestion.\n    *   **Owner:** Rami Khouri\n    *   **Due:** TBD\n*   **Bug Fix:** The \"Create Rule\" function is missing from the Workflow Automation UI.\n    *   **Owner:** Rami Khouri\n    *   **Due:** TBD\n\n**For Rivi (Ramping Up):**\n*   **Task:** Complete the AI course module on `JTBD & Task Modality Matrix` to build a shared framework.\n    *   **Owner:** Rivi Idelman\n    *   **Due:** Nov 4, 2025\n*   **Task:** Map the end-to-end patient journey by reviewing the characterization documents you were sent.\n    *   **Owner:** Rivi Idelman\n    *   **Due:** Nov 5, 2025\n*   **Task:** Begin using the dashboard for personal analysis while continuing to use Excel for team collaboration until the platform is stable.\n    *   **Owner:** Rivi Idelman\n    *   **Status:** Ongoing\n\n### 🗓️ Scheduling Updates\n\nYour weekly syncs with Rivi have been rescheduled due to upcoming conferences.\n\n*   **Action:** Update the calendar invitation to reflect the new recurring schedule.\n    *   **Owner:** Rami Khouri\n    *   **Due:** Today, Nov 1\n*   **New Schedule:**\n    *   **Next Week:** Thursday, Nov 6 @ 1:45 PM\n    *   **Rami's Conference Week:** Tuesday, Nov 11 @ 11:20 AM\n    *   **Rivi's Conference Week:** Tuesday, Nov 18 @ 2:00 PM\n\n### 🏠 Personal\n\n*   **Follow-up:** You mentioned yesterday morning you wanted to call your sister to check in.\n    *   \"I'll try to check if everything is okay. My sister... I'll call you, okay?\""
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1761957816174,
+  "sharedAt": null
+}

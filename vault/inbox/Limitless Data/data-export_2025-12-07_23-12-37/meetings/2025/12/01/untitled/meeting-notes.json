@@ -1,0 +1,242 @@
+[
+  {
+    "liveNotes": [
+      {
+        "header": "Organizational Structure & Team Dynamics",
+        "details": [
+          {
+            "text": "Organizational conflict between innovation team and R&D execution team is a structural design issue, not accidental",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Solution: Implement an 'ambidextrous organization' model with two separate teams controlled by unified senior leadership",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "R&D team focuses on executing and optimizing today's busines",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Innovation team focuses on exploring and building tomorrow's bus",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Both teams operate independently but are aligned through senior leadership oversight",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Organizations using ambidextrous model achieve 90% success rate on innovation goa",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Implementation requires three core components: structure, team assembly, and rules of engagemen",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Getting the organizational structure right is the single most critical decision",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Head of innovation must report directly to the CEO to establish innovation as a peer to R&D",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Direct reporting line to CEO prevents territorial conflicts and eliminates innovation being positioned as subordinate to ",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Reporting structure is the single most critical decision - getting it wrong undermines the entire organizational m",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Industry trend: 83% of physician informatics officers now have expanding roles, supporting the need for elevated innovation leadership",
+            "transcriptChunkIds": []
+          }
+        ]
+      },
+      {
+        "header": "Innovation Team Structure & Composition",
+        "details": [
+          {
+            "text": "Innovation department should be structured with three main functional arms",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "First arm: Clinical and Insights team - acts as sensors/eyes and ears to understand clinician and patient pain points",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Second arm: AI and Data team - technical engine that designs and builds models",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Third arm: Projects and Implementation team - operational hub managing roadmaps, budgets, and executio",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Innovation team structured as lean five-person team: innovation lead, senior AI/ML engineer, platform engineer, clinical informatics specialist, and one additional ro",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Product manager role: keeps roadmap on track and manages metrics",
+            "transcriptChunkIds": []
+          }
+        ]
+      },
+      {
+        "header": "Governance & Team Interface Management",
+        "details": [
+          {
+            "text": "Governance framework is critical to manage interface between innovation team and R&D department",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Governance goal: prevent conflict, not create bureaucracy",
+            "transcriptChunkIds": []
+          }
+        ]
+      },
+      {
+        "header": "Governance Mechanisms & Steering Committee",
+        "details": [
+          {
+            "text": "Innovation steering committee serves as high-level control tower with CEO, head of R&D, innovation lead, and key clinical leaders",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Steering committee's critical function: act as ultimate referee to decide which projects belong to innovation vs. R&D",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Portfolio framework called 'three horizons' is a powerful tool to prevent conflict between t",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Steering committee sets priorities and allocates resources across innovation and R&D initiatives",
+            "transcriptChunkIds": []
+          }
+        ]
+      },
+      {
+        "header": "Three Horizons Framework",
+        "details": [
+          {
+            "text": "Three horizons framework provides clear swimlanes and shared language for project categorization",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Horizon 1 (Core Business): incremental improvements to existing products/services, 0-2 year timeline, owned by R&D team",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Horizon 2 (Adjacent Space): expansion into adjacent markets and capabilities",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Horizon 2 (Adjacent Space): expansion into adjacent markets and capabilities, 2-4 year timeline, shared territory requiring collaboration between innovation and R&D teams",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Steering committee plays a critical role in managing Horizon 2 projects and coordinating between teams",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Horizon 3 (Breakthrough/Disruptive): unproven AI, totally new business models, 3-7 year timeline, owned by innovation team",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Horizon 3 is the innovation team's sandbox with clear ownership and autonomy to explore breakthrough opportunities",
+            "transcriptChunkIds": []
+          }
+        ]
+      },
+      {
+        "header": "Practical Workflow & Implementation",
+        "details": [
+          {
+            "text": "Practical workflow begins with insights team collecting real problems from clinicians on the ",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Product manager frames up the collected insights into actionable opportunities",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Leadership/steering committee evaluates and prioritizes insights from product manager",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "AI team designs solution based on prioritized insi",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Solution is handed off to development and implementation team",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Feedback loop: usage and impact data is collected and fed back to team for next iteration",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Friction between innovation and R&D teams is typically structural, not per",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Solution requires fixing the system structure, not blaming individuals",
+            "transcriptChunkIds": []
+          }
+        ]
+      },
+      {
+        "header": "AI Agent Implementation",
+        "details": [
+          {
+            "text": "AI agent being implemented as assistant within workflow to summarize news and send daily recap emails",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Agent has pre-configured instructions and tools to fetch news feeds",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Workflow execution allows team to observe agent functionality in action",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "AI agent workflow execution allows team to observe and test agent functionality in real-time",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Agent configuration includes pre-set instructions, model selection, and integrated tools for news feed fetching",
+            "transcriptChunkIds": []
+          }
+        ]
+      },
+      {
+        "header": "Strategic Design Considerations",
+        "details": [
+          {
+            "text": "Core design challenge: building an innovation and AI department from the ground up for a growing digital health company",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Structural choices made now will determine if the department becomes a catalyst for breakthroughs or an expensive service bureau",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Key decision: prioritize internal efficiency vs. external authority when organizing the new divi",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "Central question: should focus be on designing clear, function-focused internal structure that streamlines innovation lifecycle from clinical insights onward, or on external authorit",
+            "transcriptChunkIds": []
+          },
+          {
+            "text": "For companies relying on sophisticated platforms like Predictix, the organizational design choice is critical",
+            "transcriptChunkIds": []
+          }
+        ]
+      }
+    ]
+  }
+]

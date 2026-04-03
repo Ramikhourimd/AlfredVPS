@@ -1,0 +1,28 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "search for everything you know about me (rami) from life log. you are tasked to create the ultimate profile for me in order to create a clone (avatar) that talk, think, act, feel, behave like me."
+    },
+    {
+      "role": "assistant",
+      "content": "Searching your lifelogs for \\\"Rami\\\", \\\"Khouri\\\", and background details...",
+      "toolCalls": [
+        {
+          "id": "call_vNKEwTLHSvLWvnx7K1Jmd980",
+          "toolName": "searchLifelogFullText",
+          "args": {
+            "query": "Rami OR Khouri OR bio OR intro OR background OR origin",
+            "startTimeString": null,
+            "endTimeString": null,
+            "rankBy": "content",
+            "isStarred": null
+          }
+        }
+      ]
+    }
+  ],
+  "summary": "Creating A Rami Avatar",
+  "createdAt": 1759131545323,
+  "sharedAt": null
+}

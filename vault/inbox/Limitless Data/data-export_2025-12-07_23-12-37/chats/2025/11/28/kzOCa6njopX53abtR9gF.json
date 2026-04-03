@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Who is dekel taliaz?"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on your meetings, Dekel is a senior partner and a key figure in the company's research and innovation strategy.\n\n*   **Background & History:** He has been with the company for over 10 years, leading the \"Predictix\" initiative, which developed a decision support tool for antidepressants.\n*   **Current Role:** He is deeply involved in shaping the current research and publication strategy. He is driving the plan for the first paper, which will focus on showcasing the system's efficiency, patient demographics, and diagnostic prediction accuracy.\n*   **Strategic Focus:** He collaborates closely with you, Oren, and Alex on high-level company goals, financial modeling, and scaling the clinical operation. His primary objective appears to be establishing the company as a thought leader through publications and data-driven evidence.\n*   **Collaboration:** He works directly with you and the research team (Noam, Rivi) to define research questions, analyze data, and set timelines for publications."
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1764290197244,
+  "sharedAt": null
+}

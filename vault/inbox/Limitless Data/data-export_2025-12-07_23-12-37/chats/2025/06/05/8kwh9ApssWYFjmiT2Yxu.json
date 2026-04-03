@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a comprehensive to-do list based on my conversation transcripts. Please analyze the transcript and identify all tasks, commitments, and follow-up actions I mentioned or agreed to.\nImportantly: Only use items that I specifically said I would do. Do not include things other people said they would do.\nFor each item, include enough detail that I can understand what needs to be done without having to review the entire transcript again. Use action verbs at the beginning of each task.\nGroup related tasks together when possible, and highlight any dependencies between tasks (e.g., \"Complete X before starting Y\").\nExclude routine activities or general comments that don't require specific action."
+    },
+    {
+      "role": "assistant",
+      "content": "Okay, Rami, here's a comprehensive to-do list based on your conversations from yesterday, June 4, 2025. I've focused on tasks and commitments that you specifically said you would do, excluding actions others mentioned they would handle.\n\n**Pricing and Payment for On-Call Shifts**\n\n*   **Check**: Call the accounting department to check how much they pay per shift on Shabbat and holidays. _(Dependency: Do this before finalizing pricing for the Ministry of Health.)_\n*   **Understand**: Try to understand the document from ההסתדרות הרפואית regarding on-call shifts and pay multipliers for ערב שבת and holidays.\n*   **Reach out**: Call Royi to see if he needs help with anything and send him the existing flow.\n\n**Shira's Performance Evaluation**\n\n*   **Follow up**: Ask Alex about linking sales to Shira's bonus.\n\n**New Process Problem**\n\n*   **Reach out**: Try to reach out to someone about the new process problem.\n\n**Salary and Benefits Calculations**\n\n*   **Send**: Send Elias the סקאם.\n*   **Try**: Try to calculate the salary to see if it comes out lower.\n\n**Meeting with Lenore**\n\n*   **Make**: Make a format for the תחקיר.\n*   **See**: See if you can do something with Lenore this month.\n*   **Make**: Make a dashboard.\n\n**Other**\n\n*   **Finalize**: Finalize items and purchase a domain.\n*   **Look**: Look for the piano.\n"
+    }
+  ],
+  "summary": "**To-Do List**\n\n*   Understand the table regarding pricing.\n*   Try to avoid being late.\n*   See if I can help Amani.\n*   See if I can help Amani.\n*   Check to see if Alex needs something.",
+  "createdAt": 1749078018681,
+  "sharedAt": null
+}

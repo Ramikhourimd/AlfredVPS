@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Across the last 7 days, list each decision discussed. Under each, bullet the supporting arguments and opposing arguments with speaker tags when possible."
+    },
+    {
+      "role": "assistant",
+      "content": "Searching for decision discussions from the last 7 days...",
+      "toolCalls": [
+        {
+          "id": "call_QxkrADihpGIGVBvl9YC1ELbx",
+          "toolName": "searchLifelogs",
+          "args": {
+            "query": "decision OR decide OR should OR choose OR approve OR launch",
+            "startTimeString": "2025-09-26T00:00:00",
+            "endTimeString": "2025-10-03T23:59:59",
+            "isStarred": false
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "content": null
+    }
+  ],
+  "summary": null,
+  "createdAt": 1759482876716,
+  "sharedAt": null
+}

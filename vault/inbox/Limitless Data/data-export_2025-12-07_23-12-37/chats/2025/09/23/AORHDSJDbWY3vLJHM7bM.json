@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "### Critical Follow-ups 🚨\n*   **Resolve the Ra'ut Incident Today:** The morning meeting highlighted a critical process failure. Shachar has already opened the manual case file; you need to insert Ataf's summary and get the patient's email from Ra'ut to close the loop.\n*   **Call Ra'ut:** After sending the summary, call her. She apologized for her reaction but was also relieved it was her who experienced the issue, saying, \"I know you guys... if it were welfare, there would have been a mess.\" This is your chance to rebuild confidence by explaining the new, more robust protocol you're implementing, including the joint drill Alex suggested.\n*   **Doctor's Approval for Nurit:** You need to decide how to handle Nurit's request for the doctor's (Ahmed?) approval email. Shira confirmed he's approved, but the original email from Tali is missing. Decide whether to find it or use the generic approval email sent to Elias.\n\n### Key Tasks ✅\n*   **Redefine On-Call Protocol:** Based on the debrief, define the new protocol. Key elements to include are an automated escalation loop if the psychiatrist doesn't respond and a shared dashboard showing who is on call. As you said, \"the feedback loop needs to exist automatically.\"\n*   **Formalize Psychiatrist Onboarding:** The incident happened because \"they didn't get the proper training.\" Task Shachar with creating a standard onboarding checklist and schedule a proper demo for Ataf and Ahmed to ensure they are \"closed on all the corners.\"\n*   **Prep for Monday's Debrief:** The weekly clinic/tech sync next Monday at 1 PM will be dedicated to the lessons learned from this. Prepare your points on clarifying operational vs. clinical ownership for new projects.\n\n### Upcoming Meetings 🗓️\n*   **Thursday Webinar (9 AM):** You're scheduled to host a webinar for the therapists to explain the service. This is a great opportunity to \"understand how they work, how they think\" and get valuable feedback from the field.\n*   **Monday Sync (1 PM):** The weekly meeting with Shachar and Roi to finalize the new on-call protocol and implement the lessons learned.\n\n### Personal Reminders 🏡\n*   **Maghar Land Plot:** If you're moving forward with the project, the next steps discussed were to hire a surveyor (`מודד`) and get the official building/zoning plan (`תבעה`) to see what's possible.\n*   Don't forget to install that screen protector! 📱"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1758585290726,
+  "sharedAt": null
+}

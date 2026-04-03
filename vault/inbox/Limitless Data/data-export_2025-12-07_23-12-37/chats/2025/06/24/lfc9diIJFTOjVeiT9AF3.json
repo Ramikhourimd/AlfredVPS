@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Okay, Rami, here are your daily notifications, focusing on actionable items from your lifelogs:\n\n**Tasks:**\n\n*   **Send initial questionnaire for children's mental health program:** You committed to sending an initial questionnaire, built upon the DISC-SR, to ענן and רונית today. The email should explain the rationale and include a working draft.\n*   **Schedule a meeting with yourself, שירה, and לי:** To understand how to transition responsibilities related to the clinic and HR from לי to you and שירה.\n*   **Schedule a meeting with yourself and רועי:** To discuss the insights you've gained.\n*   **Follow up with אורן regarding credit card details:** For clinic-related expenses, as discussed in the afternoon.\n*   **Follow up with אליאס regarding the issues with סיכומים in the קליניקס:** You mentioned you would talk to him to understand how to proceed.\n\n**Follow-ups:**\n\n*   **Check on the status of Uriel's forms for קליקס access:** אליאס was supposed to handle this.\n*   **Follow up on the issue of missing סיכומים in קליניקס:** You need to understand why they aren't appearing for the doctors.\n*   **Check with שחר about automating cancellation policy enforcement:** Specifically, how to integrate it with the Cardcom and CRM systems.\n*   **Follow up with נועה regarding the VPN:** To see if it is working.\n\n**Decisions Needed:**\n\n*   **Decide on the approach to the autism project:** You mentioned you would get back to them after speaking with בקרה.\n*   **Decide whether אחמד should only treat children:** רועי raised this point, and you said you'd consider it after assessing the workload.\n*   **Determine the difference between \"titration\" and \"follow-up\" appointments:** You need to understand the distinction to schedule them correctly.\n\n**Ongoing/Important Reminders:**\n\n*   **Address the team's morale:** Multiple people have expressed feeling overwhelmed and unsupported. You mentioned scheduling individual meetings to address this.\n*   **Children's Mental Health Program:** You are aiming to finalize the questionnaire within two weeks.\n*   **Monitor waiting times for appointments:** A \"yellow light\" should trigger at two weeks, and a red light at one month.\n\n**Notes:**\n\n*   You expressed frustration about the lack of clear information and the need to chase down details. Try to establish clearer communication channels and expectations.\n*   You are aware of the need to delegate more effectively and build a stronger hierarchical structure within the team.\n*   You are concerned about the well-being of your team members and want to ensure they feel supported.\n\nLet me know if you'd like me to elaborate on any of these points!\n"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1750719616730,
+  "sharedAt": null
+}

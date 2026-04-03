@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard Cards – Variant B</title>
+  <style>
+    :root{
+      --bg:#070d1a;
+      --glass1: rgba(255,255,255,.05);
+      --glass2: rgba(255,255,255,.02);
+      --border: rgba(255,255,255,.10);
+      --text:#eaf0ff;
+      --muted:#a8b3d6;
+
+      --good:#2ecc71;
+      --warn:#f1c40f;
+      --bad:#e74c3c;
+
+      --shadow: 0 18px 55px rgba(0,0,0,.45);
+      --ring: 0 0 0 1px rgba(255,255,255,.08) inset;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1100px 700px at 60% -10%, rgba(120,150,255,.14), transparent 60%),
+        radial-gradient(900px 600px at 10% 10%, rgba(46,204,113,.08), transparent 55%),
+        linear-gradient(180deg, #060b18, #070d1a 55%, #060b18);
+      color: var(--text);
+      padding: 28px;
+    }
+
+    .wrap{max-width:1250px;margin:0 auto;}
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      gap:12px;flex-wrap:wrap;margin-bottom:14px;
+    }
+    h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .chips{display:flex;gap:10px;flex-wrap:wrap}
+    .chip{
+      padding:8px 12px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:rgba(168,179,214,.92);
+      font-size:12px; display:flex;gap:8px;align-items:center;
+      white-space:nowrap;
+    }
+    .dot{width:9px;height:9px;border-radius:50%}
+    .dot.good{background:var(--good)}
+    .dot.warn{background:var(--warn)}
+    .dot.bad{background:var(--bad)}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:16px;
+    }
+
+    .card{
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+      padding:18px;
+      min-height: 290px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* subtle corner glow */
+    .card::before{
+      content:"";
+      position:absolute; inset:-120px auto auto -140px;
+      width:260px;height:260px;border-radius:50%;
+      background: radial-gradient(circle at 40% 35%, rgba(255,255,255,.08), transparent 60%);
+      pointer-events:none;
+    }
+
+    .top{
+      display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+      margin-bottom:10px;
+    }
+
+    .tabs{
+      display:flex;gap:8px;
+      padding:4px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+    }
+    .tab{
+      border:none;background:transparent;
+      color:rgba(168,179,214,.9);
+      font-size:12px;padding:7px 12px;border-radius:999px;
+      cursor:pointer;
+    }
+    .tab.active{
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+
+    .title{
+      text-align:right;
+      display:flex; flex-direction:column; gap:6px;
+      min-width: 270px;
+    }
+    .titleRow{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    .name{font-weight:900;font-size:18px;letter-spacing:.2px}
+    .deltaMini{
+      display:flex;align-items:center;gap:6px;
+      color:rgba(168,179,214,.95);
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .triUp{
+      width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;
+      border-bottom:10px solid var(--good);
+    }
+    .triDown{
+      width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;
+      border-top:10px solid var(--bad);
+    }
+    .meta{
+      color: rgba(168,179,214,.9);
+      font-size:13px;
+    }
+
+    .kpiBlock{
+      margin-top:6px;
+      display:flex;
+      justify-content:flex-end;
+      align-items:baseline;
+      gap:10px;
+    }
+    .kpi{
+      font-size:56px;
+      font-weight:950;
+      letter-spacing:.4px;
+      line-height:1;
+      text-align:right;
+    }
+    .kpiSub{
+      color: rgba(168,179,214,.9);
+      font-size:14px;
+      margin-top:8px;
+      text-align:right;
+    }
+
+    /* Pills row instead of two big stat cards */
+    .pills{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      margin:14px 0 12px;
+      flex-wrap:wrap;
+    }
+    .pill{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.02);
+      box-shadow: var(--ring);
+      border-radius:999px;
+      padding:10px 12px;
+      min-width: 170px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      color:rgba(168,179,214,.92);
+      font-size:13px;
+    }
+    .pill b{
+      color:var(--text);
+      font-size:18px;
+      letter-spacing:.2px;
+    }
+
+    /* Minimal battery */
+    .batteryWrap{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.02);
+      padding:14px 14px 12px;
+    }
+    .batteryHead{
+      display:flex;justify-content:space-between;align-items:center;
+      color: rgba(168,179,214,.9);
+      font-size:13px;
+      margin-bottom:10px;
+    }
+    .battery{
+      position:relative;
+      height:14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      overflow:hidden;
+    }
+    .fill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      transition: width .35s ease;
+      filter:saturate(1.05);
+    }
+    .target{
+      position:absolute;
+      top:-9px;
+      width:2px;
+      height:32px;
+      background: rgba(255,255,255,.65);
+      box-shadow: 0 0 0 2px rgba(0,0,0,.25);
+      pointer-events:none;
+    }
+    .note{
+      margin-top:10px;
+      color: rgba(168,179,214,.78);
+      font-size:13px;
+      line-height:1.4;
+    }
+
+    @media(max-width:1050px){
+      .grid{grid-template-columns:1fr}
+      .kpi{font-size:52px}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Executive Dashboard – Variant B</h1>
+    <div class="chips">
+      <div class="chip"><span class="dot warn"></span> NPS (דמו): 42</div>
+      <div class="chip">עודכן לאחרונה: 12/01/2026 18:25</div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- 1) Intake Conversion -->
+    <section class="card">
+      <div class="top">
+        <div class="tabs" onclick="event.stopPropagation()">
+          <button class="tab active" id="tab-intake-7" onclick="setWindow('intake','7')">7 ימים</button>
+          <button class="tab" id="tab-intake-30" onclick="setWindow('intake','30')">30 ימים</button>
+        </div>
+
+        <div class="title">
+          <div class="titleRow">
+            <div class="name">Intake Conversion</div>
+            <div class="deltaMini" id="delta-intake"><span class="triUp"></span> +6.6%</div>
+          </div>
+          <div class="meta">פניות → פגישות שנקבעו · KPI יעד: 80%</div>
+        </div>
+      </div>
+
+      <div class="kpiBlock">
+        <div class="kpi" id="kpi-intake">—</div>
+      </div>
+      <div class="kpiSub" id="sub-intake">—</div>
+
+      <div class="pills">
+        <div class="pill"><span>מספר פניות</span><b id="p2-intake">—</b></div>
+        <div class="pill"><span>פגישות שנקבעו</span><b id="p1-intake">—</b></div>
+      </div>
+
+      <div class="batteryWrap">
+        <div class="batteryHead">
+          <span>80% יעד</span><span>המרה בפועל</span>
+        </div>
+        <div class="battery">
+          <div class="fill" id="fill-intake"></div>
+          <div class="target" id="target-intake"></div>
+        </div>
+        <div class="note">מדד תיאום/UX. “התקיימו” לא נכנס פה.</div>
+      </div>
+    </section>
+
+    <!-- 2) Attendance -->
+    <section class="card">
+      <div class="top">
+        <div class="tabs" onclick="event.stopPropagation()">
+          <button class="tab active" id="tab-att-7" onclick="setWindow('att','7')">שבוע</button>
+          <button class="tab" id="tab-att-30" onclick="setWindow('att','30')">30 ימים</button>
+        </div>
+
+        <div class="title">
+          <div class="titleRow">
+            <div class="name">Attendance</div>
+            <div class="deltaMini" id="delta-att"><span class="triDown"></span> −2.4%</div>
+          </div>
+          <div class="meta">מתוכננות → התקיימו · סף: 85%</div>
+        </div>
+      </div>
+
+      <div class="kpiBlock">
+        <div class="kpi" id="kpi-att">—</div>
+      </div>
+      <div class="kpiSub" id="sub-att">—</div>
+
+      <div class="pills">
+        <div class="pill"><span>פגישות מתוכננות</span><b id="p2-att">—</b></div>
+        <div class="pill"><span>פגישות שהתקיימו</span><b id="p1-att">—</b></div>
+      </div>
+
+      <div class="batteryWrap">
+        <div class="batteryHead">
+          <span>85% סף</span><span>אחוז הגעה בפועל</span>
+        </div>
+        <div class="battery">
+          <div class="fill" id="fill-att"></div>
+          <div class="target" id="target-att"></div>
+        </div>
+        <div class="note">מדד No-show/ביטולים. פירוק לפי סוג פגישה יורד שכבה.</div>
+      </div>
+    </section>
+
+    <!-- 3) Wait Times – CM -->
+    <section class="card">
+      <div class="top">
+        <div class="tabs" onclick="event.stopPropagation()">
+          <button class="tab active" id="tab-wcm-7" onclick="setWindow('wcm','7')">7 ימים</button>
+          <button class="tab" id="tab-wcm-30" onclick="setWindow('wcm','30')">30 ימים</button>
+        </div>
+
+        <div class="title">
+          <div class="titleRow">
+            <div class="name">Wait Times – CM</div>
+            <div class="deltaMini" id="delta-wcm"><span class="triDown"></span> +4h</div>
+          </div>
+          <div class="meta">רטרו · זמן המתנה ממוצע · יעד: 48 שעות</div>
+        </div>
+      </div>
+
+      <div class="kpiBlock">
+        <div class="kpi" id="kpi-wcm">—</div>
+      </div>
+      <div class="kpiSub" id="sub-wcm">—</div>
+
+      <div class="pills">
+        <div class="pill"><span>Avg (שעות)</span><b id="p1-wcm">—</b></div>
+        <div class="pill"><span>יעד (שעות)</span><b>48</b></div>
+      </div>
+
+      <div class="batteryWrap">
+        <div class="batteryHead">
+          <span>48h יעד</span><span>לחץ מול יעד</span>
+        </div>
+        <div class="battery">
+          <div class="fill" id="fill-wcm"></div>
+          <div class="target" id="target-wcm"></div>
+        </div>
+        <div class="note">ככל שהבטרייה “מלאה יותר” — יותר לחץ (עברנו יעד).</div>
+      </div>
+    </section>
+
+    <!-- 4) Availability -->
+    <section class="card">
+      <div class="top">
+        <div class="tabs" onclick="event.stopPropagation()">
+          <button class="tab active" id="tab-av-14" onclick="setWindow('av','14')">14 יום</button>
+          <button class="tab" id="tab-av-30" onclick="setWindow('av','30')">30 יום</button>
+        </div>
+
+        <div class="title">
+          <div class="titleRow">
+            <div class="name">Availability</div>
+            <div class="deltaMini" id="delta-av"><span class="triDown"></span> −12</div>
+          </div>
+          <div class="meta">זמן אמת · סלוטים פנויים · יעד חודשי: 80</div>
+        </div>
+      </div>
+
+      <div class="kpiBlock">
+        <div class="kpi" id="kpi-av">—</div>
+      </div>
+      <div class="kpiSub" id="sub-av">—</div>
+
+      <div class="pills">
+        <div class="pill"><span>תור קרוב</span><b id="p1-av">—</b></div>
+        <div class="pill"><span>יעד סלוטים</span><b>80</b></div>
+      </div>
+
+      <div class="batteryWrap">
+        <div class="batteryHead">
+          <span>80 יעד</span><span>סלוטים פנויים</span>
+        </div>
+        <div class="battery">
+          <div class="fill" id="fill-av"></div>
+          <div class="target" id="target-av"></div>
+        </div>
+        <div class="note">מדד עתידי: כשהוא אדום היום — זמני ההמתנה יעלו.</div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  const T = { intakePct:80, attPct:85, waitCmHours:48, availSlots:80 };
+  const DATA = {
+    intake:{
+      "7":  { leads:300, scheduled:250, prev_leads:315, prev_scheduled:246, label:"7 ימים אחרונים" },
+      "30": { leads:1240,scheduled:920, prev_leads:1200, prev_scheduled:860, label:"30 ימים אחרונים" }
+    },
+    att:{
+      "7":  { planned:100, done:88, prev_planned:102, prev_done:90, label:"שבוע נוכחי" },
+      "30": { planned:420, done:361, prev_planned:410, prev_done:360, label:"30 ימים אחרונים" }
+    },
+    wcm:{
+      "7":  { hours:62, prev_hours:58, label:"7 ימים (רטרו)" },
+      "30": { hours:58, prev_hours:55, label:"30 ימים (רטרו)" }
+    },
+    av:{
+      "14": { slots:47, prev_slots:59, earliest:"14/01", label:"14 יום קדימה" },
+      "30": { slots:112, prev_slots:125, earliest:"14/01", label:"30 יום קדימה" }
+    }
+  };
+
+  const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+  const pct=(a,b)=> b ? (a/b)*100 : 0;
+
+  function css(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+  function fillColor(v, target, higherBetter=true){
+    if(higherBetter){
+      if(v>=target) return css('--good');
+      if(v>=target*0.9) return css('--warn');
+      return css('--bad');
+    } else {
+      if(v<=target) return css('--good');
+      if(v<=target*1.1) return css('--warn');
+      return css('--bad');
+    }
+  }
+
+  function setDelta(elId, diff, improvedWhenHigher=true, suffix='%'){
+    const el = document.getElementById(elId);
+    const improved = improvedWhenHigher ? (diff>0) : (diff<0);
+    const abs = Math.abs(diff).toFixed(1);
+    const arrow = improved ? 'triUp' : 'triDown';
+    el.innerHTML = `<span class="${arrow}"></span> ${improved ? '+' : '−'}${abs}${suffix}`;
+  }
+
+  function setWindow(metric, key){
+    if(metric==='intake'){
+      document.getElementById('tab-intake-7').classList.toggle('active', key==='7');
+      document.getElementById('tab-intake-30').classList.toggle('active', key==='30');
+
+      const d=DATA.intake[key];
+      const conv=pct(d.scheduled,d.leads);
+      const prev=pct(d.prev_scheduled,d.prev_leads);
+      const diff=conv-prev;
+
+      document.getElementById('kpi-intake').textContent = `${conv.toFixed(1)}%`;
+      document.getElementById('sub-intake').textContent = d.label;
+      document.getElementById('p1-intake').textContent = d.scheduled;
+      document.getElementById('p2-intake').textContent = d.leads;
+
+      const fill=document.getElementById('fill-intake');
+      fill.style.width = `${clamp(conv,0,100)}%`;
+      fill.style.background = fillColor(conv,T.intakePct,true);
+
+      const target=document.getElementById('target-intake');
+      target.style.right = `${T.intakePct}%`;
+
+      setDelta('delta-intake', diff, true, '%');
+      return;
+    }
+
+    if(metric==='att'){
+      document.getElementById('tab-att-7').classList.toggle('active', key==='7');
+      document.getElementById('tab-att-30').classList.toggle('active', key==='30');
+
+      const d=DATA.att[key];
+      const at=pct(d.done,d.planned);
+      const prev=pct(d.prev_done,d.prev_planned);
+      const diff=at-prev;
+
+      document.getElementById('kpi-att').textContent = `${at.toFixed(1)}%`;
+      document.getElementById('sub-att').textContent = d.label;
+      document.getElementById('p1-att').textContent = d.done;
+      document.getElementById('p2-att').textContent = d.planned;
+
+      const fill=document.getElementById('fill-att');
+      fill.style.width = `${clamp(at,0,100)}%`;
+      fill.style.background = fillColor(at,T.attPct,true);
+
+      const target=document.getElementById('target-att');
+      target.style.right = `${T.attPct}%`;
+
+      setDelta('delta-att', diff, true, '%');
+      return;
+    }
+
+    if(metric==='wcm'){
+      document.getElementById('tab-wcm-7').classList.toggle('active', key==='7');
+      document.getElementById('tab-wcm-30').classList.toggle('active', key==='30');
+
+      const d=DATA.wcm[key];
+      const diff = d.hours - d.prev_hours;
+
+      document.getElementById('kpi-wcm').textContent = `${d.hours}h`;
+      document.getElementById('sub-wcm').textContent = d.label;
+      document.getElementById('p1-wcm').textContent = d.hours;
+
+      // pressure vs target (lower is better)
+      const pressure = clamp((d.hours / T.waitCmHours)*100, 0, 100);
+      const fill=document.getElementById('fill-wcm');
+      fill.style.width = `${pressure}%`;
+      fill.style.background = fillColor(d.hours,T.waitCmHours,false);
+
+      const target=document.getElementById('target-wcm');
+      target.style.right = `${clamp((T.waitCmHours / Math.max(d.hours,T.waitCmHours))*100, 0, 100)}%`;
+
+      // For wait: improvement when LOWER (diff<0). We'll show as hours, not %
+      setDelta('delta-wcm', diff, false, 'h');
+      return;
+    }
+
+    if(metric==='av'){
+      document.getElementById('tab-av-14').classList.toggle('active', key==='14');
+      document.getElementById('tab-av-30').classList.toggle('active', key==='30');
+
+      const d=DATA.av[key];
+      const diff = d.slots - d.prev_slots;
+
+      document.getElementById('kpi-av').textContent = `${d.slots}`;
+      document.getElementById('sub-av').textContent = d.label;
+      document.getElementById('p1-av').textContent = d.earliest;
+
+      const toTarget = clamp((d.slots / T.availSlots)*100, 0, 100);
+      const fill=document.getElementById('fill-av');
+      fill.style.width = `${toTarget}%`;
+      fill.style.background = fillColor(d.slots,T.availSlots,true);
+
+      const target=document.getElementById('target-av');
+      target.style.right = `${clamp((T.availSlots / Math.max(d.slots,T.availSlots))*100, 0, 100)}%`;
+
+      setDelta('delta-av', diff, true, '');
+      return;
+    }
+  }
+
+  // init
+  setWindow('intake','7');
+  setWindow('att','7');
+  setWindow('wcm','7');
+  setWindow('av','14');
+</script>
+</body>
+</html>

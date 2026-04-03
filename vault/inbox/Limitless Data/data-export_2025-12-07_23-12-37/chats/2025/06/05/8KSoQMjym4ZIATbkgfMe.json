@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a summary of my day based on my conversation transcripts from yesterday. Look at the transcript and respond with a summary of my day that I can use to review everything that happened quickly.\nHere are the things I want to be included in the summary:\n- Key meetings and conversations I participated in\n- Important information I learned or shared\n- Decisions I made or was involved in\n- Problems I encountered and solutions I found\n- Major themes or patterns in my conversations\n\nFormat the summary to be readable and insightful, highlighting what matters most about my day. Keep it brief but comprehensive, capturing the essence of my experiences rather than listing every detail.\nShow me the summary in chronological order when possible, starting with morning activities and ending with evening ones. Prioritize significant events over routine interactions."
+    },
+    {
+      "role": "assistant",
+      "content": "OK, here's a summary of your day on Wednesday, June 4th, based on the provided lifelog entries.\n\n*   **Morning:** You had a discussion about pricing and payment for on-call shifts, including weekend rates and rates paid by hospitals. You referenced a website of ההסתדרות הרפואית (Histadrut Medical Organization) regarding כוננות מחלקה (department standby) with a מקדם (coefficient) of 1.2. You discussed how to price the shifts, and what to tell דקל.\n*   **Late Morning:** You discussed Shira's performance evaluation and the weighting of different metrics, including patient satisfaction, lectures, and sales. You considered giving more weight to lectures and revenues, possibly a 60/40 or 65/35 split.\n*   **Early Afternoon:** You discussed a problem with a new process and associated costs, where you needed to pay 3000 for something. You also discussed finalizing items and purchasing a domain. You then had a detailed discussion of salary and benefits calculations with الياس الجهجاه (Elias Jahjah), including topics such as סכר בסיס (base salary), מוסמך לאומית (national certified), and תוספת שקלית (Shekel increase). You requested he send you a סכום (amount).\n*   **Afternoon:** You and Elias Jahjah briefly discussed your job levels and tenure. You then discussed a new hire and their salary. You discussed a meeting with Lenore and the finalization of a protocol.\n*   **Early Evening:** There's a discussion about someone's fear of being seen, efforts made by another person, a broken bond, and a terrifying encounter.\n*   **Evening:** You had a conversation about houses and interacted with children regarding piano playing, a toy, and saying goodbye to a friend. Later, you troubleshot a chair malfunction and discussed driving logistics, followed by more interaction with a child about piano playing.\n\nIs there anything else you'd like to know about your day? Perhaps you'd like me to focus on a specific meeting or conversation?\n"
+    }
+  ],
+  "summary": "**Day's Key Activities**",
+  "createdAt": 1749078018343,
+  "sharedAt": null
+}

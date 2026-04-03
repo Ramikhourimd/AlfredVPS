@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "**Knowledge-Context-Intention Protocols for Rami Khouri (Oct 17, 2025)**\n\n---\n\n### **Knowledge Base**\n- Building scalable psychiatric services using AI and automation\n- Focus on clinical, research, product, and business integration\n- Prioritizes fast execution, cross-workflow connectivity, and stakeholder-specific insights\n- Recent lifelog indicates ongoing task management, troubleshooting, and coordination across multiple languages and contexts\n\n---\n\n### **Context**\n- High-paced environment with multiple ongoing projects (clinical, product, operational)\n- Multilingual communication (Hebrew, Arabic, English, others)\n- Tasks involve troubleshooting, release timelines, and team coordination\n- Need for structured, minimal cognitive load workflows and automation\n\n---\n\n### **Intention**\n- Streamline task management and follow-up\n- Automate recurring workflows (e.g., release timelines, troubleshooting protocols)\n- Ensure compliance, stakeholder-specific insights, and rapid decision-making\n- Maintain high-level oversight with minimal distraction\n\n---\n\n### **Protocols**\n\n| **Area** | **Action** | **Owner** | **Due Date** | **Notes** |\n|------------|--------------|--------------|--------------|--------------|\n| **Task Management** | Create a prioritized task list from recent conversations, including troubleshooting and release timelines | You | Today | Use lifelog insights to identify urgent vs. low-priority items |\n| **Troubleshooting Workflow** | Develop a troubleshooting protocol for technical issues, including language-specific considerations | DevOps/Tech Team | End of week | Automate common issues detection and escalation |\n| **Release Timeline Tracking** | Implement a dashboard for real-time release status updates | Product Manager | Next Monday | Integrate with existing project management tools |\n| **Language & Communication** | Standardize multilingual communication templates for team updates | Communications Lead | End of week | Focus on clarity and minimal cognitive load |\n| **Follow-up & Check-ins** | Schedule bi-weekly check-ins with stakeholders (clinical, research, product) | You | Bi-weekly | Use automated reminders and summaries |\n\n---\n\n### **Risks & Compliance Flags**\n- Ensure all automation complies with healthcare data privacy standards (HIPAA, GDPR)\n- Flag any unresolved technical issues that could impact service delivery\n- Monitor stakeholder feedback for clarity and engagement\n\n---\n\n### **Next Steps**\n- Confirm task prioritization with you today ✅\n- Automate recurring workflows into protocols by end of week ⚙️\n- Prepare a one-pager on current project status for stakeholder review 📄\n\n---\n\nWould you like me to draft the initial task list or protocol documents now?"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1760665631842,
+  "sharedAt": null
+}

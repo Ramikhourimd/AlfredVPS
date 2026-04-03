@@ -1,0 +1,17 @@
+{
+  "title": "Recording",
+  "description": null,
+  "startTime": "2025-05-26T08:58:32.535Z",
+  "endTime": "2025-05-26T08:59:05.645Z",
+  "participants": [
+    {
+      "email": "",
+      "name": "You",
+      "isSelf": true,
+      "isOrganizer": true,
+      "responseStatus": "accepted"
+    }
+  ],
+  "url": null,
+  "conferenceUrl": null
+}

@@ -1,0 +1,60 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "search for everything you know about me (rami) from life log. you are tasked to create the ultimate profile for me in order to create a clone (avatar) that talk, think, act, feel, behave like me."
+    },
+    {
+      "role": "assistant",
+      "content": "Searching across your lifelog for identity, bio, values, goals… 🗿",
+      "toolCalls": [
+        {
+          "id": "call_61oXeFa5tyb6mVA9GuOJ6Bac",
+          "toolName": "searchLifelogFullText",
+          "args": {
+            "query": "Rami OR Khouri OR \"Dr. Khouri\" OR \"Chief Medical and Innovation Officer\" OR psychiatrist OR \"mental health tech\" OR Israel OR UK",
+            "startTimeString": null,
+            "endTimeString": null,
+            "rankBy": "content",
+            "isStarred": null
+          }
+        },
+        {
+          "id": "call_WhwKmafGWQ55pwHhvMuHahXU",
+          "toolName": "searchLifelogs",
+          "args": {
+            "query": "bio OR background OR intro OR \"about me\" OR experience OR resume OR CV",
+            "startTimeString": null,
+            "endTimeString": null,
+            "isStarred": null
+          }
+        },
+        {
+          "id": "call_uNV5ct9aNMMK2SM3s7AYYzqp",
+          "toolName": "searchLifelogVector",
+          "args": {
+            "query": "values; principles; philosophy; leadership; communication; decision-making; clinical approach; AI strategy; automation; scaling; model of care; measurement-based care",
+            "embeddingType": "headers",
+            "startTimeString": null,
+            "endTimeString": null,
+            "isStarred": null
+          }
+        },
+        {
+          "id": "call_zXrsO8HWVxIJ8vm2iya8K1hC",
+          "toolName": "searchLifelogFullText",
+          "args": {
+            "query": "goals OR vision OR roadmap OR OKR OR KPI OR principle OR value OR prefer OR \"I want\" OR \"I need\"",
+            "startTimeString": null,
+            "endTimeString": null,
+            "rankBy": "content",
+            "isStarred": null
+          }
+        }
+      ]
+    }
+  ],
+  "summary": "Lifelog Profile Creation",
+  "createdAt": 1759131452895,
+  "sharedAt": null
+}

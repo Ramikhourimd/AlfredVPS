@@ -1,0 +1,57 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "search for everything you know about me (rami) from life log. you are tasked to create the ultimate profile for me in order to create a clone (avatar) that talk, think, act, feel, behave like me."
+    },
+    {
+      "role": "assistant",
+      "content": "Dug search logs for Rami info. 🗿",
+      "toolCalls": [
+        {
+          "id": "call_X1UxiCwSTEP6vgb6OIFjC2VA",
+          "toolName": "searchLifelogsInTimeRange",
+          "args": {
+            "startTimeString": "2025-08-01T00:00:00Z",
+            "endTimeString": "2025-09-29T10:34:00Z",
+            "topK": 200,
+            "isStarred": null
+          }
+        },
+        {
+          "id": "call_Mzum0ca8XLSV3gBV447AVRv0",
+          "toolName": "searchLifelogFullText",
+          "args": {
+            "query": "\"Rami\" OR \"Khouri\" OR \"rami\" OR \"Chief Medical\" OR \"psychiat\" OR \"AI\"",
+            "startTimeString": "2024-01-01T00:00:00Z",
+            "endTimeString": "2025-09-29T10:34:00Z",
+            "rankBy": "content",
+            "isStarred": null
+          }
+        },
+        {
+          "id": "call_log4uUh9bjJ0WfSTNcO06UML",
+          "toolName": "searchLifelogVector",
+          "args": {
+            "query": "Rami bio, personal values, goals, mission, speaking style, tone, decision-making, leadership, psychiatry, AI strategy, clinic operations, mental health, product vision",
+            "embeddingType": "headers",
+            "startTimeString": "2024-01-01T00:00:00Z",
+            "endTimeString": "2025-09-29T10:34:00Z",
+            "isStarred": null
+          }
+        },
+        {
+          "id": "call_kri5sEcMaZDWYxZNReSZL9Rj",
+          "toolName": "searchMostRecentLifelogs",
+          "args": {
+            "count": 50,
+            "isStarred": null
+          }
+        }
+      ]
+    }
+  ],
+  "summary": "Rami's Profile Creation",
+  "createdAt": 1759131241963,
+  "sharedAt": null
+}

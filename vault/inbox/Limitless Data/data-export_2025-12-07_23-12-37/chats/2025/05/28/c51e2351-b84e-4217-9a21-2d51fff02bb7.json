@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "HOw can i star a moment using the pendant?"
+    },
+    {
+      "role": "assistant",
+      "content": "To start a moment using the Limitless Pendant, simply **double-tap the pendant**. This action will mark the beginning of a \\\"moment,\\\" allowing you to capture and highlight important events or conversations as they happen. \n\nIf you need more detailed instructions or run into any issues, feel free to reach out to support@limitless.ai!\n\nWould you like tips on how to use moments effectively, or how to find them later in your lifelog?"
+    }
+  ],
+  "summary": "Pendant Moment Initiation: Double-Tap",
+  "createdAt": 1748450518438,
+  "sharedAt": null
+}

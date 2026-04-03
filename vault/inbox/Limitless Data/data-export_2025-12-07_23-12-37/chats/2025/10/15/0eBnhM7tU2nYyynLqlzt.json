@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Here is your action plan based on yesterday's discussions.\n\n### Strategic Initiatives: AI Education Programs 🚀\n\nA two-pronged strategy was defined for community impact:\n1.  **Professional AI Course (Revenue Engine):** A paid course for professionals, starting with a pilot for doctors. Revenue will fund the youth program.\n2.  **Youth AI & Entrepreneurship Program (Impact Engine):** A program for Arab youth, focusing on innovation, responsible AI, and entrepreneurship, especially for those with neurodiverse traits (ADHD, etc.).\n\n**Recommendation:** Focus on launching the doctors' pilot first. It's the fastest path to validating the model and generating funds. The social impact angle—\"Your fee educates the next generation\"—is a powerful marketing tool.\n\n### Immediate Action Items (Owner: Rami) 🎯\n\n*   **[ ] Finalize AI Course Materials (Due: EOD Oct 17):**\n    *   Adapt your existing syllabus and landing page content for the doctors' pilot. You mentioned you have a draft: \"I sent it to Amani but maybe we should review and adjust it.\"\n    *   Send the finalized materials to the association team to begin marketing.\n*   **[ ] Provide Marketing Assets (Due: EOD Oct 16):**\n    *   Send your professional bio and a high-resolution photo to the team. They need this for the course registration page.\n*   **[ ] Confirm Availability for Speaking (Due: Today):**\n    *   Confirm if you are available on **Oct 30** for a potential speaking slot at the Palestinian Association Network event in Nazareth. You noted the 29th was not possible.\n\n### Pending & Opportunities ⏳\n\n*   **Speaking Engagement (Oct 30):** Your contact is proposing you as a speaker at their prep meeting today. This is a high-leverage opportunity to connect with ~17 associations. Awaiting their confirmation.\n*   **Youth Program Pilot:** Curriculum development for the Haifa pilot can begin once the professional course launch is underway. The \"train-the-trainer\" model you proposed is the most scalable approach.\n\n### Risk & Compliance Flag ⚖️\n\n*   **Team Assessment Request:** The team requested a diagnostic \"check-up.\" You correctly established the professional boundary that a formal clinical assessment requires a referral (`afnaya`) and a specific context, not a general inquiry.\n*   **Recommendation:** Maintain this standard. If the goal is team performance, a non-clinical workshop on productivity or workflows could be an alternative. Avoid informal psychiatric evaluations to maintain compliance and ethical integrity."
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1760487872464,
+  "sharedAt": null
+}

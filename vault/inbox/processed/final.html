@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>עמוד תפעולי – Forward + Trend + Retro (שכבה 1)</title>
+
+  <!-- Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+
+  <style>
+    :root{
+      --panel:rgba(255,255,255,.04);
+      --panel2:rgba(255,255,255,.02);
+      --border:rgba(255,255,255,.10);
+      --text:#eaf0ff;
+      --muted:#a8b3d6;
+      --good:#2ecc71;
+      --warn:#f1c40f;
+      --bad:#e74c3c;
+      --shadow: 0 16px 45px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1100px 700px at 60% -10%, rgba(120,150,255,.16), transparent 60%),
+        radial-gradient(900px 600px at 10% 10%, rgba(46,204,113,.10), transparent 55%),
+        linear-gradient(180deg, #060b18, #0b1220 55%, #060b18);
+      color:var(--text);
+      padding:22px;
+    }
+    .wrap{max-width:1320px;margin:0 auto;}
+
+    /* Header */
+    header{
+      display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    h1{margin:0;font-size:18px}
+    .sub{margin-top:6px;color:rgba(168,179,214,.9);font-size:13px;line-height:1.35}
+
+    /* Sections */
+    .section{
+      margin-top:14px;
+    }
+    .sectionTitle{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+      margin:14px 0 10px;
+    }
+    .sectionTitle h2{
+      margin:0;
+      font-size:13px;
+      color:rgba(168,179,214,.95);
+      letter-spacing:.2px;
+    }
+
+    /* Controls */
+    .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .hint{color:rgba(168,179,214,.85);font-size:12px}
+    .btn{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:12px;
+      cursor:pointer;
+    }
+    .btn.active{
+      background:rgba(255,255,255,.10);
+      border-color:rgba(255,255,255,.18);
+      font-weight:700;
+    }
+    .chip{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 12px;border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:rgba(168,179,214,.95);
+      font-size:12px;white-space:nowrap;
+    }
+    .dot{width:9px;height:9px;border-radius:50%}
+    .dot.good{background:var(--good)}
+    .dot.warn{background:var(--warn)}
+    .dot.bad{background:var(--bad)}
+
+    /* Panels */
+    .grid3{
+      display:grid;
+      grid-template-columns: 1.15fr 1.35fr 1.25fr;
+      gap:12px;
+      align-items:stretch;
+    }
+    .panel{
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      box-shadow: var(--shadow);
+      padding:14px;
+      min-height: 300px;
+      overflow:hidden;
+    }
+    .panel h3{
+      margin:0 0 10px;
+      font-size:13px;
+      color:rgba(168,179,214,.95);
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+    }
+
+    /* Generic blocks */
+    .muted{color:rgba(168,179,214,.88);font-size:12px;line-height:1.45}
+    .note{margin-top:10px;color:rgba(168,179,214,.78);font-size:12px;line-height:1.45}
+    .row{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius:16px;
+      padding:12px;
+      margin-top:12px;
+    }
+    .rowTop{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+      color:rgba(168,179,214,.95);font-size:12px;
+    }
+    .rowTop b{color:var(--text);font-size:13px}
+    .bar{
+      margin-top:10px;
+      height:12px;border-radius:999px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      position:relative;
+    }
+    .fill{height:100%;border-radius:999px;width:0%}
+    .targetLine{
+      position:absolute; top:-7px;
+      width:2px; height:26px;
+      background:rgba(255,255,255,.75);
+      right:0%;
+      opacity:.9;
+    }
+    .pillRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .pill{
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;color:#eaf0ff;
+    }
+
+    /* Forward tiles specifics */
+    .big{
+      font-size:52px;
+      font-weight:950;
+      letter-spacing:.2px;
+      line-height:1;
+      margin:2px 0 6px;
+    }
+    .matrix{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:8px;
+    }
+    .mini{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius:16px;
+      padding:12px;
+    }
+    .mini .k{color:rgba(168,179,214,.9);font-size:12px}
+    .mini .v{font-size:20px;font-weight:900;margin-top:6px}
+    .mini .t{margin-top:6px;color:rgba(168,179,214,.75);font-size:12px}
+
+    /* Retro tiles specifics (2 big numbers) */
+    .twoNums{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:6px;
+    }
+    .numBox{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.02);
+      border-radius:16px;
+      padding:12px;
+    }
+    .numBox .k{color:rgba(168,179,214,.9);font-size:12px}
+    .numBox .v{font-size:34px;font-weight:950;margin-top:6px;line-height:1}
+    .numBox .s{margin-top:6px;color:rgba(168,179,214,.75);font-size:12px}
+
+    /* Wait (4 numbers) */
+    .waitGrid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:8px;
+    }
+    .mini.good{border-color: rgba(46,204,113,.35)}
+    .mini.warn{border-color: rgba(241,196,15,.35)}
+    .mini.bad{border-color: rgba(231,76,60,.35)}
+
+    /* Trend area */
+    .trendWrap{
+      border-radius:18px;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+    .trendGrid{
+      display:grid;
+      grid-template-columns: 2fr 1fr;
+      gap:12px;
+      align-items:stretch;
+    }
+    .chartBox{height:340px;}
+    canvas{width:100% !important;height:100% !important;}
+
+    @media(max-width:1100px){
+      .grid3{grid-template-columns:1fr}
+      .trendGrid{grid-template-columns:1fr}
+      .chartBox{height:320px;}
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>עמוד תפעולי – שכבה 1</h1>
+      <div class="sub">
+        למעלה <b>Forward</b> (קדימה), באמצע <b>Trend</b> (מגמות), למטה <b>Retro</b> (בדיעבד). בלי ערבוב בין קדימה לאחורה.
+      </div>
+    </div>
+
+    <div class="controls">
+      <span class="hint">קדימה:</span>
+      <button class="btn active" id="fw14" onclick="setForwardWindow('14')">14 ימים</button>
+      <button class="btn" id="fw30" onclick="setForwardWindow('30')">30 ימים</button>
+
+      <span class="hint" style="margin-inline-start:8px;">אחורה:</span>
+      <button class="btn" id="rw7" onclick="setRetroWindow('7')">7</button>
+      <button class="btn active" id="rw30" onclick="setRetroWindow('30')">30</button>
+      <button class="btn" id="rw90" onclick="setRetroWindow('90')">90</button>
+
+      <span class="hint" style="margin-inline-start:8px;">החלקה:</span>
+      <button class="btn active" id="maOn" onclick="setMA(true)">ממוצע נע 7</button>
+      <button class="btn" id="maOff" onclick="setMA(false)">ללא</button>
+
+      <span class="chip" id="statusChip"><span class="dot warn"></span> עודכן: —</span>
+    </div>
+  </header>
+
+  <!-- FORWARD -->
+  <section class="section">
+    <div class="sectionTitle">
+      <h2>Forward / On-Calendar – קדימה (שכבה 1)</h2>
+      <div class="hint">3 קוביות: Slots פנויים · תור קרוב (4 קטגוריות) · מתוכננות קדימה + תמהיל</div>
+    </div>
+
+    <div class="grid3">
+
+      <!-- F1 Availability -->
+      <div class="panel">
+        <h3>
+          <span>Availability (סלוטים פנויים)</span>
+          <span class="chip" style="padding:6px 10px;font-size:11px">חלון: <b id="fwWindowLbl">14</b>d</span>
+        </h3>
+
+        <div class="big" id="fwSlotsBig">—</div>
+        <div class="muted">סלוטים פנויים · יעד חודשי: <b id="fwMonthlyTarget">—</b></div>
+
+        <div class="row">
+          <div class="rowTop">
+            <span>מול יעד (פרוקסי)</span>
+            <b id="fwSlotsPct">—</b>
+          </div>
+          <div class="bar">
+            <div class="fill" id="fwSlotsFill"></div>
+          </div>
+          <div class="pillRow">
+            <div class="pill">Δ מול אתמול: <b id="fwSlotsDelta">—</b></div>
+          </div>
+        </div>
+
+        <div class="note">מדד מנבא: אם כאן נמוך היום — בעוד שבועיים זמני ההמתנה יעלו.</div>
+      </div>
+
+      <!-- F2 Earliest slot -->
+      <div class="panel">
+        <h3>
+          <span>תור קרוב פנוי — לפי תפקיד וסוג פגישה</span>
+          <span class="chip" style="padding:6px 10px;font-size:11px">ימים + תאריך</span>
+        </h3>
+
+        <div class="matrix">
+          <div class="mini">
+            <div class="k">פסיכיאטר · Intake</div>
+            <div class="v" id="fwPsyIntake">—</div>
+            <div class="t" id="fwPsyIntakeDate">—</div>
+          </div>
+          <div class="mini">
+            <div class="k">פסיכיאטר · Follow-up</div>
+            <div class="v" id="fwPsyFollow">—</div>
+            <div class="t" id="fwPsyFollowDate">—</div>
+          </div>
+          <div class="mini">
+            <div class="k">מנהל תיק · Intake</div>
+            <div class="v" id="fwCmIntake">—</div>
+            <div class="t" id="fwCmIntakeDate">—</div>
+          </div>
+          <div class="mini">
+            <div class="k">מנהל תיק · Follow-up</div>
+            <div class="v" id="fwCmFollow">—</div>
+            <div class="t" id="fwCmFollowDate">—</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="rowTop">
+            <span>הכי מוקדם במערכת</span>
+            <b id="fwEarliestAny">—</b>
+          </div>
+          <div class="muted" id="fwEarliestAnyMeta">—</div>
+        </div>
+
+        <div class="note">כאן מזהים צוואר בקבוק לפי “קבוצת שירות” (Psych/CM × Intake/Follow-up).</div>
+      </div>
+
+      <!-- F3 Planned -->
+      <div class="panel">
+        <h3>
+          <span>פגישות מתוכננות (On-Calendar)</span>
+          <span class="chip" style="padding:6px 10px;font-size:11px">חלון: <b id="fwPlannedWindowLbl">14</b>d</span>
+        </h3>
+
+        <div class="big" id="fwPlannedBig">—</div>
+        <div class="muted" id="fwPlannedLbl">—</div>
+
+        <div class="row">
+          <div class="rowTop">
+            <span>תמהיל מתוכנן</span>
+            <b id="fwMixLbl">—</b>
+          </div>
+          <div class="pillRow">
+            <div class="pill">Intake: <b id="fwMixIntake">—</b></div>
+            <div class="pill">Follow-up: <b id="fwMixFollow">—</b></div>
+            <div class="pill">Psych: <b id="fwMixPsych">—</b></div>
+            <div class="pill">CM: <b id="fwMixCM">—</b></div>
+          </div>
+        </div>
+
+        <div class="note">זה “כמה הולך לקרות קדימה” (לא “כמה נקבעו השבוע”).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TREND -->
+  <section class="section">
+    <div class="sectionTitle">
+      <h2>Trend – מגמות</h2>
+      <div class="hint">גרף גדול (Retro): פניות/נקבעו/בוצעו · גרף קטן (Forward): Slots פנויים פסיכיאטר מול מנהל תיק (2 קווים)</div>
+    </div>
+
+    <div class="trendWrap">
+      <div class="trendGrid">
+        <div class="chartBox"><canvas id="trendRetro"></canvas></div>
+        <div class="chartBox"><canvas id="trendForwardSlots"></canvas></div>
+      </div>
+      <div class="note">
+        טיפ: אם “נקבעו” עולה אבל “בוצעו” לא — הדליפה היא Attendance/No-show/ביטולים.  
+        אם Slots קדימה יורד לאורך זמן — אתם בדרך לחנק גם אם רטרו נראה “בסדר” כרגע.
+      </div>
+    </div>
+  </section>
+
+  <!-- RETRO -->
+  <section class="section">
+    <div class="sectionTitle">
+      <h2>Retro / בדיעבד – אחורה (שכבה 1)</h2>
+      <div class="hint">3 קוביות: פניות↔נקבעו · מתוכננות בעבר↔בוצעו · Wait Times (4 מספרים + יעדים)</div>
+    </div>
+
+    <div class="grid3">
+
+      <!-- R1 Leads -> Scheduled Created -->
+      <div class="panel">
+        <h3>
+          <span>פניות → פגישות שנקבעו (Created)</span>
+          <span class="chip" style="padding:6px 10px;font-size:11px">חלון: <b id="rwWindowLbl">30</b>d</span>
+        </h3>
+
+        <div class="twoNums">
+          <div class="numBox">
+            <div class="k">פניות (שאלונים)</div>
+            <div class="v" id="rLeadsV">—</div>
+            <div class="s">ביקוש נכנס</div>
+          </div>
+          <div class="numBox">
+            <div class="k">נקבעו בתקופה</div>
+            <div class="v" id="rSchedCreatedV">—</div>
+            <div class="s">שיבוצים שנוצרו</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="rowTop">
+            <span>Conversion (פניות→נקבעו)</span>
+            <b><span id="rConvPct">—</span> · יעד: <span id="rConvTargetLbl">—</span></b>
+          </div>
+          <div class="bar">
+            <div class="fill" id="rConvFill"></div>
+            <div class="targetLine" id="rConvTargetLine"></div>
+          </div>
+          <div class="muted" id="rConvAnalysis" style="margin-top:10px">—</div>
+          <div class="pillRow">
+            <div class="pill">Δ פניות: <b id="rDLeads">—</b></div>
+            <div class="pill">Δ נקבעו: <b id="rDSched">—</b></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- R2 Planned Past -> Completed -->
+      <div class="panel">
+        <h3>
+          <span>מתוכננות בעבר → בוצעו בפועל</span>
+          <span class="chip" style="padding:6px 10px;font-size:11px">אותו חלון עבר</span>
+        </h3>
+
+        <div class="twoNums">
+          <div class="numBox">
+            <div class="k">מתוכננות שהיו אמורות לקרות</div>
+            <div class="v" id="rPlannedPastV">—</div>
+            <div class="s">Scheduled-to-occur</div>
+          </div>
+          <div class="numBox">
+            <div class="k">בוצעו בפועל</div>
+            <div class="v" id="rCompletedV">—</div>
+            <div class="s">ביצוע אמיתי</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="rowTop">
+            <span>Attendance (Scheduled→Completed)</span>
+            <b><span id="rAttPct">—</span> · יעד: <span id="rAttTargetLbl">—</span></b>
+          </div>
+          <div class="bar">
+            <div class="fill" id="rAttFill"></div>
+            <div class="targetLine" id="rAttTargetLine"></div>
+          </div>
+          <div class="muted" id="rAttAnalysis" style="margin-top:10px">—</div>
+          <div class="pillRow">
+            <div class="pill">דליפה: <b id="rLeakV">—</b></div>
+            <div class="pill">Intake: <b id="rCompIntakeV">—</b></div>
+            <div class="pill">Follow-up: <b id="rCompFollowV">—</b></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- R3 Wait times (4 numbers) -->
+      <div class="panel">
+        <h3>
+          <span>זמני המתנה (Retro) — Intake / Follow-up</span>
+          <span class="controls" style="gap:6px">
+            <button class="btn active" id="wmMedian" onclick="setWaitMode('median')">חציון</button>
+            <button class="btn" id="wmAvg" onclick="setWaitMode('avg')">ממוצע</button>
+          </span>
+        </h3>
+
+        <div class="waitGrid">
+          <div class="mini" id="w_psy_intake_box">
+            <div class="k">פסיכיאטר · Intake</div>
+            <div class="v" id="w_psy_intake">—</div>
+            <div class="t">יעד ≤ <b id="t_psy_intake">—</b> ימים</div>
+          </div>
+          <div class="mini" id="w_psy_follow_box">
+            <div class="k">פסיכיאטר · Follow-up</div>
+            <div class="v" id="w_psy_follow">—</div>
+            <div class="t">יעד ≤ <b id="t_psy_follow">—</b> ימים</div>
+          </div>
+          <div class="mini" id="w_cm_intake_box">
+            <div class="k">מנהל תיק · Intake</div>
+            <div class="v" id="w_cm_intake">—</div>
+            <div class="t">יעד ≤ <b id="t_cm_intake">—</b> שעות</div>
+          </div>
+          <div class="mini" id="w_cm_follow_box">
+            <div class="k">מנהל תיק · Follow-up</div>
+            <div class="v" id="w_cm_follow">—</div>
+            <div class="t">יעד ≤ <b id="t_cm_follow">—</b> שעות</div>
+          </div>
+        </div>
+
+        <div class="note">כאן זה בדיעבד. קדימה מודדים זמינות/תור קרוב, אחורה מודדים את ההמתנה בפועל.</div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script>
+  /***********************
+   * DEMO DATA (להחלפה בנתונים אמיתיים)
+   ***********************/
+
+  // Forward targets
+  const FORWARD_TARGET = { monthlySlots: 80 };
+
+  // Forward snapshot tiles (14/30)
+  const FORWARD = {
+    "14": {
+      slotsFree: 47, slotsDelta: -12, updatedAt: "12/01 18:25",
+      plannedOnCalendar: 410,
+      mix: { intake: 120, follow: 290, psych: 160, cm: 250 },
+      earliest: {
+        psyIntake: { days: 5, date: "18/01" },
+        psyFollow: { days: 2, date: "15/01" },
+        cmIntake:  { days: 1, date: "14/01" },
+        cmFollow:  { days: 0, date: "היום" }
+      }
+    },
+    "30": {
+      slotsFree: 112, slotsDelta: -13, updatedAt: "12/01 18:25",
+      plannedOnCalendar: 920,
+      mix: { intake: 260, follow: 660, psych: 360, cm: 560 },
+      earliest: {
+        psyIntake: { days: 5, date: "18/01" },
+        psyFollow: { days: 2, date: "15/01" },
+        cmIntake:  { days: 1, date: "14/01" },
+        cmFollow:  { days: 0, date: "היום" }
+      }
+    }
+  };
+
+  // Retro targets
+  const RETRO_TARGETS = {
+    convTarget: 0.90,  // 90%
+    attTarget:  0.85,  // 85%
+    wait: {
+      psy_intake_d: 14,
+      psy_follow_d: 10,
+      cm_intake_h:  48,
+      cm_follow_h:  48
+    }
+  };
+
+  // Retro snapshot tiles (7/30/90)
+  const RETRO = {
+    "7":  {
+      leads: 312, scheduledCreated: 238,
+      plannedPast: 238, completed: 191,
+      completedSplit: { intake: 48, follow: 143 },
+      wait: {
+        median: { psy_intake_d: 16, psy_follow_d: 11, cm_intake_h: 44, cm_follow_h: 30 },
+        avg:    { psy_intake_d: 19, psy_follow_d: 13, cm_intake_h: 62, cm_follow_h: 38 }
+      },
+      delta: { leads:+18, scheduled:+10 },
+      updatedAt:"12/01 18:40"
+    },
+    "30": {
+      leads: 1240, scheduledCreated: 920,
+      plannedPast: 920, completed: 730,
+      completedSplit: { intake: 145, follow: 585 },
+      wait: {
+        median: { psy_intake_d: 15, psy_follow_d: 10, cm_intake_h: 41, cm_follow_h: 28 },
+        avg:    { psy_intake_d: 18, psy_follow_d: 12, cm_intake_h: 58, cm_follow_h: 35 }
+      },
+      delta: { leads:+52, scheduled:+33 },
+      updatedAt:"12/01 18:40"
+    },
+    "90": {
+      leads: 3650, scheduledCreated: 2710,
+      plannedPast: 2710, completed: 2120,
+      completedSplit: { intake: 430, follow: 1690 },
+      wait: {
+        median: { psy_intake_d: 17, psy_follow_d: 12, cm_intake_h: 43, cm_follow_h: 31 },
+        avg:    { psy_intake_d: 20, psy_follow_d: 14, cm_intake_h: 61, cm_follow_h: 39 }
+      },
+      delta: { leads:-40, scheduled:-22 },
+      updatedAt:"12/01 18:40"
+    }
+  };
+
+  // Trend base series (daily demo). We’ll slice for 7/30/90 and apply MA optionally.
+  const DAILY = {
+    labels: [
+      "01/12","02/12","03/12","04/12","05/12","06/12","07/12","08/12","09/12","10/12","11/12","12/12",
+      "13/12","14/12","15/12","16/12","17/12","18/12","19/12","20/12","21/12","22/12","23/12","24/12",
+      "25/12","26/12","27/12","28/12","29/12","30/12"
+    ],
+    // Retro flows
+    leads:     [40,39,43,41,38,44,46,42,45,47,46,44,43,42,48,50,49,47,51,52,49,48,50,53,54,52,51,55,56,57],
+    scheduled: [31,30,33,32,29,34,35,33,34,36,35,34,33,32,36,38,37,35,39,40,37,36,38,41,42,40,39,42,43,44],
+    completed: [26,25,27,28,24,28,30,27,29,31,30,28,27,27,30,32,31,29,33,34,31,30,32,35,36,34,33,35,36,37],
+    // Forward snapshots (2 lines): free slots in next 14d, by role
+    slotsPsych14: [28,27,26,25,25,24,24,23,22,22,21,21,22,22,21,20,19,19,18,17,17,18,17,16,15,15,16,15,14,13],
+    slotsCM14:    [34,33,32,32,30,30,29,29,28,27,27,26,26,27,25,25,25,24,24,23,24,24,22,22,22,21,22,20,20,20]
+  };
+
+  /***********************
+   * Helpers
+   ***********************/
+  const css = (v)=> getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const clamp = (n,min,max)=> Math.max(min, Math.min(max, n));
+  const pct = (a,b)=> b ? (a/b) : 0;
+
+  function colorForHighIsGood(value, target){
+    if(value >= target) return css('--good');
+    if(value >= target*0.6) return css('--warn');
+    return css('--bad');
+  }
+  function colorForRatio(value, targetRatio){
+    // high is good
+    if(value >= targetRatio) return css('--good');
+    if(value >= targetRatio*0.75) return css('--warn');
+    return css('--bad');
+  }
+  function statusDotClassByForwardSlots(slots, target){
+    if(slots >= target) return "good";
+    if(slots >= target*0.6) return "warn";
+    return "bad";
+  }
+  function earliestAny(e){
+    const items = [
+      {k:"פסיכיאטר · Intake", ...e.psyIntake},
+      {k:"פסיכיאטר · Follow-up", ...e.psyFollow},
+      {k:"מנהל תיק · Intake", ...e.cmIntake},
+      {k:"מנהל תיק · Follow-up", ...e.cmFollow},
+    ];
+    items.sort((a,b)=> a.days - b.days);
+    return { days: items[0].days, date: items[0].date, label: items[0].k };
+  }
+  function movingAverage(arr, window=7){
+    const out = [];
+    for(let i=0;i<arr.length;i++){
+      const start = Math.max(0, i-window+1);
+      const chunk = arr.slice(start, i+1);
+      out.push(chunk.reduce((a,b)=>a+b,0) / chunk.length);
+    }
+    return out;
+  }
+
+  // slice daily series by retro window (7/30/90)
+  function sliceForWindow(win){
+    const n = win==="7" ? 7 : win==="30" ? 30 : 30; // demo has 30 points; treat 90 as 30 in demo
+    const start = Math.max(0, DAILY.labels.length - n);
+    const take = (arr)=> arr.slice(start);
+    return {
+      labels: take(DAILY.labels),
+      leads: take(DAILY.leads),
+      scheduled: take(DAILY.scheduled),
+      completed: take(DAILY.completed),
+      slotsPsych14: take(DAILY.slotsPsych14),
+      slotsCM14: take(DAILY.slotsCM14)
+    };
+  }
+
+  /***********************
+   * State
+   ***********************/
+  let forwardWindow = "14";
+  let retroWindow = "30";
+  let waitMode = "median";
+  let useMA = true;
+
+  let chartRetro = null;
+  let chartForwardSlots = null;
+
+  /***********************
+   * Render Forward tiles
+   ***********************/
+  function renderForward(){
+    const d = FORWARD[forwardWindow];
+    document.getElementById('fwWindowLbl').textContent = forwardWindow;
+    document.getElementById('fwPlannedWindowLbl').textContent = forwardWindow;
+
+    // Availability
+    document.getElementById('fwSlotsBig').textContent = d.slotsFree;
+    document.getElementById('fwMonthlyTarget').textContent = FORWARD_TARGET.monthlySlots;
+    document.getElementById('fwSlotsDelta').textContent = (d.slotsDelta>=0?`+${d.slotsDelta}`:`${d.slotsDelta}`);
+
+    const slotsPct = clamp((d.slotsFree / FORWARD_TARGET.monthlySlots) * 100, 0, 200);
+    document.getElementById('fwSlotsPct').textContent = `${slotsPct.toFixed(0)}%`;
+    const fill = document.getElementById('fwSlotsFill');
+    fill.style.width = `${clamp((d.slotsFree / FORWARD_TARGET.monthlySlots)*100, 0, 100)}%`;
+    fill.style.background = colorForHighIsGood(d.slotsFree, FORWARD_TARGET.monthlySlots);
+
+    // Earliest
+    document.getElementById('fwPsyIntake').textContent = `${d.earliest.psyIntake.days}d`;
+    document.getElementById('fwPsyIntakeDate').textContent = `תאריך: ${d.earliest.psyIntake.date}`;
+
+    document.getElementById('fwPsyFollow').textContent = `${d.earliest.psyFollow.days}d`;
+    document.getElementById('fwPsyFollowDate').textContent = `תאריך: ${d.earliest.psyFollow.date}`;
+
+    document.getElementById('fwCmIntake').textContent = `${d.earliest.cmIntake.days}d`;
+    document.getElementById('fwCmIntakeDate').textContent = `תאריך: ${d.earliest.cmIntake.date}`;
+
+    document.getElementById('fwCmFollow').textContent = `${d.earliest.cmFollow.days}d`;
+    document.getElementById('fwCmFollowDate').textContent = `תאריך: ${d.earliest.cmFollow.date}`;
+
+    const ea = earliestAny(d.earliest);
+    document.getElementById('fwEarliestAny').textContent = `${ea.days}d · ${ea.date}`;
+    document.getElementById('fwEarliestAnyMeta').textContent = `הקטגוריה המוקדמת ביותר: ${ea.label}`;
+
+    // Planned
+    document.getElementById('fwPlannedBig').textContent = d.plannedOnCalendar;
+    document.getElementById('fwPlannedLbl').textContent = `סה״כ פגישות משובצות ביומן ל-${forwardWindow} ימים קדימה`;
+
+    const m = d.mix;
+    document.getElementById('fwMixIntake').textContent = m.intake;
+    document.getElementById('fwMixFollow').textContent = m.follow;
+    document.getElementById('fwMixPsych').textContent = m.psych;
+    document.getElementById('fwMixCM').textContent = m.cm;
+    const intakePct = (m.intake + m.follow) ? Math.round((m.intake/(m.intake+m.follow))*100) : 0;
+    document.getElementById('fwMixLbl').textContent = `Intake ${intakePct}% · Follow-up ${100-intakePct}%`;
+  }
+
+  /***********************
+   * Render Retro tiles
+   ***********************/
+  function setBoxState(elId, state){
+    const el = document.getElementById(elId);
+    el.classList.remove("good","warn","bad");
+    el.classList.add(state);
+  }
+  function lowIsGood(value, target){
+    if(value <= target) return "good";
+    if(value <= target*1.3) return "warn";
+    return "bad";
+  }
+
+  function renderRetro(){
+    const d = RETRO[retroWindow];
+    document.getElementById('rwWindowLbl').textContent = retroWindow;
+
+    // R1 numbers
+    document.getElementById('rLeadsV').textContent = d.leads;
+    document.getElementById('rSchedCreatedV').textContent = d.scheduledCreated;
+
+    const conv = pct(d.scheduledCreated, d.leads);
+    const convPct = conv*100;
+    document.getElementById('rConvPct').textContent = `${convPct.toFixed(1)}%`;
+    document.getElementById('rConvTargetLbl').textContent = `${Math.round(RETRO_TARGETS.convTarget*100)}%`;
+    const convFill = document.getElementById('rConvFill');
+    convFill.style.width = `${clamp(convPct,0,100)}%`;
+    convFill.style.background = colorForRatio(conv, RETRO_TARGETS.convTarget);
+    const convTargetPos = clamp(RETRO_TARGETS.convTarget*100, 0, 100);
+    document.getElementById('rConvTargetLine').style.right = `${100-convTargetPos}%`;
+
+    const miss1 = d.leads - d.scheduledCreated;
+    document.getElementById('rConvAnalysis').textContent =
+      `המרה: ${d.scheduledCreated} מתוך ${d.leads} ⇒ חסרים ${miss1} כדי להפוך כל פנייה לשיבוץ.`;
+
+    document.getElementById('rDLeads').textContent = (d.delta.leads>=0?`+${d.delta.leads}`:`${d.delta.leads}`);
+    document.getElementById('rDSched').textContent = (d.delta.scheduled>=0?`+${d.delta.scheduled}`:`${d.delta.scheduled}`);
+
+    // R2 numbers
+    document.getElementById('rPlannedPastV').textContent = d.plannedPast;
+    document.getElementById('rCompletedV').textContent = d.completed;
+
+    const att = pct(d.completed, d.plannedPast);
+    const attPct = att*100;
+    document.getElementById('rAttPct').textContent = `${attPct.toFixed(1)}%`;
+    document.getElementById('rAttTargetLbl').textContent = `${Math.round(RETRO_TARGETS.attTarget*100)}%`;
+    const attFill = document.getElementById('rAttFill');
+    attFill.style.width = `${clamp(attPct,0,100)}%`;
+    attFill.style.background = colorForRatio(att, RETRO_TARGETS.attTarget);
+    const attTargetPos = clamp(RETRO_TARGETS.attTarget*100, 0, 100);
+    document.getElementById('rAttTargetLine').style.right = `${100-attTargetPos}%`;
+
+    const leak = d.plannedPast - d.completed;
+    document.getElementById('rLeakV').textContent = leak >= 0 ? leak : 0;
+    document.getElementById('rCompIntakeV').textContent = d.completedSplit.intake;
+    document.getElementById('rCompFollowV').textContent = d.completedSplit.follow;
+    document.getElementById('rAttAnalysis').textContent =
+      `בוצעו ${d.completed} מתוך ${d.plannedPast} ⇒ דליפה ${leak}. (פירוט No-show בשכבה 2).`;
+
+    // Wait times targets
+    document.getElementById('t_psy_intake').textContent = RETRO_TARGETS.wait.psy_intake_d;
+    document.getElementById('t_psy_follow').textContent = RETRO_TARGETS.wait.psy_follow_d;
+    document.getElementById('t_cm_intake').textContent  = RETRO_TARGETS.wait.cm_intake_h;
+    document.getElementById('t_cm_follow').textContent  = RETRO_TARGETS.wait.cm_follow_h;
+
+    const w = d.wait[waitMode];
+    document.getElementById('w_psy_intake').textContent = `${w.psy_intake_d}d`;
+    document.getElementById('w_psy_follow').textContent = `${w.psy_follow_d}d`;
+    document.getElementById('w_cm_intake').textContent  = `${w.cm_intake_h}h`;
+    document.getElementById('w_cm_follow').textContent  = `${w.cm_follow_h}h`;
+
+    setBoxState("w_psy_intake_box", lowIsGood(w.psy_intake_d, RETRO_TARGETS.wait.psy_intake_d));
+    setBoxState("w_psy_follow_box", lowIsGood(w.psy_follow_d, RETRO_TARGETS.wait.psy_follow_d));
+    setBoxState("w_cm_intake_box",  lowIsGood(w.cm_intake_h,  RETRO_TARGETS.wait.cm_intake_h));
+    setBoxState("w_cm_follow_box",  lowIsGood(w.cm_follow_h,  RETRO_TARGETS.wait.cm_follow_h));
+
+    // Status chip time (use latest of both in demo)
+    const fw = FORWARD[forwardWindow].updatedAt;
+    const rw = d.updatedAt;
+    const dot = statusDotClassByForwardSlots(FORWARD[forwardWindow].slotsFree, FORWARD_TARGET.monthlySlots);
+    document.getElementById('statusChip').innerHTML =
+      `<span class="dot ${dot}"></span> עודכן: קדימה ${fw} · אחורה ${rw}`;
+  }
+
+  /***********************
+   * Trend charts
+   ***********************/
+  function destroyCharts(){
+    if(chartRetro){ chartRetro.destroy(); chartRetro=null; }
+    if(chartForwardSlots){ chartForwardSlots.destroy(); chartForwardSlots=null; }
+  }
+
+  function buildTrend(){
+    destroyCharts();
+
+    const sliced = sliceForWindow(retroWindow);
+    const labels = sliced.labels;
+
+    const leads = (useMA ? movingAverage(sliced.leads, 7) : sliced.leads);
+    const scheduled = (useMA ? movingAverage(sliced.scheduled, 7) : sliced.scheduled);
+    const completed = (useMA ? movingAverage(sliced.completed, 7) : sliced.completed);
+
+    const slotsP = (useMA ? movingAverage(sliced.slotsPsych14, 7) : sliced.slotsPsych14);
+    const slotsC = (useMA ? movingAverage(sliced.slotsCM14, 7) : sliced.slotsCM14);
+
+    // Retro trend chart (3 lines)
+    chartRetro = new Chart(document.getElementById('trendRetro').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: 'פניות (שאלונים)', data: leads, tension: 0.25, pointRadius: 2 },
+          { label: 'שיבוצים שנוצרו (Scheduled Created)', data: scheduled, tension: 0.25, pointRadius: 2 },
+          { label: 'בוצעו בפועל (Completed)', data: completed, tension: 0.25, pointRadius: 2 },
+        ]
+      },
+      options: {
+        responsive:true,
+        maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{position:'top', labels:{color:'rgba(234,240,255,.9)'}},
+          tooltip:{enabled:true}
+        },
+        scales:{
+          x:{ticks:{color:'rgba(168,179,214,.85)'}, grid:{color:'rgba(255,255,255,.06)'}},
+          y:{beginAtZero:true, ticks:{color:'rgba(168,179,214,.85)'}, grid:{color:'rgba(255,255,255,.06)'}}
+        }
+      }
+    });
+
+    // Forward slots trend (2 lines) — layer 1 as you asked
+    chartForwardSlots = new Chart(document.getElementById('trendForwardSlots').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Slots פסיכיאטר (Next 14d)', data: slotsP, tension: 0.25, pointRadius: 2 },
+          { label: 'Slots מנהל תיק (Next 14d)', data: slotsC, tension: 0.25, pointRadius: 2 },
+        ]
+      },
+      options: {
+        responsive:true,
+        maintainAspectRatio:false,
+        interaction:{mode:'index',intersect:false},
+        plugins:{
+          legend:{position:'top', labels:{color:'rgba(234,240,255,.9)'}},
+          tooltip:{enabled:true}
+        },
+        scales:{
+          x:{ticks:{color:'rgba(168,179,214,.85)'}, grid:{color:'rgba(255,255,255,.06)'}},
+          y:{ticks:{color:'rgba(168,179,214,.85)'}, grid:{color:'rgba(255,255,255,.06)'}}
+        }
+      }
+    });
+  }
+
+  /***********************
+   * Controls
+   ***********************/
+  function setForwardWindow(w){
+    forwardWindow = w;
+    document.getElementById('fw14').classList.toggle('active', w==='14');
+    document.getElementById('fw30').classList.toggle('active', w==='30');
+    renderAll();
+  }
+
+  function setRetroWindow(w){
+    retroWindow = w;
+    document.getElementById('rw7').classList.toggle('active', w==='7');
+    document.getElementById('rw30').classList.toggle('active', w==='30');
+    document.getElementById('rw90').classList.toggle('active', w==='90');
+    renderAll();
+  }
+
+  function setMA(v){
+    useMA = v;
+    document.getElementById('maOn').classList.toggle('active', v===true);
+    document.getElementById('maOff').classList.toggle('active', v===false);
+    renderAll();
+  }
+
+  function setWaitMode(m){
+    waitMode = m;
+    document.getElementById('wmMedian').classList.toggle('active', m==='median');
+    document.getElementById('wmAvg').classList.toggle('active', m==='avg');
+    renderAll();
+  }
+
+  function renderAll(){
+    renderForward();
+    renderRetro();
+    buildTrend();
+  }
+
+  // init
+  renderAll();
+</script>
+</body>
+</html>

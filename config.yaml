@@ -1,5 +1,5 @@
 vault:
-  path: /Users/ramikhouri/Desktop/Taliaz
+  path: /app/vault
   ignore_dirs:
     - _templates
     - _bases
@@ -62,7 +62,7 @@ surveyor:
   watcher:
     debounce_seconds: 30
   ollama:
-    base_url: http://localhost:11434
+    base_url: http://ollama:11434
     model: nomic-embed-text
     embedding_dims: 768
   milvus:

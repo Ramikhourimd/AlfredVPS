@@ -1,0 +1,28 @@
+---
+created: '2025-11-13'
+from: '[[person/Rami Khouri]]'
+input_type: voice-memo
+project: '[[project/Telia''z AI Diagnostic Research Paper]]'
+received: '2025-11-13'
+related:
+- '[[note/Patient Treatment Duration and Session Frequency Analysis Request 2025-11-13]]'
+- '[[task/Analyze Patient Session Frequency by Treatment Period]]'
+source: limitless
+status: processed
+---
+
+# Rami Khouri requests a data analysis
+
+## Request for a table of treatment duration and meeting frequency
+
+> [1](#startMs=1763043142117&endMs=1763043152117): טבלה של מספר הימים שמטופל נמצא בטיפול ומספר המפגשים שהוא עשה.
+
+> [1](#startMs=1763043152117&endMs=1763043168117): אני רוצה שתכין לי ט שמראה לי את ממוצע הפגישות לפי תקופה.
+
+> [1](#startMs=1763043168117&endMs=1763043190117): למשל אם מטופל עבר 45 כאילו מה מה האם יש שוני בפגישות בתקופה הראשונה לעומת תקופה הבאה, בהתחלה לעומת הסוף.
+
+## Proposal for calculating average meetings over time intervals
+
+> [1](#startMs=1763043190117&endMs=1763043193117): עכשיו, תנסה לחשוב על דרך איך לעשות את זה.
+
+> [2](#startMs=1763043193571&endMs=1763043207571): אינטרבלים של זמן ותעשה מין מרווח כזה קדימה אחורה ואז תחשב ממוצע תציע דרך כדי לעשות את זה.

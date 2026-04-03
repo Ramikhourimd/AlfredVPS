@@ -1,0 +1,35 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Across the last 7 days, list each decision discussed. Under each, bullet the supporting arguments and opposing arguments with speaker tags when possible."
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "toolCalls": [
+        {
+          "id": "call_hdQAgo2XL8AJ3cDrXz1qeGw4",
+          "toolName": "searchLifelogFullText",
+          "args": {
+            "query": "decision OR decide",
+            "startTimeString": "2025-07-22T00:00:00Z",
+            "endTimeString": "2025-07-29T07:17:00Z",
+            "rankBy": "content"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "content": null
+    },
+    {
+      "role": "assistant",
+      "content": "Here’s a rundown of every decision that came up in your lifelogs over the past week, with the key pros and cons (speaker tags where available):\n\n1. Decision: Make shakshuka  \n   • Supporting  \n     – Unknown: “بدي اعمل شكشوكه” (“I want to make shakshuka”).  \n   • Opposing  \n     – No objections surfaced in the recording.\n\n2. Decision: Technology platform for the new training academy (custom build vs. third-party service)  \n   • Supporting a custom build  \n     – Unknown: “Your preference is to integrate AI tools” (arguing for tighter AI integration in a bespoke platform).  \n   • Opposing use of a third-party service  \n     – Unknown: “or use an existing third party service” (raising the option of faster deployment/less upfront dev).\n\n3. Decision: Hybrid work schedule – choosing in-office day  \n   • Supporting office on Thursday  \n     – You: “اثنين ولا خميس انت بدك؟” (“Monday or Thursday, which do you want?”)  \n     – Unknown: “خميس.” (“Thursday.”)  \n   • Opposing office on Monday  \n     – Unknown: “لا خميس.” (“No, Thursday.”) implicitly rejecting Monday.\n\n4. Decision: Focus on front-end work and check in with colleague  \n   • Supporting  \n     – Unknown: “اذا لسه الشغل الاساس على الفرونت … لازم احكي معها اشوف هي شصارت” (“Since the core work is on the front-end, we need to talk to her to see where things stand.”)  \n   • Opposing / Caveat  \n     – Unknown: “يا صاحبي مشكله” (“Buddy, there’s a problem.”) indicating blockers.\n\n5. Decision: Build the e-learning platform using Laravel + Supabase  \n   • Supporting Laravel/Supabase choice  \n     – You: “سدر هي بلاتفورما ل … بلاتفورما ليرنينج” (“Seder [Laravel] is a learning platform framework.”)  \n     – You: “اسمع شو تعمل اعمل لافل سوبر بيس” (“Listen: set up Laravel + Supabase.”)  \n   • Opposing / Questions  \n     – Unknown: “تعمل ايه؟” (“What exactly should I build?”)  \n     – Unknown: “ايش هرش؟” (“What is it scraping?”) showing some confusion around requirements.\n\n6. Decision: Adopt “Manos” as a research tool  \n   • Supporting  \n     – You: “هسا بدي اياك تبلش تستعمل مانوس … بيساعد” (“I want you to start using Manos—it really helps.”)  \n   • Opposing / Clarification needed  \n     – Unknown: “ايش هرش؟” (“What’s it scraping?”) asking for more detail on how Manos works."
+    }
+  ],
+  "summary": "Decision Analysis: 7 Days\nUser: Decisions, arguments",
+  "createdAt": 1753762625620,
+  "sharedAt": null
+}

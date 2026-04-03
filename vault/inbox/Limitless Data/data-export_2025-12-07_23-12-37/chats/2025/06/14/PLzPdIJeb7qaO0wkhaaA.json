@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Okay, Rami, here are some actionable items and reminders based on your lifelog entries from yesterday:\n\n**Tasks:**\n\n*   **Follow up with Adiel:** Discuss the philanthropy work and ensure preparations are in place to provide support to those in need. The lifelog mentioned: \"דבר איתם על זה שצריך לעשות פה שאנחנו עכשיו מתחילים לתת מענה לכל מי שיצטרך וכל זה ו ושיקבלו אותנו.\" (Talk to them about the fact that we need to do here that we are now starting to respond to anyone who needs it and all that and that they will accept us.)\n*   **Provide clinical points:** Send the \"נקודות\" (points) about how to talk to kids, limit news exposure and maintain routine to the clinic.\n*   **Address concerns with doctors:** Help Shira manage the challenges with doctors regarding the new three-meeting structure and agreements. The lifelog mentioned: \"כדאי שתיכנס לתמונה פה ותעזור לה\" (It is better to enter the picture here and help her).\n\n**Follow-ups:**\n\n*   **Check in with Shira:** Follow up on the increase in workload and ensure the team is prepared to handle the rising numbers. The lifelog mentioned: \"שירה אמרה לי ש אה, שכבר מתחיל להיות בקלוג\" (Shira told me that, ah, it's already starting to be a clog).\n*   **Clarify Alex's concerns:** Understand the specific issues Alex raised regarding the changes being implemented, especially concerning the doctors.\n\n**Reminders/Context:**\n\n*   **PR and Landing Page:** Be aware that Adi has created a landing page, and Shahar is working on connecting it to the website to direct people from various sources (Maccabi, B2C).\n*   **מרכזי חוסן (Resilience Centers):** Shira will release a message to the מרכזי חוסן (Resilience Centers) to offer support.\n\n**Team Dynamics:**\n\n*   **Address team concerns:** It seems there are some underlying tensions and disagreements within the team regarding workload distribution, strategic decisions, and project management. Consider facilitating a team meeting to address these issues and clarify roles and responsibilities. The lifelog mentioned: \"אני מנסה לעזור לה לנהל את זה\" (I'm trying to help her manage it).\n\nI hope this is helpful, Rami. Let me know if you need any further clarification or assistance.\n"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1749855616771,
+  "sharedAt": null
+}

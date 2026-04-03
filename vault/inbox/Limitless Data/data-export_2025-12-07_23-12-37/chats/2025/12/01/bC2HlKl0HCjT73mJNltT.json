@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Who is dekel taliaz?"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on your lifelogs, Dekel Taliaz is a senior leader at Taliaz, likely a founder, who is central to the company's strategic direction and organizational structure.\n\nHere is a summary of his profile:\n\n*   **Strategic Stance & Governance:**\n    *   He is a primary driver of the \"hyper-growth\" strategy, which you have previously identified as a risk.\n    *   He advocates for a clear governance model where leadership sets the strategic goals, and the clinical operation is responsible for execution. As he put it: \"We are the ones who define the goals, the clinic is the one that manages the operation.\"\n    *   He has explicitly prioritized a \"service-first, human-oriented\" brand identity over a technology-focused one, stating: \"We don't want to put the emphasis on technology, we want to put the emphasis on service.\"\n\n*   **Management & Operational Focus:**\n    *   He is deeply involved in defining organizational structure, referencing corporate models like direct vs. dotted reporting lines to solve communication bottlenecks.\n    *   He is pragmatic but demands total commitment for key roles, noting that for certain positions, \"you want all of him.\"\n    *   He is involved in high-level personnel decisions, including your recruitment from Rambam and the hiring of Bassel.\n\n*   **Key Responsibilities:**\n    *   A central figure in leadership meetings, driving discussions on major partnerships (Klalit), operational targets, and resolving cross-departmental issues (e.g., uncoordinated communication with legal counsel).\n    *   He is consulted on operational details, such as the appropriate duration for clinical intake sessions."
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1764554377170,
+  "sharedAt": null
+}

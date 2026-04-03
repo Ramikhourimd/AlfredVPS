@@ -1,0 +1,34 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Consult me how to proceed with shira’s contract and demands"
+    },
+    {
+      "role": "assistant",
+      "content": "",
+      "toolCalls": [
+        {
+          "id": "call_yjVeU5wp51JEzExCR1dc13Uo",
+          "toolName": "searchLifelogs",
+          "args": {
+            "query": "Shira",
+            "startTimeString": "2025-07-01T00:00:00Z",
+            "endTimeString": "2025-07-29T07:00:00Z"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "content": null
+    },
+    {
+      "role": "assistant",
+      "content": "Here’s a concise, step-by-step playbook for wrapping up Shira’s negotiation and getting unstuck:\n\n1. Get her formal counter-offer on paper—fast  \n   • Ask Shira to send you her “real ask” (base + bonus structure) by end of day (or latest tomorrow morning).  \n   • Clarify: Is ₪12 K at 75 % FTE, or ₪12 K at her current 50 %? You need that straight.  \n\n2. Lock in clear hours vs. compensation  \n   • If she wants a true raise (not just more hours), decide whether to:  \n     – Increase her base at 50 % FTE to ₪12 K; or  \n     – Convert her to 75 % FTE at that rate.  \n   • Spell it out in the draft contract: “₪X K base at Y % time, plus bonus up to ₪Z on KPIs.”  \n\n3. Define and document the KPI-linked bonus plan  \n   • Keep it simple and measurable—e.g.:  \n     – Revenue target (e.g. clinic income ≥ ₪1 M/mo → 100 % bonus)  \n     – Wait-time metric (avg. < 2 wks → full bonus; 2–3 wks → 50 %)  \n     – Budget retention (maintain 60∶40 mix)  \n   • State frequency and payout schedule (monthly/quarterly).  \n\n4. Propose a 3-month trial window  \n   • “Let’s treat the next 3 months as a pilot: you onboard these new responsibilities, we track performance against the KPIs, then reconvene.”  \n   • This gives her runway to prove herself—and you guard against over-committing.  \n\n5. Line up your Plan B now  \n   • Begin spec’ing a full-time administrative/operations manager (internal or external) who can take off some of Shira’s plate.  \n   • Explore splitting clinical-ops and admin-ops duties between two roles, if her scope proves too broad.  \n\n6. Communicate to the team  \n   • Tell Rena and Alex that you’ve asked Shira for a written proposal and set a tight deadline; share the high-level terms you’re discussing so everyone’s aligned.  \n   • Make clear that you’ll only green-light the final contract once the numbers and FTE match budget.  \n\nSample next-day email to Shira:  \n“Shira, thanks for last night’s conversation. To move forward, please send me by tomorrow 10 am:  \n1. Your preferred base salary and FTE %  \n2. Your proposed bonus structure (measurable KPIs & payout)  \nOnce I have that in writing, we’ll finalize your contract—on a 3-month pilot basis—and lock in our commitments. If you’d like to chat before sending, let me know. Looking forward to wrapping this up cleanly.”"
+    }
+  ],
+  "summary": "Contract Negotiations With Shira",
+  "createdAt": 1753762847542,
+  "sharedAt": null
+}

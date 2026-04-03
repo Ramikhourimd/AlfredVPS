@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a summary of my day based on my conversation transcripts from yesterday. Look at the transcript and respond with a summary of my day that I can use to review everything that happened quickly.\nHere are the things I want to be included in the summary:\n- Key meetings and conversations I participated in\n- Important information I learned or shared\n- Decisions I made or was involved in\n- Problems I encountered and solutions I found\n- Major themes or patterns in my conversations\n\nFormat the summary to be readable and insightful, highlighting what matters most about my day. Keep it brief but comprehensive, capturing the essence of my experiences rather than listing every detail.\nShow me the summary in chronological order when possible, starting with morning activities and ending with evening ones. Prioritize significant events over routine interactions."
+    },
+    {
+      "role": "assistant",
+      "content": "Okay, here's a summary of your day on June 13, 2025, based on the provided lifelog entries:\n\n**Morning/Early Afternoon:**\n\n*   **PR, Philanthropy, and Clinical Services Discussion:** You discussed PR efforts, philanthropy work led by Adial (who may not be traveling next week), and the need to address increased demand for clinical services. You were updated on Shira's plan to release a statement to resilience centers. You agreed to provide points on how to talk to children and limit news exposure during this time.\n    *   **Action:** Follow up with Adial regarding the philanthropy work. Provide points to Unknown on how to talk to children and limit news exposure.\n*   **Addressing Physician Concerns:** You addressed concerns raised by Alex regarding the new three-session agreements with physicians. You mentioned that Shira is managing this, but you're available to assist if needed. You noted this issue isn't significantly impacting operations.\n\n**Afternoon:**\n\n*   **Work Projects and Team Dynamics:** You had a discussion about work projects, timelines, and team dynamics, including concerns about resources and strategic direction. You expressed frustration with Oren and Alex making decisions without consulting you. You emphasized the need for a strategic approach involving multiple team members.\n\n**General Themes:**\n\n*   **Managing Stress and Anxiety:** There's a recurring theme of addressing anxiety and fear, both in the context of clinical advice and personal experiences related to alarms and potential threats.\n*   **Team Coordination and Communication:** A significant portion of your day involved discussions around team coordination, project management, and strategic alignment, with some friction apparent in decision-making processes.\n"
+    }
+  ],
+  "summary": "Daily Summary",
+  "createdAt": 1749855616782,
+  "sharedAt": null
+}

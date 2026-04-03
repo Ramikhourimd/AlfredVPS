@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Okay, Rami, based on our conversations today, June 5th, 2025, here are some knowledge-context-intention based protocols for your personal and work life:\n\n### Work Life Protocols\n\n*   **Objective**: Streamline decision-making and task delegation within your team.\n*   **Knowledge**: You aim to empower your team members (like the person you were speaking with in the 10:35 AM entry) to handle more responsibilities independently.\n*   **Context**: You had discussions about the bonus structure for the secretaries, new contracts for psychiatrists, and cancellation policies.\n*   **Intentions**:\n    *   Delegate decision-making authority to team members on operational matters, such as Linor's compensation model, as long as they align with budgetary guidelines (10:49 AM).\n    *   Consult with Alex on strategic and financial decisions, especially those related to refunds or significant financial commitments (10:36 AM).\n    *   Involve Elias in risk management and medical protocol-related decisions to ensure compliance and patient safety (10:36 AM).\n    *   Clarify the bonus structure for secretaries and communicate it effectively to the team, ensuring transparency and fairness (10:53 AM).\n*   **Protocols**:\n    *   Operational decisions: Empower team members to make independent choices, with guidance from you as needed.\n    *   Strategic decisions: Consult with Alex for final approval.\n    *   Risk management: Involve Elias for input on medical and legal considerations.\n    *   Bonus structure: Clearly define bonus criteria and payment schedules, communicating changes promptly to the team.\n\n### Personal Life Protocols\n\n*   **Objective**: Balance work responsibilities with family needs and personal well-being.\n*   **Knowledge**: You were dealing with a power issue at home, possibly related to a dryer, and considering purchasing a new one (11:06 AM, 11:16 AM).\n*   **Context**: You had a conversation with Nada about hanging laundry (11:18 AM). You also discussed car repairs with someone (12:34 PM).\n*   **Intentions**:\n    *   Address household issues promptly to maintain a comfortable living environment.\n    *   Coordinate with family members on household tasks and responsibilities.\n    *   Maintain your car.\n*   **Protocols**:\n    *   Household issues: Prioritize addressing issues like power outages and appliance malfunctions to minimize disruption.\n    *   Family coordination: Delegate tasks and responsibilities to family members to ensure a fair distribution of workload.\n    *   Car: Maintain car.\n\nIs there anything else I can help you with today?\n"
+    }
+  ],
+  "summary": "Creating Protocols",
+  "createdAt": 1749164409995,
+  "sharedAt": null
+}

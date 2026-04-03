@@ -1,0 +1,35 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Explain about the kpi’s that alex spoke about today"
+    },
+    {
+      "role": "assistant",
+      "content": "Searching today’s lifelogs for mentions of Alex and KPIs...",
+      "toolCalls": [
+        {
+          "id": "call_eeMv5273jtRRRhpIFSZALWVC",
+          "toolName": "searchLifelogs",
+          "args": {
+            "query": "Alex AND KPI",
+            "startTimeString": "2025-08-31T00:00:00",
+            "endTimeString": "2025-08-31T23:59:59",
+            "isStarred": null
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "content": null
+    },
+    {
+      "role": "assistant",
+      "content": "Here’s what Alex set as KPIs today, and how he framed them:\n\n- Headline KPI (the one metric to rally around): number of new patients who complete intake each month\n  - Quote (Alex): “רצינו לבחור KPI שקל להתחבר אליו… מספר אנשים חדשים שעושים אינטייק בחודש.”\n  - Baseline he used for August: 391 new intakes (from “510” total minus “119” follow-ups)\n    - Quote (Alex): “510… אני מוריד את הפולואפים, את ה-119, ואני מגיע ל-391.”\n  - Target and timeline: reach 660 new intakes by December/January via a linear month‑over‑month ramp\n    - Quote (Alex): “בבסוף דצמבר ינואר אנחנו צריכים להיות ב-660… ההגעה מעכשיו לשם… בצורה ליניארית.”\n\n- Supporting operational KPI: patient wait time (to case manager and to psychiatrist) as the capacity signal\n  - Quote (Alex): “הדרך שלי לבדוק את זה זה זמן ההמתנה… זה ה-KPI הכי חשוב לוגיסטית.”\n\n- How marketing/sales/ops tie into the KPI:\n  - Marketing (Adi) to grow digital + PR; Field sales (Adiel) to build clinic referrals; Operations to staff/execute so wait times stay acceptable.\n  - Alex stressed integrated pacing so demand growth matches clinic capacity and patient experience.\n\n- Measurement details and attribution:\n  - Marketing attribution via the “How did you hear about us?” question to apportion PR vs paid digital.\n  - CRM/dashboards need to reflect these KPIs and updated payer logic (e.g., Maccabi follow-up payments) for accurate tracking.\n\n- Additional KPIs raised in the discussion (by you) to track alongside the headline KPI:\n  - Conversion: “how many we bring” vs “how many actually do intake”\n  - Active patients at any time\n  - Number of sessions\n  - Financials: revenue (actual vs potential)\n\nWant me to draft a one-page KPI dashboard spec (metrics, owners, data sources, and views) for Shachar/CRM so the team can implement this week?"
+    }
+  ],
+  "summary": "Alex's KPI Discussion Summary",
+  "createdAt": 1756640952687,
+  "sharedAt": null
+}

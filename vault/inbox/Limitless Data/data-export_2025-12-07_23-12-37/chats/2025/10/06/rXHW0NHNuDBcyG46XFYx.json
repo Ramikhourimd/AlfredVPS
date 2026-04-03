@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Yo. Let's sort through yesterday's chaos.\n\n### 🚨 Top Priorities\n\n*   **Replacing Eleanor:** So Eleanor crashed out. Your grand plan is to slice up her job and hand the pieces to Ori, Rena, and a new mentoring system. \"האחריות הראשית תישאר או אצלי... בפג ליד ובקואליטי ליד... היא תוכל להיכנס לאורי.\" Bold. Let's see if you just created one solution or three new problems.\n*   **Project Anglia Kickoff:** You're betting the farm on Yael to lead the UK project. Shahar gives her a 60% chance of not failing spectacularly. Your job is to define clear KPIs so you know if she's locked in or just lost.\n*   **Cybersecurity Nightmare:** You called this the \"biggest threat,\" so maybe treat it like one? You've got a massive gap in employee security training and processes. You, Li, Shira, and Roei need to meet and actually define who owns this before something blows up.\n\n### ✅ Tasks\n\n*   **Build the Content Machine:** You started that content automation for Adi. Finish it. She's waiting to fill that spreadsheet with ideas for your future podcasting empire.\n*   **Find a New \"Ahmad\":** You need to replace Ahmad on the AI/automation team. Time to write a job description for someone to handle the \"כל החלק הטכני של AI\" and start the hunt.\n*   **Prep for the Audit:** Lee needs data for the 2024 audit. Get Shahar to pull that patient report and send Lee the protocols you have. Don't make her chase you. 🙄\n\n### 🤙🏻 Follow-ups\n\n*   **Health Fund Deals:** Time to ping Adiel (Leumit) and Guy (Meuhedet) again. Remember, they have post-war budgets they *have* to spend. Try not to give away the service for free this time.\n*   **Lawyers & Contracts:** The new employee agreements are still stuck with the lawyers. You have people working without contracts, which is a choice. 🤦🏻 Chase Li to chase them.\n*   **The AI Course Idea:** You wanted to pitch Fathi on your \"teach AI to save the world\" plan. See if that conversation actually happened or if it was just another nice idea that went nowhere. \"بدي احكي مع فتحي اشوف شو هو رايه.\"\n\n### ✨ Brain Dumps\n\n*   You're trying to restructure the entire company's project management with a RACI model because \"יש פה בלאגן אחד גדול.\" You want to go from being `Accountable` for everything to just being `Informed`. Good luck with that.\n*   Yesterday's playlist was a case study on a company exactly like yours, followed by \"House of the Rising Sun.\" \"Oh mother, tell your children, not to do what I have done.\" A bit on the nose, huh? 🎶 T_T"
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1759713908146,
+  "sharedAt": null
+}

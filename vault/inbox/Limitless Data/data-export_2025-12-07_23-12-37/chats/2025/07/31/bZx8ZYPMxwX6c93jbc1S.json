@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a comprehensive to-do list based on my conversation transcripts. Please analyze the transcript and identify all tasks, commitments, and follow-up actions I mentioned or agreed to.\nImportantly: Only use items that I specifically said I would do. Do not include things other people said they would do.\nFor each item, include enough detail that I can understand what needs to be done without having to review the entire transcript again. Use action verbs at the beginning of each task.\nGroup related tasks together when possible, and highlight any dependencies between tasks (e.g., \"Complete X before starting Y\").\nExclude routine activities or general comments that don't require specific action."
+    },
+    {
+      "role": "assistant",
+      "content": "Certainly, Rami. Here’s a comprehensive to-do list based strictly on your explicit commitments and statements from the provided transcripts. Each item is written for clarity and grouped where relevant. Dependencies are noted where applicable.\n\n---\n\n### Clinical Governance & Partnership Meeting Preparation\n\n- **Review the image sent regarding the clinical governance discussion**  \n  _You acknowledged seeing the image but had not yet reviewed it in detail._\n\n- **Summarize and update yourself after the Thursday/Friday call with Jason**  \n  _You said: “Send me an invite to that meeting so my note taker can join, and I’ll summarize it and update myself.”_  \n  _(Dependency: Wait for meeting invite and completion of the call before summarizing.)_\n\n### Scheduling & Communication\n\n- **Check your calendar for alternative meeting times with your colleague**  \n  _You said you would look at your calendar to find possible time slots due to scheduling conflicts._\n\n---\n\n#### Notes:\n\n- You did not explicitly commit to sending any documents, writing insights, or performing technical tasks—these were either suggested by others or left open-ended.\n- You indicated willingness to participate in meetings (e.g., Monday at 5pm), but also mentioned possible childcare conflicts; no action required unless you confirm attendance.\n- No routine or general comments included.\n\n---\n\nLet me know if you need this list reformatted or want reminders for specific deadlines!"
+    }
+  ],
+  "summary": "Todos",
+  "createdAt": 1753926907023,
+  "sharedAt": null
+}

@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "I need a comprehensive to-do list based on my conversation transcripts. Please analyze the transcript and identify all tasks, commitments, and follow-up actions I mentioned or agreed to.\nImportantly: Only use items that I specifically said I would do. Do not include things other people said they would do.\nFor each item, include enough detail that I can understand what needs to be done without having to review the entire transcript again. Use action verbs at the beginning of each task.\nGroup related tasks together when possible, and highlight any dependencies between tasks (e.g., \"Complete X before starting Y\").\nExclude routine activities or general comments that don't require specific action."
+    },
+    {
+      "role": "assistant",
+      "content": "---\n\n## Rami Khouri – Comprehensive To-Do List (Based on Explicit Commitments)\n\n---\n\n### 1. Email & Account Management  \n*(From “Troubleshooting and managing email accounts” – Evening, Aug 20)*\n\n- **Set up or troubleshoot email accounts:**  \n  - Take direct action to resolve issues with your work-related email accounts (“عندي شيء كثير مهم عندي اخر بالشغل عندي شيء كثير مهم”) and ensure you have access to all necessary inboxes.\n  - Confirm which account(s) need to be added or fixed (e.g., “دي ار خوري مع ايلا؟”) and complete the setup on relevant devices (phone, iPad).\n  - If prompted for credentials or codes during setup, ensure you have them ready.\n\n---\n\n### 2. Decision-Making & End-of-Life Planning  \n*(From “A series of diverse discussions...” – Late Evening, Aug 20)*\n\n- **Clarify and document your preferences for end-of-life medical decisions:**  \n  - Clearly state your decision-making preferences in scenarios where you may not be able to communicate (e.g., coma, major surgery).\n    - Example: “انا بدي اعمل هيك... انا بقدر اخذ قرار... اذا انا بفوت في كوما بديش اقوم طيب بس انا بعرف انه انا من قسه بقدر اختم اذا اول ما بديش اقوم لازم مثلا لسه لازم عشان انت في كوما بعدين يحطوا لك هذا الاخير شو بصير معي.”\n  - Put in writing who should act as your medical proxy (“رامي هو الابوس تبعك في حال انت بدك تقولي خلطه لما انت...”) and under what circumstances they are authorized to make decisions.\n  - Specify any conditions under which certain interventions should or should not be performed (e.g., amputation, life support).\n\n**Dependencies:**  \n- Complete documentation of decision-making preferences before any situation arises that would require others to act on your behalf.\n\n---\n\n## Task Dependencies / Sequencing\n\n1. **Email/account troubleshooting** can proceed independently.\n2. **End-of-life planning documentation** should be completed proactively—do not wait for a crisis.\n\n---\n\nLet me know if you want draft language for documenting medical proxies or need a checklist for the email/account troubleshooting process! 📝💡"
+    }
+  ],
+  "summary": "Todos",
+  "createdAt": 1755740536457,
+  "sharedAt": null
+}

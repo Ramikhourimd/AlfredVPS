@@ -1,0 +1,8 @@
+---
+processed_at: '2026-02-25T13:25:17.391282+00:00'
+status: processed
+---
+
+Test transcript for Taliaz KB Ingester Pipeline
+Speaker 1: Hello, this is a test meeting on October 25, 2023.
+Speaker 2: Yes, testing the ingestion process.

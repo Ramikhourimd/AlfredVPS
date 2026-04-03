@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "תוציא על סמך הוובינר שהיה עכשיו ב 14:00 היום מדריך באורך של 5-6 עמודים לגבי . מתי משתמשים בשירות, ואיך להפוך את זה לשירות שהמטפלים ידעו מתי ואיך להשתמש בו. תכניס דוגמאות שעוזרות לחדד"
+    },
+    {
+      "role": "assistant",
+      "content": "בודק את לוגי הוובינר של היום ב-14:00...",
+      "toolCalls": [
+        {
+          "id": "call_aZyldHIKlj1EghYmVlW5ttmD",
+          "toolName": "searchLifelogsInTimeRange",
+          "args": {
+            "startTimeString": "2025-10-19T13:30:00+03:00",
+            "endTimeString": "2025-10-19T15:30:00+03:00",
+            "topK": 40,
+            "isStarred": null
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "content": null
+    }
+  ],
+  "summary": null,
+  "createdAt": 1760876238953,
+  "sharedAt": null
+}

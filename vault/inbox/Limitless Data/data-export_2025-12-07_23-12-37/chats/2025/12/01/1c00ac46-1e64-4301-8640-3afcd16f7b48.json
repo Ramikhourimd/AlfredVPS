@@ -1,0 +1,27 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Summarize my day yesterday (only work relevant conversations and meetings) in the big context of my work in the last month."
+    },
+    {
+      "role": "assistant",
+      "content": "Checking yesterday’s lifelogs…",
+      "toolCalls": [
+        {
+          "id": "call_ojg9AS6J27j5g6YQz3PdPk4a",
+          "toolName": "searchLifelogsInTimeRange",
+          "args": {
+            "startTimeString": "2025-11-30T00:00:00",
+            "endTimeString": "2025-12-01T00:00:00",
+            "topK": 50,
+            "isStarred": null
+          }
+        }
+      ]
+    }
+  ],
+  "summary": "Yesterday's Work Summary",
+  "createdAt": 1764567867907,
+  "sharedAt": null
+}

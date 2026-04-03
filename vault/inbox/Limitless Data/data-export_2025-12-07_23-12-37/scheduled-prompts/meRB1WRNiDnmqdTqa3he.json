@@ -1,0 +1,4 @@
+{
+  "promptName": "Custom Message",
+  "promptTemplate": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+}

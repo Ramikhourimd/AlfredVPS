@@ -1,0 +1,31 @@
+{
+  "title": "פגישת ניהול",
+  "description": "<a href=\"https://us02web.zoom.us/j/6167089807\">https://us02web.zoom.us/j/6167089807</a>",
+  "startTime": "2025-07-21T07:00:00.000Z",
+  "endTime": "2025-07-21T08:00:00.000Z",
+  "participants": [
+    {
+      "email": "shira@healthymind.co.il",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": true,
+      "responseStatus": "accepted"
+    },
+    {
+      "email": "rami.salim.khouri@gmail.com",
+      "name": null,
+      "isSelf": true,
+      "isOrganizer": false,
+      "responseStatus": "accepted"
+    },
+    {
+      "email": "alex@taliazhealth.com",
+      "name": null,
+      "isSelf": false,
+      "isOrganizer": false,
+      "responseStatus": "tentative"
+    }
+  ],
+  "url": "https://www.google.com/calendar/event?eid=MXVscGU4Y3BoOTAzaGduOGNhdXY5bDFyaG9fMjAyNTA3MjFUMDcwMDAwWiByYW1pLnNhbGltLmtob3VyaUBt",
+  "conferenceUrl": "https://us02web.zoom.us/j/6167089807\">https://us02web.zoom.us/j/6167089807</a>"
+}

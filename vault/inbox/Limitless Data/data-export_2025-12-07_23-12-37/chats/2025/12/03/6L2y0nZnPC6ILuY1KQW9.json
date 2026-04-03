@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Who is dekel taliaz?"
+    },
+    {
+      "role": "assistant",
+      "content": "Based on your conversations, Dekel is the CEO of your company, Taliaz.\n\nHere is a summary of his role and characteristics as discussed:\n\n*   **Role & Authority:** Dekel is the CEO and a primary decision-maker alongside Oren. He has signing authority on legal agreements and is seen as the head of the company, with key personnel like Lee reporting to him and Oren.\n\n*   **Strengths:** He is described as a \"scientist\" with a strong vision. His primary strength is operational execution; he is exceptionally thorough, follows up meticulously, and ensures tasks are completed (\"makes things happen\").\n\n*   **Perceived Weaknesses:** You and Oren discussed that his focus is highly operational and short-term (\"a man of the 'now'\"). You believe he excels at \"firefighting\" but may lack the long-term strategic planning needed as the company scales. You also noted a tendency towards micromanagement, which can create the impression that he doesn't trust his team.\n\n*   **Public-Facing Role:** He handles public relations, including television interviews on behalf of the clinic. You've noted this sometimes overlaps with your responsibilities as the medical lead."
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1764730350975,
+  "sharedAt": null
+}

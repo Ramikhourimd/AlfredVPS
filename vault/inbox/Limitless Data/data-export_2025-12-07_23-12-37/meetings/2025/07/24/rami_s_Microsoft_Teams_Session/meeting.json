@@ -1,0 +1,17 @@
+{
+  "title": "rami's Microsoft Teams Session",
+  "description": null,
+  "startTime": "2025-07-24T08:00:05.000Z",
+  "endTime": "2025-07-24T08:59:51.000Z",
+  "participants": [
+    {
+      "email": "rami.salim.khouri@gmail.com",
+      "name": null,
+      "isSelf": true,
+      "isOrganizer": true,
+      "responseStatus": "accepted"
+    }
+  ],
+  "url": "https://www.google.com/calendar/event?eid=aG9tNmdxY3NobHU5bDFzZmduNHZuZDBhYWMgcmFtaS5zYWxpbS5raG91cmlAbQ",
+  "conferenceUrl": "https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZDQ0YmVlZjgtZjUzOC00YmYxLTg1ZmUtYzVhZDI4MzE3YTY3%40thread.v2/0?context=%7b%22Tid%22%3a%2289e846c1-57c1-4a4c-b65a-6d2107dbdb64%22%2c%22Oid%22%3a%221bd4ac63-ad53-4728-8eae-dd3eeaab2d41%22%7d"
+}

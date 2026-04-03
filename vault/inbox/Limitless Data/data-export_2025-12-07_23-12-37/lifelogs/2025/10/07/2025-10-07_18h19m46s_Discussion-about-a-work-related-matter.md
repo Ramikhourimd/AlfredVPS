@@ -1,0 +1,92 @@
+---
+alfred_tags:
+- work/discussions
+- compensation
+relationships:
+- confidence: 0.75
+  context: Work discussions on different dates
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/10/07/2025-10-07_18h19m46s_Discussion-about-a-work-related-matter.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/12/04/2025-12-04_10h34m38s_Discussion-about-various-work-related-topics.md
+  type: related-to
+- confidence: 0.75
+  context: Work discussions on different dates
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/10/07/2025-10-07_18h19m46s_Discussion-about-a-work-related-matter.md
+  target: inbox/processed/2025-12-04_10h34m38s_Discussion-about-various-work-related-topics.md
+  type: related-to
+- confidence: 0.7
+  context: Related work discussions
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/10/07/2025-10-07_18h19m46s_Discussion-about-a-work-related-matter.md
+  target: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/12/04/2025-12-04_12h13m08s_Discussion-about-work-and-compensation.md
+  type: related-to
+- confidence: 0.7
+  context: Related work discussions
+  source: inbox/Limitless Data/data-export_2025-12-07_23-12-37/lifelogs/2025/10/07/2025-10-07_18h19m46s_Discussion-about-a-work-related-matter.md
+  target: inbox/processed/2025-09-29_09h14m40s_Rami-Khouri-and-Unknown-discuss-work-related-topics.md
+  type: related-to
+---
+
+# Discussion about a work-related matter
+
+## Initial greetings and general conversation
+
+> [1](#startMs=1759861186230&endMs=1759861189230): طيب سلام.
+
+> [2](#startMs=1759861189230&endMs=1759861191230): الله يسلمك شو اخبارك؟
+
+> [1](#startMs=1759861192230&endMs=1759861193230): شو يا حبيبي؟
+
+> [2](#startMs=1759861194230&endMs=1759861195230): خالص شكلك.
+
+> [1](#startMs=1759861197230&endMs=1759861202230): اه والله مش عارف كيف بدي الاربعه الصبح اليوم.
+
+> [1](#startMs=1759861204230&endMs=1759861205230): الله يعطيك العافيه.
+
+> [2](#startMs=1759861206230&endMs=1759861207230): الله يعافيك.
+
+> [1](#startMs=1759861207230&endMs=1759861208230): شو وضعك؟
+
+## Discussion about a document and associated costs
+
+> [2](#startMs=1759861209230&endMs=1759861213230): ايه سامر خلص جيب قال لي بكره بيبعث لك اياها.
+
+> [1](#startMs=1759861214230&endMs=1759861215230): ايه بعد.
+
+> [2](#startMs=1759861215230&endMs=1759861218230): اه طلع اه جوزف بعث لي الحساب.
+
+> [1](#startMs=1759861219230&endMs=1759861219231): اه.
+
+> [2](#startMs=1759861219231&endMs=1759861224230): في ورقه هو كاتب الاشياء بس وصل معاه ل 22.
+
+> [2](#startMs=1759861226230&endMs=1759861233230): بس انا يعني مش عارف انه انا عامل شغلات زايد شغلات.
+
+> [2](#startMs=1759861234230&endMs=1759861239230): يعني اكثر من شوف انه هي بس مش عارف بدي اياك تشوف انت بعث لي الورقه.
+
+> [1](#startMs=1759861241230&endMs=1759861242230): اه.
+
+> [2](#startMs=1759861242230&endMs=1759861252230): كل شيء فاهمه يعني من شو كتب بس شوي فجعني يمكن استعمل انا يمكن عشان مش متعود ايه ايه.
+
+> [1](#startMs=1759861253230&endMs=1759861257230): شو وصل لك هو غير شو حكي لك؟ شو الاشياء اللي قال لك اياها؟
+
+> [2](#startMs=1759861257230&endMs=1759861267230): انه في جنطات ايه في الانتر كولر هذا تبع الموتور.
+
+> [1](#startMs=1759861268230&endMs=1759861268231): ايه.
+
+> [1](#startMs=1759861268231&endMs=1759861269230): هذا قديش حقه؟
+
+> [2](#startMs=1759861271230&endMs=1759861273230): هسا انا مش عارف الورقه هون.
+
+> [1](#startMs=1759861274230&endMs=1759861277230): بس هو عمل شيء بالله ما يقول لك على سعره يعني؟
+
+> [2](#startMs=1759861277230&endMs=1759861280230): هو مش كل شيء كان يقول لي هو ما كانش يقول لي اسعاره.
+
+> [2](#startMs=1759861281230&endMs=1759861286230): يعني في اشياء كان يقول لي بس الاشياء يعني انا توقعت انه الاشياء الغاليه كان يقول لي عليها يعني في اشياء كان يقول لي حقها.
+
+> [2](#startMs=1759861287230&endMs=1759861295230): ايه مش يعني بعرفش مش قصه مش عارف الصراحه كيف بدي احس هالشيء.
+
+> [1](#startMs=1759861296230&endMs=1759861306230): بس هو السعر يعني في ذو الاشياء اللي هو منها بتحس انه غالي في له يعني وهو ماخذ غالي ولا حال ولا مش فاهم.
+
+> [2](#startMs=1759861309230&endMs=1759861311230): انا كان بدي اياك تطلع عشان تشوف معي.
+
+> [1](#startMs=1759861313230&endMs=1759861317230): طب تعال علي بكره انا بدك ما بحكي مع على التليفون.
+
+> [2](#startMs=1759861319230&endMs=1759861321230): طيب ليش؟

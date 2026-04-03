@@ -1,0 +1,22 @@
+---
+created: '2025-11-13'
+from: '[[person/Rami Khouri]]'
+input_type: voice-memo
+received: '2025-11-13'
+related:
+- '[[note/BYD Screen Arrangement Pricing Discussion 2025-11-13]]'
+- '[[asset/BYD Vehicle]]'
+source: limitless
+status: processed
+type: input
+---
+
+# Rami Khouri discusses a product
+
+## Discussion about product features
+
+> [1](#startMs=1763040067461&endMs=1763040080461): הם היחידים שהם היחידים שהם מאפשרים ללא מיגון. הם היחידים שהם עובדים עם מסכי הסדר של BYD. ככה יצא השנה. כל שנה זה היה חברה אחרת. השנה זה בשנתיים הם כאילו בתוך ישר.
+
+> [2](#startMs=1763040082461&endMs=1763040090025): אוקיי, בדקתי עכשיו, אה, זה 1700 בתוך חובה ועשרת אלפים
+
+> [1](#startMs=1763040090045&endMs=1763040102045): בצורה כזה כיף. חוץ מהגיל, לא יודע אם יש הבדל כאילו בין אחד בין השני כי אין לי את זה עוד. זה קצת מוזר.

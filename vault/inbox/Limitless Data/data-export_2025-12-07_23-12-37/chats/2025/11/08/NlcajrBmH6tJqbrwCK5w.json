@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Based on what you know about me today and yesterday, create knowledge-context-intention based protocols regarding my personal and worklife"
+    },
+    {
+      "role": "assistant",
+      "content": "Here is your protocol for Saturday, Nov 8.\n\n### Car Transaction Protocol 🚗\n\nAll actions below relate to the sale of your old car and the setup of your new one, based on yesterday's conversations.\n\n**1. Finalize Sale (Due: Sunday, Nov 9)**\nThese items are for the transfer of your previous BYD.\n\n*   **Coordinate Ownership Transfer:** Be available Sunday morning for the online transfer. The buyer will message you to initiate the process, which should take ~5 minutes for both parties.\n    *   **Owner:** Rami\n    *   **Due:** Nov 9, AM\n*   **Verify Funds Received:** Monitor your bank account for the completed wire transfers. The large transfer initiated on Friday may not post until the next business day (Sunday/Monday).\n    *   **Owner:** Rami\n    *   **Due:** Nov 10\n*   **Settle Registration:** Ensure the disabled tag (\"תב נכה\") is removed from the sold vehicle and the pro-rated registration fee is paid, as you committed to the buyer.\n    *   **Owner:** Rami\n    *   **Due:** Nov 14\n\n**2. New Car Onboarding**\nFollow-ups with the seller for your new vehicle.\n\n*   **Obtain Second Key:** The seller mentioned he has a second key for you. Request it when you next connect.\n    *   **Owner:** Rami\n    *   **Due:** Nov 9\n*   **Send Email for App Setup:** Provide your email address to the seller so he can link it to the car's official application.\n    *   **Owner:** Rami\n    *   **Due:** Nov 9\n*   **Evaluate 360° Camera App:** The seller offered to send instructions for a \"pirated\" app that enables the 360° parking camera.\n    *   **Compliance Risk:** ⚠️ He explicitly stated this app could void the vehicle's warranty. \"זה מסיר את האחריות\" (This removes the warranty).\n    *   **Recommendation:** Request the instructions, but weigh the feature's benefit against the potential warranty invalidation before installing.\n    *   **Owner:** Rami\n    *   **Due:** Nov 14\n\n**Context Verified:** I've registered your professional role as a psychiatrist leading a startup that operates an online psychiatric clinic. No immediate work-related action items were detected in yesterday's logs. Standing by for project inputs."
+    }
+  ],
+  "summary": "Custom Message",
+  "createdAt": 1762564946572,
+  "sharedAt": null
+}
